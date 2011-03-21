@@ -6,17 +6,19 @@
 
 from selenium import selenium
 import unittest, time, re, string
+from run import settings
 
 class check_addon_create(unittest.TestCase):
     def setUp(self):
         self.verificationErrors = []
-        self.selenium = selenium("localhost", 4444, "*firefox /Applications/Firefox4.0b7/Firefox.app/Contents/MacOS/firefox-bin", "https://builder-addons.allizom.org/")
+        self.selenium = selenium("localhost", 4444,
+                settings.FIREFOX_INSTANCE, settings.HOME_PAGE_URL)
         self.selenium.start()
-    
+
     def test_check_addon_create(self):
         sel = self.selenium
         sel.open("/")
-        
+
         sel.click("signin")
         sel.wait_for_page_to_load("30000")
         sel.type("id_username", "amo.test.acc@gmail.com")
@@ -28,13 +30,13 @@ class check_addon_create(unittest.TestCase):
         #After signing in, click on the create add-on button on the home page
         sel.click("//a[@id='create_addon']/span")
         sel.wait_for_page_to_load("30000")
-        
+
         #Click on the save button to save this add-on
         sel.click("package-save")
         a=sel.get_text("//section[@id='package-info']/h3[@id='ji-toggler']/a")
         addon_name_saved=string.strip(a)
         print addon_name_saved
-        
+
         #Go to the dashboard and check that the label for this add-on should show 'initial'.
         sel.click("link=My Account")
         sel.wait_for_page_to_load("30000")
