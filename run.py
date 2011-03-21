@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import unittest
 import sys
 
@@ -20,8 +21,7 @@ except ImportError:
 suite = unittest.TestSuite()
 
 for arg in sys.argv[1:]:
-    print "importing %s" % arg
-    test_module = __import__('tests.%s' % arg)
+    test_module = __import__('tests.%s' % arg, fromlist=['tests'])
     suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(test_module))
 
 runner = unittest.TextTestRunner()

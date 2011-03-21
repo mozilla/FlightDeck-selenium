@@ -1,0 +1,23 @@
+Selenium tests to be run on FlightDeck.
+
+Installation
+############
+
+All requirements in requirements.txt
+
+Please add settings_local.py with content from settings.py which should be 
+overwritten - especially AMO_USERNAME and AMO_PASSWORD
+
+If you'd like to test localhost change the HOME_PAGE_URL to your localhost
+
+
+Usage
+#####
+
+``./run.py test_module1 test_module2``
+
+Where ``test_module`` is the name of the module from ./tests/ directory
+
+in example: 
+
+``./run.py check_addon_label check_lib_label``
