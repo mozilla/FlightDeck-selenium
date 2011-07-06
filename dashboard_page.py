@@ -28,9 +28,9 @@ class DashboardPage(Page):
     _addons_counter = "//aside[@id='app-sidebar']/ul/li[1]/strong"
     _libs_counter = "//aside[@id='app-sidebar']/ul/li[2]/strong"
 
-    def __init__(self, selenium):
+    def __init__(self, testsetup):
         ''' Creates a new instance of the class and gets the page ready for testing '''
-        self.sel = selenium
+        self.sel = testsetup.selenium
 
     def get_page_title(self):
         return self.sel.title

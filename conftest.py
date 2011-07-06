@@ -103,7 +103,7 @@ def pytest_addoption(parser):
     parser.addoption("--base-url",
                      action="store",
                      dest="base_url",
-                     default="http://quality-new.stage.mozilla.com",
+                     default="https://builder-addons.allizom.org",
                      help="base URL for the application under test")
 
 
