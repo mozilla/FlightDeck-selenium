@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from selenium import webdriver
 from page import Page
 
 class LibraryEditorPage(Page):
@@ -9,9 +8,9 @@ class LibraryEditorPage(Page):
     _copy_btn = 'package-copy'
     
 
-    def __init__(self, selenium):
+    def __init__(self, testsetup):
         ''' Creates a new instance of the class and gets the page ready for testing '''
-        self.sel = selenium
+        self.sel = testsetup.selenium
 
     def get_lib_name(self):
         return self.sel.find_element_by_id(self._library_name).text

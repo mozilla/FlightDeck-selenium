@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from selenium import webdriver
 from page import Page
+from selenium.webdriver.common.by import By
 
 class DashboardPage(Page):
 
@@ -12,14 +12,14 @@ class DashboardPage(Page):
     _private_addons_link = "//aside[@id='app-sidebar']/ul[3]/li[1]/a"
     _private_libs_link = "//aside[@id='app-sidebar']/ul[3]/li[2]/a"
     _addon_label_name = "//section[@id='app-content']/ul[1]/li[1]/h4"
-    _lib_label_name = "//section[@id='app-content']/ul[2]/li[1]/h4"
+    _lib_label_name = "//section[@id='app-content']/ul[1]/li[1]/h3"
     _addon_test_btn = "//section[@id='app-content']/ul[1]/li[1]/ul/li[1]/a"
     _addon_delete_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[3]/a"
     _addon_edit_btn = "//section[@id='app-content']/ul[1]/li[1]/ul/li[2]/a"
     _addon_public_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[2]/li[1]/a"
     _addon_private_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[2]/li[2]/a"
     _confirm_delete_btn = 'delete_package'
-    _lib_edit_btn = "//section[@id='app-content']/ul[2]/li[1]/ul/li[1]/a"
+    _lib_edit_btn_locator = (By.CSS_SELECTOR, ".UI_Edit_Version > a")
     _lib_delete_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[1]/li[2]/a"
     _lib_public_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[2]/li[1]/a"
     _lib_private_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[2]/li[2]/a"
@@ -89,7 +89,7 @@ class DashboardPage(Page):
         self.sel.implicitly_wait(10)
     
     def navigate_to_lib_editor(self):
-        self.sel.find_element_by_xpath(self._lib_source_btn).click()
+        self.sel.find_element(*self._lib_edit_btn_locator).click()
         self.sel.implicitly_wait(10)
         
     def check_addon_test_btn_present(self):
