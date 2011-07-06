@@ -10,7 +10,7 @@ class DashboardPage(Page):
     _top_public_addon_name = "//section[@id='app-content']/ul/li[1]/h3"
     _top_public_lib_name = "//section[@id='app-content']/ul[2]/li[1]/h3"
     _private_addons_link = "//aside[@id='app-sidebar']/ul[3]/li[1]/a"
-    _private_libs_link = "//aside[@id='app-sidebar']/ul[3]/li[2]/a"
+    _private_libs_link = (By.LINK_TEXT, "Private Libraries")
     _addon_label_name = "//section[@id='app-content']/ul[1]/li[1]/h4"
     _lib_label_name = "//section[@id='app-content']/ul[1]/li[1]/h3"
     _addon_test_btn = "//section[@id='app-content']/ul[1]/li[1]/ul/li[1]/a"
@@ -22,7 +22,7 @@ class DashboardPage(Page):
     _lib_edit_btn_locator = (By.CSS_SELECTOR, ".UI_Edit_Version > a")
     _lib_delete_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[1]/li[2]/a"
     _lib_public_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[2]/li[1]/a"
-    _lib_private_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[2]/li[2]/a"
+    _lib_private_btn_locator = (By.XPATH, "//a[@title='My preciousss!']")
     _addons_list = "//section[@id='app-content']/ul[1]/li"
     _libs_list = "//section[@id='app-content']/ul[2]/li"
     _addons_counter = "//aside[@id='app-sidebar']/ul/li[1]/strong"
@@ -48,7 +48,7 @@ class DashboardPage(Page):
     
     def get_top_lib_name(self):
         #self.sel.find_element_by_xpath(self._create_addon_btn).click()
-        return self.sel.find_element_by_xpath(self._top_public_lib_name).text
+        return self.sel.find_element_by_xpath(self._lib_label_name).text
     
     def get_addon_label_name(self):
         #self.sel.find_element_by_xpath(self._create_addon_btn).click()
@@ -81,7 +81,7 @@ class DashboardPage(Page):
         self.sel.implicitly_wait(10)
     
     def go_to_private_libs_page(self):
-        self.sel.find_element_by_xpath(self._private_libs_link).click()
+        self.sel.find_element(*self._private_libs_link).click()
         self.sel.implicitly_wait(10)
     
     def navigate_to_addon_editor(self):
@@ -160,10 +160,10 @@ class DashboardPage(Page):
     #    self.sel.implicitly_wait(10)
     #    return
     #
-    #def click_lib_mkprivate_btn(self):
-    #    self.sel.find_element_by_xpath(self._lib_disable_btn).click()
-    #    self.sel.implicitly_wait(10)
-    #    return
+    def click_lib_mkprivate_btn(self):
+        self.sel.find_element(*self._lib_private_btn_locator).click()
+        self.sel.implicitly_wait(10)
+        return
 
     def click_addon_delete(self):
         self.sel.find_element_by_xpath(self._addon_delete_btn).click()
