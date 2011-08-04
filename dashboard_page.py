@@ -52,7 +52,7 @@ class DashboardPage(Page):
     
     def get_addon_label_name(self):
         #self.sel.find_element_by_xpath(self._create_addon_btn).click()
-        return self.sel.find_element_by_xpath(self._addon_label_name)
+        return self.sel.find_element_by_xpath(self._lib_label_name)
     
     def get_lib_label_name(self):
         #self.sel.find_element_by_xpath(self._create_addon_btn).click()
@@ -85,7 +85,7 @@ class DashboardPage(Page):
         self.sel.implicitly_wait(10)
     
     def navigate_to_addon_editor(self):
-        self.sel.find_element_by_xpath(self._addon_source_btn).click()
+        self.sel.find_element(*self._lib_edit_btn_locator).click()
         self.sel.implicitly_wait(10)
     
     def navigate_to_lib_editor(self):

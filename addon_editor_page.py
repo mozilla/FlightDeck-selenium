@@ -12,9 +12,9 @@ class AddonEditorPage(Page):
     _home_page_url = settings.HOME_PAGE_URL
     _copy_btn = 'package-copy'
 
-    def __init__(self, selenium):
+    def __init__(self, testsetup):
         ''' Creates a new instance of the class and gets the page ready for testing '''
-        self.sel = selenium
+        self.sel = testsetup.selenium 
 
     def get_addon_name(self):
         return self.sel.find_element_by_id(self._addon_name).text
