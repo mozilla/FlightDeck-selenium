@@ -9,7 +9,7 @@ class DashboardPage(Page):
     _home_page_click = 'flightdeck-logo'
     _top_public_addon_name = "//section[@id='app-content']/ul/li[1]/h3"
     _top_public_lib_name = "//section[@id='app-content']/ul[2]/li[1]/h3"
-    _private_addons_link = "//aside[@id='app-sidebar']/ul[3]/li[1]/a"
+    _private_addons_link = (By.LINK_TEXT, "Private Add-ons")
     _private_libs_link = (By.LINK_TEXT, "Private Libraries")
     _addon_label_name = "//section[@id='app-content']/ul[1]/li[1]/h4"
     _lib_label_name = "//section[@id='app-content']/ul[1]/li[1]/h3"
@@ -77,7 +77,7 @@ class DashboardPage(Page):
         return len(elements)
     
     def go_to_private_addons_page(self):
-        self.sel.find_element_by_xpath(self._private_addons_link).click()
+        self.sel.find_element(*self._private_addons_link).click()
         self.sel.implicitly_wait(10)
     
     def go_to_private_libs_page(self):
@@ -155,11 +155,11 @@ class DashboardPage(Page):
         except NoSuchElementException:
             return False
     
-    #def click_addon_mkprivate_btn(self):
-    #    self.sel.find_element_by_xpath(self._addon_disable_btn).click()
-    #    self.sel.implicitly_wait(10)
-    #    return
-    #
+    def click_addon_mkprivate_btn(self):
+        self.sel.find_element(*self._lib_private_btn_locator).click()
+        self.sel.implicitly_wait(10)
+        return
+    
     def click_lib_mkprivate_btn(self):
         self.sel.find_element(*self._lib_private_btn_locator).click()
         self.sel.implicitly_wait(10)

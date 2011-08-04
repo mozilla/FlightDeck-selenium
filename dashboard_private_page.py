@@ -22,7 +22,7 @@ class DashboardPrivatePage(Page):
         return self.sel.find_element_by_xpath(self._top_private_lib_name).text
         
     def click_addon_mkpublic_btn(self):
-        self.sel.find_element_by_xpath(self._addon_mkpublic_btn).click()
+        self.sel.find_element(*self._lib_mkpublic_btn_locator).click()
         self.sel.implicitly_wait(10)
         return
     

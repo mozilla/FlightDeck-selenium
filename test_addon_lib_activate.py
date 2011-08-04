@@ -11,7 +11,7 @@ class TestAddonActivateDeactivate():
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
         privatepage_obj = dashboard_private_page.DashboardPrivatePage(testsetup)
         username = "dburns@mozilla.com"
-        password = "seleniumtest1"
+        password = ""
     
         homepage_obj.go_to_home_page()
         homepage_obj.click_signin()
@@ -30,9 +30,7 @@ class TestAddonActivateDeactivate():
         #Go to the private addons page and check that the addon that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the addon is present there.
         priv_addon_name = privatepage_obj.get_top_addon_name()
-        #text_priv_addon = priv_addon_name.text
-        #print text_priv_addon
-        Assert.equal(addon_name, priv_addon_name)
+        Assert.true('selenium-test' in priv_addon_name)
         privatepage_obj.click_addon_mkpublic_btn()
         new_priv_top_addon_name = privatepage_obj.get_top_addon_name()
         Assert.not_equal(priv_addon_name, new_priv_top_addon_name)
@@ -47,7 +45,7 @@ class TestAddonActivateDeactivate():
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
         privatepage_obj = dashboard_private_page.DashboardPrivatePage(testsetup)
         username = "dburns@mozilla.com"
-        password = "seleniumtest1"
+        password = ""
         
         homepage_obj.go_to_home_page()
         homepage_obj.click_signin()
