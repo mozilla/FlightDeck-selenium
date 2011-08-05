@@ -14,8 +14,8 @@ class TestAddonLabel():
         loginpage_obj = login_page.LoginPage(testsetup)
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
         addonpage_obj = addon_editor_page.AddonEditorPage(testsetup)
-        username = "dburns@mozilla.com"
-        password = "seleniumtest1"
+        username = ""
+        password = ""
         
         #Create an addon. Then go to dashoard and assert that the label is 'initial'. 
         homepage_obj.go_to_home_page()

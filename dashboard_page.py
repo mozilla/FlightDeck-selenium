@@ -2,6 +2,7 @@
 
 from page import Page
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 
 class DashboardPage(Page):
 
@@ -13,9 +14,9 @@ class DashboardPage(Page):
     _private_libs_link = (By.LINK_TEXT, "Private Libraries")
     _addon_label_name = "//section[@id='app-content']/ul[1]/li[1]/h4"
     _lib_label_name = "//section[@id='app-content']/ul[1]/li[1]/h3"
-    _addon_test_btn = "//section[@id='app-content']/ul[1]/li[1]/ul/li[1]/a"
-    _addon_delete_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[3]/a"
-    _addon_edit_btn = "//section[@id='app-content']/ul[1]/li[1]/ul/li[2]/a"
+    _addon_test_btn = (By.XPATH, "//a[@title='Test Add-on']")
+    _addon_delete_btn = (By.XPATH, "//a[@title='Once and for all']") 
+    _addon_edit_btn = (By.LINK_TEXT, "Edit") 
     _addon_public_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[2]/li[1]/a"
     _addon_private_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[2]/li[2]/a"
     _confirm_delete_btn = 'delete_package'
@@ -94,21 +95,21 @@ class DashboardPage(Page):
         
     def check_addon_test_btn_present(self):
         try:
-            self.sel.find_element_by_xpath(self._addon_test_btn)
+            self.sel.find_element(*self._addon_test_btn)
             return True
         except NoSuchElementException:
             return False
 
     def check_addon_edit_btn_present(self):
         try:
-            self.sel.find_element_by_xpath(self._addon_edit_btn)
+            self.sel.find_element(*self._addon_edit_btn)
             return True
         except NoSuchElementException:
             return False
     
     def check_addon_delete_btn_present(self):
         try:
-            self.sel.find_element_by_xpath(self._addon_delete_btn)
+            self.sel.find_element(*self._addon_delete_btn)
             return True
         except NoSuchElementException:
             return False
