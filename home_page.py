@@ -22,33 +22,20 @@ class HomePage(Page):
 
     def go_to_home_page(self):
         self.sel.get(self._home_page_url)
-        self.sel.implicitly_wait(10)
 
     def click_signin(self):
-        #self.sel.find_element_by_xpath(self._create_addon_btn).click()
         self.sel.find_element_by_id(self._signin_link).click()
-        self.sel.implicitly_wait(10)
-        return
 
-#Takes you to your dashboard
     def click_myaccount(self):
-        #self.sel.find_element_by_xpath(self._create_addon_btn).click()
         self.sel.find_element(*self._my_account_link).click()
-        self.sel.implicitly_wait(10)
-        return
 
     def click_create_addon_btn(self):
         self.sel.find_element_by_xpath(self._create_addon_btn).click()
-        self.sel.implicitly_wait(10)
-        return
-
     def click_create_lib_btn(self):
         self.sel.find_element(*self._create_lib_btn).click()
 
     def click_create_addon_link(self):
         self.sel.find_element_by_xpath(self._create_addon_link).click()
-        self.sel.implicitly_wait(10)
-        return
 
     def check_addon_disable_btn_present(self):
         try:

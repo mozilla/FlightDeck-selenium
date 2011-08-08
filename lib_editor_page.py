@@ -7,7 +7,6 @@ class LibraryEditorPage(Page):
     _library_name = 'package-info-name'
     _copy_btn = 'package-copy'
     
-
     def __init__(self, testsetup):
         ''' Creates a new instance of the class and gets the page ready for testing '''
         self.sel = testsetup.selenium
@@ -17,5 +16,3 @@ class LibraryEditorPage(Page):
 
     def click_copy_btn(self):
         self.sel.find_element_by_id(self._copy_btn).click()
-        self.sel.implicitly_wait(10)
-        return
