@@ -12,6 +12,7 @@ class DashboardPage(Page):
     _top_public_lib_name = "//section[@id='app-content']/ul[2]/li[1]/h3"
     _private_addons_link = (By.LINK_TEXT, "Private Add-ons")
     _private_libs_link = (By.LINK_TEXT, "Private Libraries")
+    _public_libs_link = (By.LINK_TEXT, "Public Libraries")
     _addon_label_name = "//section[@id='app-content']/ul[1]/li[1]/h4"
     _lib_label_name = "//section[@id='app-content']/ul[1]/li[1]/h3"
     _addon_test_btn = (By.XPATH, "//a[@title='Test Add-on']")
@@ -83,7 +84,9 @@ class DashboardPage(Page):
     
     def go_to_private_libs_page(self):
         self.sel.find_element(*self._private_libs_link).click()
-        self.sel.implicitly_wait(10)
+    
+    def go_to_public_libs_page(self):
+        self.sel.find_element(*self._public_libs_link).click()
     
     def navigate_to_addon_editor(self):
         self.sel.find_element(*self._lib_edit_btn_locator).click()
@@ -167,7 +170,7 @@ class DashboardPage(Page):
         return
 
     def click_addon_delete(self):
-        self.sel.find_element_by_xpath(self._addon_delete_btn).click()
+        self.sel.find_element(*self._addon_delete_btn).click()
         self.sel.implicitly_wait(10)
         return
 
@@ -177,7 +180,7 @@ class DashboardPage(Page):
         return
 
     def click_lib_delete(self):
-        self.sel.find_element_by_xpath(self._lib_delete_btn).click()
+        self.sel.find_element(*self._addon_delete_btn).click()
         self.sel.implicitly_wait(10)
         return
     
