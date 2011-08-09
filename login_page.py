@@ -33,20 +33,25 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+
+
 from page import Page
+from selenium.webdriver.common.by import By
 
 
-class LibraryEditorPage(Page):
+class LoginPage(Page):
 
-    _library_name = 'package-info-name'
-    _copy_btn = 'package-copy'
+    _username_locator = (By.ID, 'id_username')
+    _password_locator = (By.ID, 'id_password')
+    _submit_locator = (By.NAME, 'save')
     
     def __init__(self, testsetup):
         ''' Creates a new instance of the class and gets the page ready for testing '''
+        self.testsetup = testsetup
         self.sel = testsetup.selenium
+        self._home_page_url = testsetup.base_url
 
-    def get_lib_name(self):
-        return self.sel.find_element_by_id(self._library_name).text
-
-    def click_copy_btn(self):
-        self.sel.find_element_by_id(self._copy_btn).click()
+    def login(self, username, password):
+        self.sel.find_element(*self._username_locator).send_keys(username)
+        self.sel.find_element(*self._password_locator).send_keys(password)
+        self.sel.find_element(*self._submit_locator).click()
