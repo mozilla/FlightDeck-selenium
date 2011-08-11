@@ -46,13 +46,13 @@ class TestAddonLabel():
         loginpage_obj = login_page.LoginPage(testsetup)
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
         addonpage_obj = addon_editor_page.AddonEditorPage(testsetup)
-        username = ""
-        password = ""
+        credentials = loginpage_obj.credentials_of_user('default')
+
         
         #Create an addon. Then go to dashoard and assert that the label is 'initial'. 
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
-        loginpage_obj.login(username, password)
+        loginpage_obj.login(credentials['email'], credentials['password'])
         addon_name = addonpage_obj.get_addon_name()
         text_addon = addon_name
         homepage_obj.click_myaccount()

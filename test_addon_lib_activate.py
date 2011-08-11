@@ -44,12 +44,12 @@ class TestAddonActivateDeactivate():
         loginpage_obj = login_page.LoginPage(testsetup)
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
         privatepage_obj = dashboard_private_page.DashboardPrivatePage(testsetup)
-        username = "dburns@mozilla.com"
-        password = ""
-    
+        credentials = loginpage_obj.credentials_of_user('default')
+
+        
         homepage_obj.go_to_home_page()
         homepage_obj.click_signin()
-        loginpage_obj.login(username, password)
+        loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         #Get the name of the addon present at the top of the list on dashboard.
         #This will be used to compare whether the addon is removed from the top of list after making it private
@@ -78,12 +78,11 @@ class TestAddonActivateDeactivate():
         loginpage_obj = login_page.LoginPage(testsetup)
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
         privatepage_obj = dashboard_private_page.DashboardPrivatePage(testsetup)
-        username = "dburns@mozilla.com"
-        password = ""
-        
+        credentials = loginpage_obj.credentials_of_user('default')
+
         homepage_obj.go_to_home_page()
         homepage_obj.click_signin()
-        loginpage_obj.login(username, password)
+        loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         
         #Get the name of the library present at the top of the library list on dashboard.

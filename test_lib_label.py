@@ -47,13 +47,13 @@ class TestLibLabel():
         loginpage_obj = login_page.LoginPage(testsetup)
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
         libpage_obj = lib_editor_page.LibraryEditorPage(testsetup)
-        username = ""
-        password = ""
-        
+        credentials = loginpage_obj.credentials_of_user('default')
+
+         
         #Create a library. Then go to dashoard and assert that the label is 'initial'. 
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
-        loginpage_obj.login(username, password)
+        loginpage_obj.login(credentials['email'], credentials['password'])
         lib_name = libpage_obj.get_lib_name()
         text_lib = lib_name
         homepage_obj.click_myaccount()

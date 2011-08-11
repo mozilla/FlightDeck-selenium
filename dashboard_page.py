@@ -63,93 +63,93 @@ class DashboardPage(Page):
     _addons_counter = "//aside[@id='app-sidebar']/ul/li[1]/strong"
     _libs_counter = "//aside[@id='app-sidebar']/ul/li[2]/strong"
 
-    def __init__(self, testsetup):
-        ''' Creates a new instance of the class and gets the page ready for testing '''
-        self.sel = testsetup.selenium
+    #def __init__(self, testsetup):
+    #    ''' Creates a new instance of the class and gets the page ready for testing '''
+    #    self.sel = testsetup.selenium
 
     def get_page_title(self):
-        return self.sel.title
+        return self.selenium.title
     
     def get_top_addon_name(self):
-        return self.sel.find_element_by_xpath(self._top_public_addon_name).text
+        return self.selenium.find_element_by_xpath(self._top_public_addon_name).text
     
     def get_top_lib_name(self):
-        return self.sel.find_element_by_xpath(self._lib_label_name).text
+        return self.selenium.find_element_by_xpath(self._lib_label_name).text
     
     def get_addon_label_name(self):
-        return self.sel.find_element_by_xpath(self._lib_label_name)
+        return self.selenium.find_element_by_xpath(self._lib_label_name)
     
     def get_lib_label_name(self):
-        return self.sel.find_element_by_xpath(self._lib_label_name)
+        return self.selenium.find_element_by_xpath(self._lib_label_name)
     
     def get_addons_count(self):
-        return self.sel.find_element_by_xpath(self._addons_counter).text
+        return self.selenium.find_element_by_xpath(self._addons_counter).text
         
     def calc_total_addons(self):
-        elements = self.sel.find_elements_by_xpath(self._addons_list)
+        elements = self.selenium.find_elements_by_xpath(self._addons_list)
         return len(elements)
         
     def go_to_private_addons_page(self):
         self.sel.find_element(*self._private_addons_link).click()
     
     def go_to_private_libs_page(self):
-        self.sel.find_element(*self._private_libs_link).click()
+        self.selenium.find_element(*self._private_libs_link).click()
     
     def go_to_public_libs_page(self):
-        self.sel.find_element(*self._public_libs_link).click()
+        self.selenium.find_element(*self._public_libs_link).click()
     
     def navigate_to_addon_editor(self):
-        self.sel.find_element(*self._lib_edit_btn_locator).click()
+        self.selenium.find_element(*self._lib_edit_btn_locator).click()
     
     def navigate_to_lib_editor(self):
-        self.sel.find_element(*self._lib_edit_btn_locator).click()
+        self.selenium.find_element(*self._lib_edit_btn_locator).click()
         
     def check_addon_test_btn_present(self):
         try:
-            self.sel.find_element(*self._addon_test_btn)
+            self.selenium.find_element(*self._addon_test_btn)
             return True
         except NoSuchElementException:
             return False
 
     def check_addon_edit_btn_present(self):
         try:
-            self.sel.find_element(*self._addon_edit_btn)
+            self.selenium.find_element(*self._addon_edit_btn)
             return True
         except NoSuchElementException:
             return False
     
     def check_addon_delete_btn_present(self):
         try:
-            self.sel.find_element(*self._addon_delete_btn)
+            self.selenium.find_element(*self._addon_delete_btn)
             return True
         except NoSuchElementException:
             return False
     
     def check_addon_public_btn_present(self):
         try:
-            self.sel.find_element_by_xpath(self._addon_public_btn)
+            self.selenium.find_element_by_xpath(self._addon_public_btn)
             return True
         except NoSuchElementException:
             return False
     
     def check_addon_private_btn_present(self):
         try:
-            self.sel.find_element_by_xpath(self._addon_private_btn)
+            self.selenium.find_element_by_xpath(self._addon_private_btn)
             return True
         except NoSuchElementException:
             return False
     
     def click_addon_mkprivate_btn(self):
-        self.sel.find_element(*self._lib_private_btn_locator).click()
+        self.selenium.find_element(*self._lib_private_btn_locator).click()
     
     def click_lib_mkprivate_btn(self):
-        self.sel.find_element(*self._lib_private_btn_locator).click()
+        self.selenium.find_element(*self._lib_private_btn_locator).click()
 
     def click_addon_delete(self):
-        self.sel.find_element(*self._addon_delete_btn).click()
+        self.selenium.find_element(*self._addon_delete_btn).click()
 
     def confirm_delete(self):
-        self.sel.find_element_by_id(self._confirm_delete_btn).click()
+        self.selenium.find_element_by_id(self._confirm_delete_btn).click()
 
     def click_lib_delete(self):
-        self.sel.find_element(*self._addon_delete_btn).click()
+        self.selenium.find_element(*self._addon_delete_btn).click()

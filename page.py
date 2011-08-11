@@ -36,14 +36,17 @@
 
 import time
 import base64
+import yaml
 
 
 class Page(object):
-
+    
     def __init__(self, testsetup):
         self.testsetup = testsetup
-        self.base_url = testsetup.base_url
         self.selenium = testsetup.selenium
+        self.credentials = testsetup.credentials
+        self._home_page_url = testsetup.base_url
+
 
     @property
     def is_the_current_page(self):
@@ -66,3 +69,11 @@ class Page(object):
         f = open(filename, "wb")
         f.write(base64.decodestring(self.selenium.get_screenshot_as_base64()))
         f.close()
+
+    def credentials_of_user(self, user):
+        return self.parse_yaml_file(self.credentials)[user]
+
+    def parse_yaml_file(self, file_name):
+        stream = file(file_name, 'r')
+        return yaml.load(stream)
+    

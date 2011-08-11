@@ -46,12 +46,11 @@ class TestLibLabelcheck_lib_label():
         homepage_obj = home_page.HomePage(testsetup)
         loginpage_obj = login_page.LoginPage(testsetup)
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
-        username = '' 
-        password = ''
+        credentials = loginpage_obj.credentials_of_user('default')
 
         homepage_obj.go_to_home_page()
         homepage_obj.click_signin()
-        loginpage_obj.login(username, password)
+        loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
 
         #Get the total count of the number of add-ons that are displayed on the dashboard.
