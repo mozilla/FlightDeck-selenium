@@ -64,7 +64,7 @@ class TestAddonActivateDeactivate():
         #Go to the private addons page and check that the addon that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the addon is present there.
         priv_addon_name = privatepage_obj.get_top_addon_name()
-        Assert.true('selenium-test' in priv_addon_name)
+        Assert.true('amotesting' in priv_addon_name)
         privatepage_obj.click_addon_mkpublic_btn()
         new_priv_top_addon_name = privatepage_obj.get_top_addon_name()
         Assert.not_equal(priv_addon_name, new_priv_top_addon_name)

@@ -58,7 +58,7 @@ class TestAddonLabel():
         homepage_obj.click_myaccount()
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         label_name = dashboardpage_obj.get_addon_label_name()
-        Assert.true("selenium-test1" in label_name.text)
+        Assert.true("amotesting" in label_name.text)
         
         #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
         dashboardpage_obj.navigate_to_addon_editor()

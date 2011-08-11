@@ -90,7 +90,7 @@ class DashboardPage(Page):
         return len(elements)
         
     def go_to_private_addons_page(self):
-        self.sel.find_element(*self._private_addons_link).click()
+        self.selenium.find_element(*self._private_addons_link).click()
     
     def go_to_private_libs_page(self):
         self.selenium.find_element(*self._private_libs_link).click()

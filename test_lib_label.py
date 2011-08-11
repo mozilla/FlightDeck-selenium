@@ -59,7 +59,7 @@ class TestLibLabel():
         homepage_obj.click_myaccount()
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         label_name = dashboardpage_obj.get_lib_label_name()
-        Assert.true("initial" in label_name.text)
+        Assert.true("amotesting" in label_name.text)
         
         #Click on the edit button of the library.Then create a copy of that library and assert that the label is 'copy'
         dashboardpage_obj.navigate_to_lib_editor()

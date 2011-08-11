@@ -53,6 +53,8 @@ class LoginPage(Page):
 
 
     def login(self, username, password):
+        self.selenium.implicitly_wait(10)     
+   
         self.selenium.find_element(*self._username_locator).send_keys(username)
         self.selenium.find_element(*self._password_locator).send_keys(password)
         self.selenium.find_element(*self._submit_locator).click()
