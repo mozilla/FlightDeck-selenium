@@ -49,14 +49,8 @@ class HomePage(Page):
     _create_addon_link = "//header[@id='app-header']/div[2]/nav/ul/li[1]/div/ul/li[1]/a"
     _create_lib_link = (By.XPATH, "//span[text()='Create Library']")
 
-    #def __init__(self, testsetup):
-    #    ''' Creates a new instance of the class and gets the page ready for testing '''
-    #    self.testsetup = testsetup
-    #    self.sel = testsetup.selenium
-    #    self._home_page_url = testsetup.base_url
-
     def go_to_home_page(self):
-        self.selenium.get(self._home_page_url)
+        self.selenium.get(self.base_url)
 
     def click_signin(self):
         self.selenium.find_element_by_id(self._signin_link).click()

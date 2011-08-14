@@ -45,8 +45,7 @@ class Page(object):
         self.testsetup = testsetup
         self.selenium = testsetup.selenium
         self.credentials = testsetup.credentials
-        self._home_page_url = testsetup.base_url
-
+        self.base_url = testsetup.base_url
 
     @property
     def is_the_current_page(self):

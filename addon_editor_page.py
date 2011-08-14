@@ -42,10 +42,6 @@ class AddonEditorPage(Page):
     _signin_link = 'signin'
     _copy_btn = 'package-copy'
 
-    #def __init__(self, testsetup):
-    #    ''' Creates a new instance of the class and gets the page ready for testing '''
-    #    self.sel = testsetup.selenium 
-
     def get_addon_name(self):
         return self.selenium.find_element_by_id(self._addon_name).text
 

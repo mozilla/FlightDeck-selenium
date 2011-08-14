@@ -67,6 +67,7 @@ def pytest_runtest_setup(item):
             TestSetup.selenium = webdriver.Remote(
                 command_executor = "http://%s:%s/wd/hub" % (item.host, item.port),
                 desired_capabilities = capabilities)
+            TestSetup.selenium.implicitly_wait(10)     
         except AttributeError:
             valid_browsers = [attr for attr in dir(webdriver.DesiredCapabilities) if not attr.startswith('__')]
             raise AttributeError("Invalid browser name: '%s'. Valid options are: %s" % (item.browser_name, ", ".join(valid_browsers)))

@@ -83,7 +83,7 @@ class TestAddonLibDelete():
         lib_name = libpage_obj.get_lib_name()
         print lib_name
         homepage_obj.click_myaccount()
-        dashboardpage_obj.go_to_public_libs_page()
+
         top_lib_name = dashboardpage_obj.get_top_lib_name()
         print top_lib_name
 
