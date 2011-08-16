@@ -48,15 +48,15 @@ class DashboardPage(Page):
     _private_libs_link = (By.LINK_TEXT, "Private Libraries")
     _public_libs_link = (By.LINK_TEXT, "Public Libraries")  
    
-    _addon_test_btn =    "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[1]/a" 
-    _addon_delete_btn =  "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[3]/a" 
-    _addon_edit_btn =    "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[2]/a" 
-    _addon_public_btn =  "//section[@id='app-content']/ul[1]/li[1]/ul[2]/li[1]/a"
+    _addon_test_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[1]/a" 
+    _addon_delete_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[3]/a" 
+    _addon_edit_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[2]/a" 
+    _addon_public_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[2]/li[1]/a"
     _addon_private_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[2]/li[2]/a"
     
     _lib_edit_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[1]/li[1]/a"
-    _lib_delete_btn =       "//section[@id='app-content']/ul[2]/li[1]/ul[1]/li[2]/a"
-    _lib_public_btn =       "//section[@id='app-content']/ul[2]/li[1]/ul[2]/li[1]/a"
+    _lib_delete_btn ="//section[@id='app-content']/ul[2]/li[1]/ul[1]/li[2]/a"
+    _lib_public_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[2]/li[1]/a"
     _lib_private_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[2]/li[2]/a"
     
     _confirm_delete_btn = 'delete_package'

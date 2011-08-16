@@ -46,7 +46,6 @@ class LoginPage(Page):
     _submit_locator = (By.NAME, 'save')
 
     def login(self, username, password):
- 
         self.selenium.find_element(*self._username_locator).send_keys(username)
         self.selenium.find_element(*self._password_locator).send_keys(password)
         self.selenium.find_element(*self._submit_locator).click()
