@@ -33,30 +33,30 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import home_page, login_page, dashboard_page, lib_editor_page
+import fd_home_page, fd_login_page, fd_dashboard_page, fd_lib_editor_page
 from unittestzero import Assert
 
 
 class TestLibLabel():
 
-
     def testShouldCheckLibraryLabel(self, testsetup):
         #This test is to check the labels of a library on the dashboard
         #Create page objects
-        homepage_obj = home_page.HomePage(testsetup)
-        loginpage_obj = login_page.LoginPage(testsetup)
-        dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
-        libpage_obj = lib_editor_page.LibraryEditorPage(testsetup)
+        homepage_obj = fd_home_page.HomePage(testsetup)
+        loginpage_obj = fd_login_page.LoginPage(testsetup)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
+        libpage_obj = fd_lib_editor_page.LibraryEditorPage(testsetup)
+        
         credentials = loginpage_obj.credentials_of_user('default')
 
          
-        #Create a library. Then go to dashoard and assert that the label is 'initial'. 
+        #Create a library. Then go to dashoard and assert that the label is 'initial'.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])
         text_lib = libpage_obj.get_lib_name()
         
-        homepage_obj.click_myaccount()
+        libpage_obj.header.click_dashboard()
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         label_name = dashboardpage_obj.get_top_lib_name()
         Assert.true(text_lib in label_name)
@@ -70,7 +70,7 @@ class TestLibLabel():
             Assert.not_equal(text_lib, text_copy_lib)
         except:
             print 'A copy of the addon could not be created'
-        homepage_obj.click_myaccount()
+        libpage_obj.header.click_dashboard()
         label_name = dashboardpage_obj.get_top_lib_name()
 
         Assert.true("copy" in label_name)

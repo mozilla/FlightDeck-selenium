@@ -34,19 +34,17 @@
 #
 # ***** END LICENSE BLOCK *****
 from page import Page
+from fd_base_page import FlightDeckBasePage
+from selenium.webdriver.common.by import By
 
 
-class AddonEditorPage(Page):
+class LoginPage(FlightDeckBasePage):
 
-    _addon_name = 'package-info-name'
-    _signin_link = 'signin'
-    _copy_btn = 'package-copy'
+    _username_locator = (By.ID, 'id_username')
+    _password_locator = (By.ID, 'id_password')
+    _submit_locator = (By.NAME, 'save')
 
-    def get_addon_name(self):
-        return self.selenium.find_element_by_id(self._addon_name).text
-
-    def click_signin(self):
-        self.selenium.find_element_by_id(self._signin_link).click()
-
-    def click_copy_btn(self):
-        self.selenium.find_element_by_id(self._copy_btn).click()
+    def login(self, username, password):
+        self.selenium.find_element(*self._username_locator).send_keys(username)
+        self.selenium.find_element(*self._password_locator).send_keys(password)
+        self.selenium.find_element(*self._submit_locator).click()

@@ -33,22 +33,22 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import home_page, login_page, dashboard_page, lib_editor_page, addon_editor_page, dashboard_private_page
+import fd_home_page, fd_login_page, fd_dashboard_page, fd_lib_editor_page, fd_addon_editor_page
 from unittestzero import Assert
 
 
 class TestAddonActivateDeactivate():
     
     def testShouldCheckAddonDeactivateAndActivate(self, testsetup):
-        homepage_obj = home_page.HomePage(testsetup)
-        loginpage_obj = login_page.LoginPage(testsetup)
-        dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
-        privatepage_obj = dashboard_private_page.DashboardPrivatePage(testsetup)
-        credentials = loginpage_obj.credentials_of_user('default')
+        homepage_obj = fd_home_page.HomePage(testsetup)
+        loginpage_obj = fd_login_page.LoginPage(testsetup)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
 
-        
+        credentials = homepage_obj.credentials_of_user('default')
+
         homepage_obj.go_to_home_page()
-        homepage_obj.click_signin()
+        homepage_obj.header.click_signin()
+        
         loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         #Get the name of the addon present at the top of the list on dashboard.
@@ -63,27 +63,27 @@ class TestAddonActivateDeactivate():
 
         #Go to the private addons page and check that the addon that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the addon is present there.
-        priv_addon_name = privatepage_obj.get_top_addon_name()
+        priv_addon_name = dashboardpage_obj.get_top_addon_name()
         Assert.equal(addon_name, priv_addon_name)
         
-        privatepage_obj.click_addon_mkpublic_btn()
-        new_priv_top_addon_name = privatepage_obj.get_top_addon_name()
+        dashboardpage_obj.click_addon_mkpublic_btn()
+        new_priv_top_addon_name = dashboardpage_obj.get_top_addon_name()
         Assert.not_equal(priv_addon_name, new_priv_top_addon_name)
         
-        privatepage_obj.go_to_dashboard()
+        dashboardpage_obj.header.click_dashboard()
         top_addon = dashboardpage_obj.get_top_addon_name()
         Assert.equal(priv_addon_name, top_addon)
         
 
     def testShouldCheckLibDeactivateAndActivate(self, testsetup):
-        homepage_obj = home_page.HomePage(testsetup)
-        loginpage_obj = login_page.LoginPage(testsetup)
-        dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
-        privatepage_obj = dashboard_private_page.DashboardPrivatePage(testsetup)
+        homepage_obj = fd_home_page.HomePage(testsetup)
+        loginpage_obj = fd_login_page.LoginPage(testsetup)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
+
         credentials = loginpage_obj.credentials_of_user('default')
 
         homepage_obj.go_to_home_page()
-        homepage_obj.click_signin()
+        homepage_obj.header.click_signin()
         loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         
@@ -99,15 +99,15 @@ class TestAddonActivateDeactivate():
 
         #Go to the private libraries page and check that the library that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the library is present there.
-        priv_lib_name = privatepage_obj.get_top_lib_name()
+        priv_lib_name = dashboardpage_obj.get_top_lib_name()
 
         #print text_priv_addon
         Assert.equal(lib_name, priv_lib_name)
         
-        privatepage_obj.click_lib_mkpublic_btn()
-        new_priv_top_lib_name = privatepage_obj.get_top_lib_name()
+        dashboardpage_obj.click_lib_mkpublic_btn()
+        new_priv_top_lib_name = dashboardpage_obj.get_top_lib_name()
         Assert.not_equal(priv_lib_name, new_priv_top_lib_name)
         
-        privatepage_obj.go_to_dashboard()
+        dashboardpage_obj.header.click_dashboard()
         top_lib = dashboardpage_obj.get_top_lib_name()
         Assert.equal(priv_lib_name, top_lib)

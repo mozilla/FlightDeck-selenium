@@ -33,10 +33,11 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from fd_base_page import FlightDeckBasePage
 from page import Page
 
 
-class LibraryEditorPage(Page):
+class LibraryEditorPage(FlightDeckBasePage):
 
     _library_name = 'package-info-name'
     _copy_btn = 'package-copy'

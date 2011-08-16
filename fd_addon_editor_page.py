@@ -33,29 +33,17 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from selenium.webdriver.common.by import By
+from fd_base_page import FlightDeckBasePage
 from page import Page
 
 
-class DashboardPrivatePage(Page):
+class AddonEditorPage(FlightDeckBasePage):
 
-    _top_private_addon_name = "//section[@id='app-content']/ul/li[1]/h3"
-    _top_private_lib_name = "//section[@id='app-content']/ul/li[1]/h3"
-    _addon_mkpublic_btn = "//section[@id='app-content']/ul/li[1]/ul[2]/li[1]/a"
-    _lib_mkpublic_btn = "//section[@id='app-content']/ul/li[1]/ul[2]/li[1]/a"
-    _my_account_link = (By.XPATH, "//a[@title='My Account']")
+    _addon_name = 'package-info-name'
+    _copy_btn = 'package-copy'
 
-    def get_top_addon_name(self):
-        return self.selenium.find_element_by_xpath(self._top_private_addon_name).text
-    
-    def get_top_lib_name(self):
-        return self.selenium.find_element_by_xpath(self._top_private_lib_name).text
-        
-    def click_addon_mkpublic_btn(self):
-        self.selenium.find_element_by_xpath(self._addon_mkpublic_btn).click()
-    
-    def click_lib_mkpublic_btn(self):
-        self.selenium.find_element_by_xpath(self._lib_mkpublic_btn).click()
-    
-    def go_to_dashboard(self):
-        self.selenium.find_element(*self._my_account_link).click()
+    def get_addon_name(self):
+        return self.selenium.find_element_by_id(self._addon_name).text
+
+    def click_copy_btn(self):
+        self.selenium.find_element_by_id(self._copy_btn).click()

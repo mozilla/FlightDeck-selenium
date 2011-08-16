@@ -33,32 +33,33 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from fd_base_page import FlightDeckBasePage
 from page import Page
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
 
-class DashboardPage(Page):
+class DashboardPage(FlightDeckBasePage):
 
     _home_page_click = 'flightdeck-logo'
     _top_public_addon_name = "//section[@id='app-content']/ul[1]/li[1]/h3"
     _top_public_lib_name = "//section[@id='app-content']/ul[2]/li[1]/h3"
 
+    _public_addons_link = (By.LINK_TEXT, "Public Add-ons")
+    _public_libs_link = (By.LINK_TEXT, "Public Libraries")
     _private_addons_link = (By.LINK_TEXT, "Private Add-ons")
     _private_libs_link = (By.LINK_TEXT, "Private Libraries")
-    _public_libs_link = (By.LINK_TEXT, "Public Libraries")  
    
-    _addon_test_btn =    "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[1]/a" 
-    _addon_delete_btn =  "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[3]/a" 
-    _addon_edit_btn =    "//section[@id='app-content']/ul[1]/li[1]/ul[1]/li[2]/a" 
-    _addon_public_btn =  "//section[@id='app-content']/ul[1]/li[1]/ul[2]/li[1]/a"
-    _addon_private_btn = "//section[@id='app-content']/ul[1]/li[1]/ul[2]/li[2]/a"
+    _addon = "//ul[preceding-sibling::h2[text()='Your Latest Add-ons']][1]"
+    _lib = "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]"
     
-    _lib_edit_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[1]/li[1]/a"
-    _lib_delete_btn =       "//section[@id='app-content']/ul[2]/li[1]/ul[1]/li[2]/a"
-    _lib_public_btn =       "//section[@id='app-content']/ul[2]/li[1]/ul[2]/li[1]/a"
-    _lib_private_btn = "//section[@id='app-content']/ul[2]/li[1]/ul[2]/li[2]/a"
-    
+    _name = "/li[1]/h3"
+    _test_btn = "/li[1]/ul/li[@class='UI_Try_in_Browser XPI_test']/a"
+    _edit_btn = "/li[1]/ul/li[@class='UI_Edit_Version ']/a"
+    _delete_btn = "/li[1]/ul/li[@class='UI_Delete']/a"
+    _public_btn = "/li[1]/ul/li/a[@title='Let the world use it']"
+    _private_btn = "/li[1]/ul/li/a[@title='My preciousss!']"
+      
     _confirm_delete_btn = 'delete_package'
     
     _addons_list = "//section[@id='app-content']/ul[1]/li"
@@ -66,14 +67,11 @@ class DashboardPage(Page):
     _addons_counter = "//aside[@id='app-sidebar']/ul/li[1]/strong"
     _libs_counter = "//aside[@id='app-sidebar']/ul/li[2]/strong"
 
-    def get_page_title(self):
-        return self.selenium.title
-    
     def get_top_addon_name(self):
-        return self.selenium.find_element_by_xpath(self._top_public_addon_name).text
+        return self.selenium.find_element_by_xpath(self._addon + self._name).text
     
     def get_top_lib_name(self):
-        return self.selenium.find_element_by_xpath(self._top_public_lib_name).text   
+        return self.selenium.find_element_by_xpath(self._lib + self._name).text   
 
     def get_addons_count(self):
         return self.selenium.find_element_by_xpath(self._addons_counter).text
@@ -92,57 +90,63 @@ class DashboardPage(Page):
         self.selenium.find_element(*self._public_libs_link).click()
     
     def navigate_to_addon_editor(self):
-        self.selenium.find_element_by_xpath(self._addon_edit_btn).click()
+        self.selenium.find_element_by_xpath(self._addon + self._edit_btn).click()
     
     def navigate_to_lib_editor(self):
-        self.selenium.find_element_by_xpath(self._lib_edit_btn).click()
+        self.selenium.find_element_by_xpath(self._lib + self._edit_btn).click()
         
     def check_addon_test_btn_present(self):
         try:
-            self.selenium.find_element_by_xpath(self._addon_test_btn)
+            self.selenium.find_element_by_xpath(self._addon + self._test_btn)
             return True
         except NoSuchElementException:
             return False
 
     def check_addon_edit_btn_present(self):
         try:
-            self.selenium.find_element_by_xpath(self._addon_edit_btn)
+            self.selenium.find_element_by_xpath(self._addon + self._edit_btn)
             return True
         except NoSuchElementException:
             return False
     
     def check_addon_delete_btn_present(self):
         try:
-            self.selenium.find_element_by_xpath(self._addon_delete_btn)
+            self.selenium.find_element_by_xpath(self._addon + self._delete_btn)
             return True
         except NoSuchElementException:
             return False
     
     def check_addon_public_btn_present(self):
         try:
-            self.selenium.find_element_by_xpath(self._addon_public_btn)
+            self.selenium.find_element_by_xpath(self._addon + self._public_btn)
             return True
         except NoSuchElementException:
             return False
     
     def check_addon_private_btn_present(self):
         try:
-            self.selenium.find_element_by_xpath(self._addon_private_btn)
+            self.selenium.find_element_by_xpath(self._addon + self._private_btn)
             return True
         except NoSuchElementException:
             return False
     
     def click_addon_mkprivate_btn(self):
-        self.selenium.find_element_by_xpath(self._addon_private_btn).click()
+        self.selenium.find_element_by_xpath(self._addon + self._private_btn).click()
+    
+    def click_addon_mkpublic_btn(self):
+        self.selenium.find_element_by_xpath(self._addon + self._public_btn).click()
     
     def click_lib_mkprivate_btn(self):
-        self.selenium.find_element_by_xpath(self._lib_private_btn).click()
+        self.selenium.find_element_by_xpath(self._lib + self._private_btn).click()
+        
+    def click_lib_mkpublic_btn(self):
+        self.selenium.find_element_by_xpath(self._lib + self._public_btn).click()
 
     def click_addon_delete(self):
-        self.selenium.find_element_by_xpath(self._addon_delete_btn).click()
+        self.selenium.find_element_by_xpath(self._addon + self._delete_btn).click()
 
     def click_lib_delete(self):
-        self.selenium.find_element_by_xpath(self._lib_delete_btn).click()
+        self.selenium.find_element_by_xpath(self._lib + self._delete_btn).click()
         
     def confirm_delete(self):
         self.selenium.find_element_by_id(self._confirm_delete_btn).click()

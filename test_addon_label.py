@@ -33,7 +33,7 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import home_page, login_page, dashboard_page, addon_editor_page
+import fd_home_page, fd_login_page, fd_dashboard_page, fd_addon_editor_page
 from unittestzero import Assert
 
 
@@ -42,10 +42,11 @@ class TestAddonLabel():
     def testShouldCheckAddonLabel(self, testsetup):
         #This test is to check the labels of an add-on on the dashboard
         #Create page objects
-        homepage_obj = home_page.HomePage(testsetup)
-        loginpage_obj = login_page.LoginPage(testsetup)
-        dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
-        addonpage_obj = addon_editor_page.AddonEditorPage(testsetup)
+        homepage_obj = fd_home_page.HomePage(testsetup)
+        loginpage_obj = fd_login_page.LoginPage(testsetup)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
+        addonpage_obj = fd_addon_editor_page.AddonEditorPage(testsetup)
+        
         credentials = loginpage_obj.credentials_of_user('default')
 
         
@@ -55,7 +56,7 @@ class TestAddonLabel():
         loginpage_obj.login(credentials['email'], credentials['password'])
         addon_name = addonpage_obj.get_addon_name()
 
-        homepage_obj.click_myaccount()
+        homepage_obj.header.click_dashboard()
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         label_name = dashboardpage_obj.get_top_addon_name()
         Assert.true(addon_name in label_name)
@@ -69,6 +70,6 @@ class TestAddonLabel():
             Assert.not_equal(text_addon, text_copy_addon)
         except:
             print 'A copy of the addon could not be created'
-        homepage_obj.click_myaccount()
+        homepage_obj.header.click_dashboard()
         label_name = dashboardpage_obj.get_top_addon_name()
         Assert.true("(copy 1)" in label_name)

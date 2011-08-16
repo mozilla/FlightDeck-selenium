@@ -18,7 +18,8 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): David Burns 
+# Contributor(s): David Burns
+#                 Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -33,20 +34,48 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-
-
 from page import Page
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
-
-class LoginPage(Page):
-
-    _username_locator = (By.ID, 'id_username')
-    _password_locator = (By.ID, 'id_password')
-    _submit_locator = (By.NAME, 'save')
-
-    def login(self, username, password):
- 
-        self.selenium.find_element(*self._username_locator).send_keys(username)
-        self.selenium.find_element(*self._password_locator).send_keys(password)
-        self.selenium.find_element(*self._submit_locator).click()
+class FlightDeckBasePage(Page):
+       
+    
+    def go_to_home_page(self):
+        self.selenium.get(self.base_url)
+       
+    @property
+    def header(self):
+        return FlightDeckBasePage.HeaderRegion(self.testsetup)
+       
+    class HeaderRegion(Page):
+       
+        _header = "header#app-header"
+       
+        #_create_addon_link_locator =
+        #_create_lib_link_locator =
+        _search_link_locator = _header + " nav>ul>li:nth-child(2)>span>a"
+        _documentation_link_locator = _header + " nav>ul>li:nth-child(3)>span>a"
+        _signin_link_locator = _header + " nav>ul>li:nth-child(4)>span>a"
+        _myaccount_link_locator = _header + " nav>ul>li:nth-child(4)>span>a[title='My Account']"
+        _signout_link_locator = _header + " nav>ul>li:nth-child(4)>span>a[title='Sign Out']"
+       
+        #def click_create_addon
+        #def click_create_lib
+       
+        def click_search(self):
+            self.selenium.find_element_by_css_selector(self._search_link_locator).click()
+           
+        def click_documentation(self):
+            self.selenium.find_element_by_css_selector(self._documentation_link_locator).click()
+               
+        def click_signin(self):
+            self.selenium.find_element_by_css_selector(self._signin_link_locator).click()
+           
+        def click_dashboard(self):
+            self.selenium.find_element_by_css_selector(self._myaccount_link_locator).click()
+       
+        def click_signout(self):
+            self.selenium.find_element_by_css_selector(self._signout_link_locator).click()
+       
+            

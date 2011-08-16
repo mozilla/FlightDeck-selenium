@@ -41,11 +41,15 @@ import yaml
 
 class Page(object):
     
+    
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.selenium = testsetup.selenium
         self.credentials = testsetup.credentials
         self.base_url = testsetup.base_url
+    
+    def get_page_title(self):
+        return self.selenium.title
 
     @property
     def is_the_current_page(self):
