@@ -44,12 +44,12 @@ class TestAddonActivateDeactivate():
         loginpage_obj = login_page.LoginPage(testsetup)
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
         privatepage_obj = dashboard_private_page.DashboardPrivatePage(testsetup)
-        username = "dburns@mozilla.com"
-        password = ""
-    
+        credentials = loginpage_obj.credentials_of_user('default')
+
+        
         homepage_obj.go_to_home_page()
         homepage_obj.click_signin()
-        loginpage_obj.login(username, password)
+        loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         #Get the name of the addon present at the top of the list on dashboard.
         #This will be used to compare whether the addon is removed from the top of list after making it private
@@ -64,10 +64,12 @@ class TestAddonActivateDeactivate():
         #Go to the private addons page and check that the addon that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the addon is present there.
         priv_addon_name = privatepage_obj.get_top_addon_name()
-        Assert.true('selenium-test' in priv_addon_name)
+        Assert.equal(addon_name, priv_addon_name)
+        
         privatepage_obj.click_addon_mkpublic_btn()
         new_priv_top_addon_name = privatepage_obj.get_top_addon_name()
         Assert.not_equal(priv_addon_name, new_priv_top_addon_name)
+        
         privatepage_obj.go_to_dashboard()
         top_addon = dashboardpage_obj.get_top_addon_name()
         Assert.equal(priv_addon_name, top_addon)
@@ -78,12 +80,11 @@ class TestAddonActivateDeactivate():
         loginpage_obj = login_page.LoginPage(testsetup)
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
         privatepage_obj = dashboard_private_page.DashboardPrivatePage(testsetup)
-        username = "dburns@mozilla.com"
-        password = ""
-        
+        credentials = loginpage_obj.credentials_of_user('default')
+
         homepage_obj.go_to_home_page()
         homepage_obj.click_signin()
-        loginpage_obj.login(username, password)
+        loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         
         #Get the name of the library present at the top of the library list on dashboard.
@@ -99,12 +100,14 @@ class TestAddonActivateDeactivate():
         #Go to the private libraries page and check that the library that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the library is present there.
         priv_lib_name = privatepage_obj.get_top_lib_name()
-        #text_priv_addon = priv_addon_name.text
+
         #print text_priv_addon
         Assert.equal(lib_name, priv_lib_name)
+        
         privatepage_obj.click_lib_mkpublic_btn()
         new_priv_top_lib_name = privatepage_obj.get_top_lib_name()
         Assert.not_equal(priv_lib_name, new_priv_top_lib_name)
+        
         privatepage_obj.go_to_dashboard()
         top_lib = dashboardpage_obj.get_top_lib_name()
         Assert.equal(priv_lib_name, top_lib)

@@ -44,14 +44,8 @@ class LoginPage(Page):
     _username_locator = (By.ID, 'id_username')
     _password_locator = (By.ID, 'id_password')
     _submit_locator = (By.NAME, 'save')
-    
-    def __init__(self, testsetup):
-        ''' Creates a new instance of the class and gets the page ready for testing '''
-        self.testsetup = testsetup
-        self.sel = testsetup.selenium
-        self._home_page_url = testsetup.base_url
 
     def login(self, username, password):
-        self.sel.find_element(*self._username_locator).send_keys(username)
-        self.sel.find_element(*self._password_locator).send_keys(password)
-        self.sel.find_element(*self._submit_locator).click()
+        self.selenium.find_element(*self._username_locator).send_keys(username)
+        self.selenium.find_element(*self._password_locator).send_keys(password)
+        self.selenium.find_element(*self._submit_locator).click()

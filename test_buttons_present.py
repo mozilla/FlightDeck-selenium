@@ -45,12 +45,12 @@ class TestButtonsPresent():
         homepage_obj = home_page.HomePage(testsetup)
         loginpage_obj = login_page.LoginPage(testsetup)
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
-        username = "dburns@mozilla.com"
-        password = "seleniumtest1"
+        credentials = loginpage_obj.credentials_of_user('default')
+
     
         homepage_obj.go_to_home_page()
         homepage_obj.click_signin()
-        loginpage_obj.login(username, password)
+        loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         
         #On the dashboard, check that the addon has "Test", "Edit", Delete", "Public" and "Private" button present
@@ -64,12 +64,12 @@ class TestButtonsPresent():
         homepage_obj = home_page.HomePage(testsetup)
         loginpage_obj = login_page.LoginPage(testsetup)
         dashboardpage_obj = dashboard_page.DashboardPage(testsetup)
-        username = ""
-        password = ""
+        credentials = loginpage_obj.credentials_of_user('default')
+
         
         homepage_obj.go_to_home_page()
         homepage_obj.click_signin()
-        loginpage_obj.login(username, password)
+        loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
 
         Assert.true(dashboardpage_obj.check_addon_test_btn_present())

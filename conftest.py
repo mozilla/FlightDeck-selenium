@@ -47,6 +47,7 @@ def pytest_runtest_setup(item):
     item.platform = item.config.option.platform
     item.port = item.config.option.port
     TestSetup.base_url = item.config.option.base_url
+    TestSetup.credentials = item.config.option.credentialsfile
     TestSetup.skip_selenium = True
 
     if item.browser_name is None:
@@ -66,6 +67,7 @@ def pytest_runtest_setup(item):
             TestSetup.selenium = webdriver.Remote(
                 command_executor = "http://%s:%s/wd/hub" % (item.host, item.port),
                 desired_capabilities = capabilities)
+            TestSetup.selenium.implicitly_wait(10)     
         except AttributeError:
             valid_browsers = [attr for attr in dir(webdriver.DesiredCapabilities) if not attr.startswith('__')]
             raise AttributeError("Invalid browser name: '%s'. Valid options are: %s" % (item.browser_name, ", ".join(valid_browsers)))
@@ -105,7 +107,10 @@ def pytest_addoption(parser):
                      dest="base_url",
                      default="https://builder-addons.allizom.org",
                      help="base URL for the application under test")
-
+    parser.addoption("--credentialsfile",
+                     action="store",
+                     default="credentials.yaml",
+                     help="provide the credentials filename")
 
 class TestSetup:
     def __init__(self, request):
