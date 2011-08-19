@@ -49,27 +49,27 @@ class TestAddonLabel():
         
         credentials = loginpage_obj.credentials_of_user('default')
 
-        
         #Create an addon. Then go to dashoard and assert that the label is 'initial'. 
+      
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])
-        addon_name = addonpage_obj.get_addon_name()
+        addon_name = addonpage_obj.addon_name
 
         homepage_obj.header.click_dashboard()
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
-        label_name = dashboardpage_obj.get_top_addon_name()
-        Assert.true(addon_name in label_name)
+        label_name = dashboardpage_obj.addon(1).name
+        Assert.contains(addon_name, label_name)
         
         #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
-        dashboardpage_obj.navigate_to_addon_editor()
+        dashboardpage_obj.addon(1).click_edit()
         addonpage_obj.click_copy_btn()
-        text_copy_addon = addonpage_obj.get_addon_name()
+        text_copy_addon = addonpage_obj.addon_name
 
         try:
             Assert.not_equal(text_addon, text_copy_addon)
         except:
             print 'A copy of the addon could not be created'
         homepage_obj.header.click_dashboard()
-        label_name = dashboardpage_obj.get_top_addon_name()
-        Assert.true("(copy 1)" in label_name)
+        label_name = dashboardpage_obj.addon(1).name
+        Assert.contains("(copy 1)", label_name)

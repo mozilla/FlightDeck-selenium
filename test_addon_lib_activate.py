@@ -53,25 +53,25 @@ class TestAddonActivateDeactivate():
         Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
         #Get the name of the addon present at the top of the list on dashboard.
         #This will be used to compare whether the addon is removed from the top of list after making it private
-        addon_name = dashboardpage_obj.get_top_addon_name()
+        addon_name = dashboardpage_obj.addon(1).name
         
         #Click on the private button to make it private and then check that the addon is not in the list anymore
-        dashboardpage_obj.click_addon_mkprivate_btn()
-        new_top_addon_name = dashboardpage_obj.get_top_addon_name()
+        dashboardpage_obj.addon(1).click_private()
+        new_top_addon_name = dashboardpage_obj.addon(1).name
         Assert.not_equal(addon_name, new_top_addon_name)
         dashboardpage_obj.go_to_private_addons_page()
 
         #Go to the private addons page and check that the addon that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the addon is present there.
-        priv_addon_name = dashboardpage_obj.get_top_addon_name()
+        priv_addon_name = dashboardpage_obj.addon(1).name
         Assert.equal(addon_name, priv_addon_name)
         
-        dashboardpage_obj.click_addon_mkpublic_btn()
-        new_priv_top_addon_name = dashboardpage_obj.get_top_addon_name()
+        dashboardpage_obj.addon(1).click_public()
+        new_priv_top_addon_name = dashboardpage_obj.addon(1).name
         Assert.not_equal(priv_addon_name, new_priv_top_addon_name)
         
         dashboardpage_obj.header.click_dashboard()
-        top_addon = dashboardpage_obj.get_top_addon_name()
+        top_addon = dashboardpage_obj.addon(1).name
         Assert.equal(priv_addon_name, top_addon)
         
 
@@ -89,25 +89,25 @@ class TestAddonActivateDeactivate():
         
         #Get the name of the library present at the top of the library list on dashboard.
         #This will be used to compare whether the library is removed from the top of list after making it private
-        lib_name = dashboardpage_obj.get_top_lib_name()
+        lib_name = dashboardpage_obj.library(1).name
         
         #Click on the private button to make it private and then check that the library is not in the list anymore
-        dashboardpage_obj.click_lib_mkprivate_btn()
-        new_top_lib_name = dashboardpage_obj.get_top_lib_name()
+        dashboardpage_obj.library(1).click_private()
+        new_top_lib_name = dashboardpage_obj.library(1).name
         Assert.not_equal(lib_name, new_top_lib_name)
         dashboardpage_obj.go_to_private_libs_page()
 
         #Go to the private libraries page and check that the library that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the library is present there.
-        priv_lib_name = dashboardpage_obj.get_top_lib_name()
+        priv_lib_name = dashboardpage_obj.library(1).name
 
         #print text_priv_addon
         Assert.equal(lib_name, priv_lib_name)
         
-        dashboardpage_obj.click_lib_mkpublic_btn()
-        new_priv_top_lib_name = dashboardpage_obj.get_top_lib_name()
+        dashboardpage_obj.library(1).click_public()
+        new_priv_top_lib_name = dashboardpage_obj.library(1).name
         Assert.not_equal(priv_lib_name, new_priv_top_lib_name)
         
         dashboardpage_obj.header.click_dashboard()
-        top_lib = dashboardpage_obj.get_top_lib_name()
+        top_lib = dashboardpage_obj.library(1).name
         Assert.equal(priv_lib_name, top_lib)

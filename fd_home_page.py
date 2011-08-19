@@ -41,11 +41,11 @@ from selenium.webdriver.common.by import By
 
 class HomePage(FlightDeckBasePage):
 
-    _create_addon_btn = "//div[@id='features-wrapper']/div/div[1]/div[2]/div/a/span"
-    _create_lib_btn = (By.XPATH, "//a[@title='Create Library']")
+    _create_addon_btn = (By.CSS_SELECTOR, "div.right_column div.fd_button > a")
+    _create_lib_btn = (By.CSS_SELECTOR, "div.UI_Bottom_Info a[title='Create Library']")
 
     def click_create_addon_btn(self):
-        self.selenium.find_element_by_xpath(self._create_addon_btn).click()
+        self.selenium.find_element(*self._create_addon_btn).click()
         
     def click_create_lib_btn(self):
         self.selenium.find_element(*self._create_lib_btn).click()

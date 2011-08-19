@@ -35,15 +35,17 @@
 # ***** END LICENSE BLOCK *****
 from fd_base_page import FlightDeckBasePage
 from page import Page
+from selenium.webdriver.common.by import By
 
 
 class LibraryEditorPage(FlightDeckBasePage):
 
-    _library_name = 'package-info-name'
-    _copy_btn = 'package-copy'
+    _library_name = (By.ID, 'package-info-name')
+    _copy_btn = (By.ID, 'package-copy')
     
-    def get_lib_name(self):
-        return self.selenium.find_element_by_id(self._library_name).text
+    @property
+    def lib_name(self):
+        return self.selenium.find_element(*self._library_name).text
 
     def click_copy_btn(self):
-        self.selenium.find_element_by_id(self._copy_btn).click()
+        self.selenium.find_element(*self._copy_btn).click()

@@ -52,20 +52,20 @@ class TestAddonLibDelete():
         homepage_obj.click_create_addon_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])
         #Get the name of the addon on the editor page.
-        addon_name = addonpage_obj.get_addon_name()
+        addon_name = addonpage_obj.addon_name
 
         #Go the the dashboard and delete the addon that you just created. Then check that the addon at the top of the list is not the same as the one you just deleted.
         homepage_obj.header.click_dashboard()
-        top_addon_name = dashboardpage_obj.get_top_addon_name()
-        dashboardpage_obj.click_addon_delete()
+        top_addon_name = dashboardpage_obj.addon(1).name
+        dashboardpage_obj.addon(1).click_delete()
         dashboardpage_obj.confirm_delete()
-        top_addon_name_after_delete = dashboardpage_obj.get_top_addon_name()
+        top_addon_name_after_delete = dashboardpage_obj.addon(1).name
         Assert.not_equal(top_addon_name, top_addon_name_after_delete)
         
         #Go to homepage and create a new addon and check that its name is the same as the one that was just deleted.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
-        new_addon_name = addonpage_obj.get_addon_name()
+        new_addon_name = addonpage_obj.addon_name
 
         Assert.equal(new_addon_name, addon_name)
 
@@ -82,17 +82,17 @@ class TestAddonLibDelete():
 
         homepage_obj.click_create_lib_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])
-        lib_name = libpage_obj.get_lib_name()
+        lib_name = libpage_obj.lib_name
 
         homepage_obj.header.click_dashboard()
-        top_lib_name = dashboardpage_obj.get_top_lib_name()
+        top_lib_name = dashboardpage_obj.library(1).name
 
-        dashboardpage_obj.click_lib_delete()
+        dashboardpage_obj.library(1).click_delete()
         dashboardpage_obj.confirm_delete()
-        top_lib_name_after_delete = dashboardpage_obj.get_top_lib_name()
+        top_lib_name_after_delete = dashboardpage_obj.library(1).name
         Assert.not_equal(top_lib_name, top_lib_name_after_delete)
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
         
-        new_lib_name = libpage_obj.get_lib_name()
+        new_lib_name = libpage_obj.lib_name
         Assert.equal(new_lib_name, lib_name)

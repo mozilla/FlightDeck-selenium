@@ -54,28 +54,28 @@ class FlightDeckBasePage(Page):
        
         #_create_addon_link_locator =
         #_create_lib_link_locator =
-        _search_link_locator = _header + " nav>ul>li:nth-child(2)>span>a"
-        _documentation_link_locator = _header + " nav>ul>li:nth-child(3)>span>a"
-        _signin_link_locator = _header + " nav>ul>li:nth-child(4)>span>a"
-        _myaccount_link_locator = _header + " nav>ul>li:nth-child(4)>span>a[title='My Account']"
-        _signout_link_locator = _header + " nav>ul>li:nth-child(4)>span>a[title='Sign Out']"
+        _search_link_locator = (By.CSS_SELECTOR, _header + " nav>ul>li:nth-child(2)>span>a")
+        _documentation_link_locator = (By.CSS_SELECTOR, _header + " nav>ul>li:nth-child(3)>span>a")
+        _signin_link_locator = (By.CSS_SELECTOR, _header + " nav>ul>li:nth-child(4)>span>a")
+        _myaccount_link_locator = (By.CSS_SELECTOR, _header + " nav>ul>li:nth-child(4)>span>a[title='My Account']")
+        _signout_link_locator = (By.CSS_SELECTOR, _header + " nav>ul>li:nth-child(4)>span>a[title='Sign Out']")
        
         #def click_create_addon
         #def click_create_lib
        
         def click_search(self):
-            self.selenium.find_element_by_css_selector(self._search_link_locator).click()
+            self.selenium.find_element(*self._search_link_locator).click()
            
         def click_documentation(self):
-            self.selenium.find_element_by_css_selector(self._documentation_link_locator).click()
+            self.selenium.find_element(*self._documentation_link_locator).click()
                
         def click_signin(self):
-            self.selenium.find_element_by_css_selector(self._signin_link_locator).click()
+            self.selenium.find_element(*self._signin_link_locator).click()
            
         def click_dashboard(self):
-            self.selenium.find_element_by_css_selector(self._myaccount_link_locator).click()
+            self.selenium.find_element(*self._myaccount_link_locator).click()
        
         def click_signout(self):
-            self.selenium.find_element_by_css_selector(self._signout_link_locator).click()
+            self.selenium.find_element(*self._signout_link_locator).click()
        
             

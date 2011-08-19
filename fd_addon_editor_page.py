@@ -35,15 +35,17 @@
 # ***** END LICENSE BLOCK *****
 from fd_base_page import FlightDeckBasePage
 from page import Page
+from selenium.webdriver.common.by import By
 
 
 class AddonEditorPage(FlightDeckBasePage):
 
-    _addon_name = 'package-info-name'
-    _copy_btn = 'package-copy'
+    _addon_name = (By.ID, 'package-info-name')
+    _copy_btn = (By.ID, 'package-copy')
 
-    def get_addon_name(self):
-        return self.selenium.find_element_by_id(self._addon_name).text
+    @property
+    def addon_name(self):
+        return self.selenium.find_element(*self._addon_name).text
 
     def click_copy_btn(self):
-        self.selenium.find_element_by_id(self._copy_btn).click()
+        self.selenium.find_element(*self._copy_btn).click()

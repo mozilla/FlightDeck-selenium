@@ -33,7 +33,6 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import string
 import fd_home_page, fd_login_page, fd_dashboard_page
 from unittestzero import Assert
 
@@ -57,9 +56,7 @@ class TestLibLabelcheck_lib_label():
         addon_count = dashboardpage_obj.calc_total_addons()
 
         #Get the number of addons that are displayed on the left hand side of the page.(Something like your add-ons(20))
-        counter = dashboardpage_obj.get_addons_count()
-        counter = string.lstrip(counter, '(')
-        counter = string.rstrip(counter, ')')
+        counter = dashboardpage_obj.addons_count
 
         #Assert that the total addons on the page matches the counter on the left hand side.
         Assert.equal(str(addon_count), str(counter))
