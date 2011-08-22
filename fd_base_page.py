@@ -50,18 +50,11 @@ class FlightDeckBasePage(Page):
        
     class HeaderRegion(Page):
        
-        _header = "header#app-header"
-       
-        #_create_addon_link_locator =
-        #_create_lib_link_locator =
-        _search_link_locator = (By.CSS_SELECTOR, _header + " nav>ul>li:nth-child(2)>span>a")
-        _documentation_link_locator = (By.CSS_SELECTOR, _header + " nav>ul>li:nth-child(3)>span>a")
-        _signin_link_locator = (By.CSS_SELECTOR, _header + " nav>ul>li:nth-child(4)>span>a")
-        _myaccount_link_locator = (By.CSS_SELECTOR, _header + " nav>ul>li:nth-child(4)>span>a[title='My Account']")
-        _signout_link_locator = (By.CSS_SELECTOR, _header + " nav>ul>li:nth-child(4)>span>a[title='Sign Out']")
-       
-        #def click_create_addon
-        #def click_create_lib
+        _search_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(2) > span > a")
+        _documentation_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(3) > span > a")
+        _signin_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) > span > a")
+        _myaccount_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) a[title='My Account']")
+        _signout_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) a[title='Sign Out']")
        
         def click_search(self):
             self.selenium.find_element(*self._search_link_locator).click()

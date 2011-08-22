@@ -18,7 +18,8 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): David Burns 
+# Contributor(s): David Burns
+#                 Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -50,7 +51,7 @@ class TestAddonActivateDeactivate():
         homepage_obj.header.click_signin()
         
         loginpage_obj.login(credentials['email'], credentials['password'])
-        Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
+        Assert.true(dashboardpage_obj.is_the_current_page)
         #Get the name of the addon present at the top of the list on dashboard.
         #This will be used to compare whether the addon is removed from the top of list after making it private
         addon_name = dashboardpage_obj.addon(1).name
@@ -59,7 +60,7 @@ class TestAddonActivateDeactivate():
         dashboardpage_obj.addon(1).click_private()
         new_top_addon_name = dashboardpage_obj.addon(1).name
         Assert.not_equal(addon_name, new_top_addon_name)
-        dashboardpage_obj.go_to_private_addons_page()
+        dashboardpage_obj.click_private_addons_link()
 
         #Go to the private addons page and check that the addon that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the addon is present there.
@@ -85,7 +86,7 @@ class TestAddonActivateDeactivate():
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
         loginpage_obj.login(credentials['email'], credentials['password'])
-        Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
+        Assert.true(dashboardpage_obj.is_the_current_page)
         
         #Get the name of the library present at the top of the library list on dashboard.
         #This will be used to compare whether the library is removed from the top of list after making it private
@@ -95,7 +96,7 @@ class TestAddonActivateDeactivate():
         dashboardpage_obj.library(1).click_private()
         new_top_lib_name = dashboardpage_obj.library(1).name
         Assert.not_equal(lib_name, new_top_lib_name)
-        dashboardpage_obj.go_to_private_libs_page()
+        dashboardpage_obj.click_private_libraries_link()
 
         #Go to the private libraries page and check that the library that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the library is present there.

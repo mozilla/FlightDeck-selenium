@@ -18,7 +18,8 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): David Burns 
+# Contributor(s): David Burns
+#                 Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -57,7 +58,7 @@ class TestAddonLabel():
         addon_name = addonpage_obj.addon_name
 
         homepage_obj.header.click_dashboard()
-        Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
+        Assert.true(dashboardpage_obj.is_the_current_page)
         label_name = dashboardpage_obj.addon(1).name
         Assert.contains(addon_name, label_name)
         

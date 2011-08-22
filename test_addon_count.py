@@ -18,7 +18,8 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): David Burns 
+# Contributor(s): David Burns
+#                 Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -50,13 +51,13 @@ class TestLibLabelcheck_lib_label():
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
         loginpage_obj.login(credentials['email'], credentials['password'])
-        Assert.equal("Dashboard - Add-on Builder", dashboardpage_obj.get_page_title())
+        Assert.true(dashboardpage_obj.is_the_current_page)
 
         #Get the total count of the number of add-ons that are displayed on the dashboard.
-        addon_count = dashboardpage_obj.calc_total_addons()
+        addon_count = dashboardpage_obj.addons_element_count()
 
         #Get the number of addons that are displayed on the left hand side of the page.(Something like your add-ons(20))
-        counter = dashboardpage_obj.addons_count
+        counter = dashboardpage_obj.addons_count_label
 
         #Assert that the total addons on the page matches the counter on the left hand side.
         Assert.equal(str(addon_count), str(counter))

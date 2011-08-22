@@ -45,9 +45,9 @@ class DashboardPage(FlightDeckBasePage):
     _page_title = "Dashboard - Add-on Builder"
 
     _public_addons_link = (By.LINK_TEXT, "Public Add-ons")
-    _public_libs_link = (By.LINK_TEXT, "Public Libraries")
+    _public_libraries_link = (By.LINK_TEXT, "Public Libraries")
     _private_addons_link = (By.LINK_TEXT, "Private Add-ons")
-    _private_libs_link = (By.LINK_TEXT, "Private Libraries")
+    _private_libraries_link = (By.LINK_TEXT, "Private Libraries")
     
     _confirm_delete_btn = (By.ID, 'delete_package')
     
@@ -58,37 +58,37 @@ class DashboardPage(FlightDeckBasePage):
     
 
     def addon(self, index):
-        return self.AddonRegion(self.testsetup, index)
+        return self.Addon(self.testsetup, index)
 
     def library(self, index):
-        return self.LibRegion(self.testsetup, index)
+        return self.Library(self.testsetup, index)
         
     @property
-    def addons_count(self):
+    def addons_count_label(self):
         counter = self.selenium.find_element(*self._addons_public_counter).text
         return counter
 
-    def calc_total_addons(self):
+    def addons_element_count(self):
         elements = self.selenium.find_elements(*self._addons_list)
         return len(elements)
         
-    def go_to_private_addons_page(self):
+    def click_private_addons_link(self):
         self.selenium.find_element(*self._private_addons_link).click()
     
-    def go_to_private_libs_page(self):
-        self.selenium.find_element(*self._private_libs_link).click()
+    def click_private_libraries_link(self):
+        self.selenium.find_element(*self._private_libraries_link).click()
     
-    def go_to_public_libs_page(self):
-        self.selenium.find_element(*self._public_libs_link).click()
+    def click_public_libraries_link(self):
+        self.selenium.find_element(*self._public_libraries_link).click()
 
     def confirm_delete(self):
         self.selenium.find_element(*self._confirm_delete_btn).click()
           
 
-    class AddonRegion(FlightDeckBasePage):
+    class Addon(Page):
     
         def __init__(self, testsetup, index):
-            FlightDeckBasePage.__init__(self, testsetup)
+            Page.__init__(self, testsetup)
             self.index = index
            
         _addon = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Add-ons']][1]/li")
@@ -102,7 +102,7 @@ class DashboardPage(FlightDeckBasePage):
      
         @property
         def root_locator(self):
-            return self.selenium.find_elements(*self._addon)[self.index-1]
+            return self.selenium.find_elements(*self._addon)[self.index - 1]
     
         @property
         def name(self):
@@ -124,10 +124,10 @@ class DashboardPage(FlightDeckBasePage):
             self.root_locator.find_element(*self._private_btn).click()
 
 
-    class LibRegion(FlightDeckBasePage):
+    class Library(Page):
     
         def __init__(self, testsetup, index):
-            FlightDeckBasePage.__init__(self, testsetup)
+            Page.__init__(self, testsetup)
             self.index = index
            
         _addon = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]/li")
@@ -140,7 +140,7 @@ class DashboardPage(FlightDeckBasePage):
      
         @property
         def root_locator(self):
-            return self.selenium.find_elements(*self._addon)[self.index-1]
+            return self.selenium.find_elements(*self._addon)[self.index - 1]
     
         @property
         def name(self):

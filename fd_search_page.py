@@ -47,22 +47,25 @@ class SearchPage(FlightDeckBasePage):
     
     def type_and_click_search(self, text):
         self.selenium.find_element(*self._search_field_locator).sendkeys(text)
+        self.selenium.find_element(*self._search_btn).click()
         
     @property
     def addon(index):
-        return self.AddonRegion(self.testsetup, index)
+        return self.Addon(self.testsetup, index)
         
     @property
     def library(index):
-        return self.LibraryRegion(self.testsetup, index)
+        return self.Library(self.testsetup, index)
         
         
-    class AddonRegion(FlightDeckBasePage):
+    class Addon(FlightDeckBasePage):
     
         def __init__(self, testsetup, index):
             FlightDeckBasePage.__init__(self, testsetup)
             self.index = index
            
+        # TODO repair locator when bug fixed
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=680422 
         _addon = (By.XPATH, "//div[preceding-sibling::h2[contains(text(),'Add-on Results')]]" +
                   "[not(preceding-sibling::h2[contains(text(),'Library Results')])]")
     
@@ -85,7 +88,7 @@ class SearchPage(FlightDeckBasePage):
             self.root_locator.find_element(*self._test_btn).click()
 
 
-    class LibraryRegion(FlightDeckBasePage):
+    class Library(FlightDeckBasePage):
     
         def __init__(self, testsetup, index):
             FlightDeckBasePage.__init__(self, testsetup)
