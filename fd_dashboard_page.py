@@ -38,7 +38,7 @@ from fd_base_page import FlightDeckBasePage
 from page import Page
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-
+import string
 
 class DashboardPage(FlightDeckBasePage):
 
@@ -65,12 +65,10 @@ class DashboardPage(FlightDeckBasePage):
         
     @property
     def addons_count_label(self):
-        counter = self.selenium.find_element(*self._addons_public_counter).text
-        return counter
+        return self.selenium.find_element(*self._addons_public_counter).text
 
     def addons_element_count(self):
-        elements = self.selenium.find_elements(*self._addons_list)
-        return len(elements)
+        return len(self.selenium.find_elements(*self._addons_list))
         
     def click_private_addons_link(self):
         self.selenium.find_element(*self._private_addons_link).click()
@@ -94,6 +92,8 @@ class DashboardPage(FlightDeckBasePage):
         _addon = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Add-ons']][1]/li")
     
         _name = (By.CSS_SELECTOR, "h3:not(span)")
+        _version = (By.CSS_SELECTOR, "h3 > span.version")
+
         _test_btn = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")  
         _edit_btn = (By.CSS_SELECTOR, "li.UI_Edit_Version > a") 
         _delete_btn = (By.CSS_SELECTOR, "li.UI_Delete > a")
@@ -106,8 +106,12 @@ class DashboardPage(FlightDeckBasePage):
     
         @property
         def name(self):
-            return self.root_locator.find_element(*self._name).text
-
+            # here we are stripping the <span class="version">
+            # text from the h3 to get *just* the addon's name
+            name = self.root_locator.find_element(*self._name).text
+            version = self.root_locator.find_element(*self._version).text
+            return str(name).replace(version, "").rstrip()    
+            
         def click_test(self):
             self.root_locator.find_element(*self._test_btn).click()
 
@@ -133,6 +137,7 @@ class DashboardPage(FlightDeckBasePage):
         _addon = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]/li")
     
         _name = (By.CSS_SELECTOR, "h3:not(span)")
+        _version = (By.CSS_SELECTOR, "h3 > span.version")
         _edit_btn = (By.CSS_SELECTOR, "li.UI_Edit_Version > a") 
         _delete_btn = (By.CSS_SELECTOR, "li.UI_Delete > a")
         _public_btn = (By.CSS_SELECTOR, "li.UI_Activate > a")
@@ -144,8 +149,12 @@ class DashboardPage(FlightDeckBasePage):
     
         @property
         def name(self):
-            return self.root_locator.find_element(*self._name).text
-
+            # here we are stripping the <span class="version">
+            # text from the h3 to get *just* the library's name
+            name = self.root_locator.find_element(*self._name).text
+            version = self.root_locator.find_element(*self._version).text
+            return str(name).replace(version, "").rstrip()    
+            
         def click_edit(self):
             self.root_locator.find_element(*self._edit_btn).click()
             

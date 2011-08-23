@@ -42,26 +42,69 @@ from selenium.webdriver.common.by import By
 
 class SearchPage(FlightDeckBasePage):
     
-    _search_field_locator = (By.CSS_SELECTOR, "#Search > input[type='search']")
-    _search_btn = (By.CSS_SELECTOR, "#Search > button[type='submit']")
+    _search_field_locator = (By.CSS_SELECTOR, "form#Search input[type='search']")
+    _search_btn = (By.CSS_SELECTOR, "form#Search button[type='submit']")
     
-    def type_and_click_search(self, text):
-        self.selenium.find_element(*self._search_field_locator).sendkeys(text)
+    _filter_by_addons = (By.LINK_TEXT, "Add-ons")
+    _filter_by_libraries = (By.LINK_TEXT, "Libraries")
+    
+    _addon_count_label = (By.XPATH, "//strong[preceding-sibling::a[contains(text(),'Add-ons')]]")
+    _library_count_label = (By.XPATH, "//strong[preceding-sibling::a[contains(text(),'Libraries')]]")
+    
+    _results_message = (By.CSS_SELECTOR, "#SearchResults > p")
+    
+    # TODO repair locator when bug fixed
+    # https://bugzilla.mozilla.org/show_bug.cgi?id=680422 
+    _addon_list = (By.XPATH, "//div[preceding-sibling::h2[contains(text(),'Add-on Results')]]" +
+        "[not(preceding-sibling::h2[contains(text(),'Library Results')])]")
+    _library_list = (By.XPATH, "//div[preceding-sibling::h2[contains(text(),'Library Results')]]")
+    
+    def _item_locator_by_name(self, name):
+        return (By.LINK_TEXT, name)
+    
+    def type_into_search(self, text):
+        self.selenium.find_element(*self._search_field_locator).send_keys(text)
+        
+    def click_search(self):
         self.selenium.find_element(*self._search_btn).click()
         
+    def is_addon_present(self, name):
+        list = self.selenium.find_elements(*self._addon_list)
+        return list.find_element(*self._item_locator_by_name(name)).is_displayed()
+        
+    def click_filter_addons_link(self):
+        self.selenium.find_element(*self._filter_by_addons).click()
+        
+    def click_filter_libraries_link(self):
+        self.selenium.find_element(*self._filter_by_libraries).click()
+        
+    def addons_element_count(self):
+        return len(self.selenium.find_elements(*self._addon_list))
+    
     @property
-    def addon(index):
+    def addons_count_label(self):
+        label = self.selenium.find_element(*self._addon_count_label).text
+        return int(str(label).replace("(","").replace(")",""))
+
+    def library_element_count(self):
+        return len(self.selenium.find_elements(*self._library_list))
+
+    @property
+    def library_count_label(self):
+        label = self.selenium.find_element(*self._library_count_label).text
+        return int(str(label).replace("(","").replace(")",""))
+        
+    def addon(self, index):
         return self.Addon(self.testsetup, index)
         
-    @property
-    def library(index):
+    def library(self, index):
         return self.Library(self.testsetup, index)
         
         
-    class Addon(FlightDeckBasePage):
+    class Addon(Page):
     
         def __init__(self, testsetup, index):
-            FlightDeckBasePage.__init__(self, testsetup)
+            Page.__init__(self, testsetup)
             self.index = index
            
         # TODO repair locator when bug fixed
@@ -69,43 +112,69 @@ class SearchPage(FlightDeckBasePage):
         _addon = (By.XPATH, "//div[preceding-sibling::h2[contains(text(),'Add-on Results')]]" +
                   "[not(preceding-sibling::h2[contains(text(),'Library Results')])]")
     
-        _name = (By.CSS_SELECTOR, "h3:not(span)")
+        _name = (By.CSS_SELECTOR, "h3")
+        _by_link = (By.CSS_SELECTOR, "h3 > span > a")
+        _by_span_tag = (By.CSS_SELECTOR, "h3 > span")
         _test_btn = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")  
         _source_btn = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
         
         @property
         def root_locator(self):
             return self.selenium.find_elements(*self._addon)[self.index-1]
-    
+            
         @property
         def name(self):
-            return self.root_locator.find_element(*self._name).text
+            # stripping the author from the name to be left with just the name
+            name = self.root_locator.find_element(*self._name).text
+            by_tag = self.root_locator.find_element(*self._by_span_tag).text
+            return str(name).replace(by_tag, "").rstrip()
+        
+        @property
+        def author_name(self):
+            return self.root_locator.find_element(*self._by_link).text
 
         def click_source(self):
-            self.root_locator.find_element(*self._edit_btn).click()
+            self.root_locator.find_element(*self._source_btn).click()
 
         def click_test(self):
             self.root_locator.find_element(*self._test_btn).click()
 
+        def click_by_link(self):
+            self.root_locator.find_element(*self._by_link).click()
 
-    class Library(FlightDeckBasePage):
+
+    class Library(Page):
     
         def __init__(self, testsetup, index):
-            FlightDeckBasePage.__init__(self, testsetup)
+            Page.__init__(self, testsetup)
             self.index = index
            
-        _lib = (By.XPATH, "//div[preceding-sibling::h2[contains(text(),'Library Results')]]")
-    
-        _name = (By.CSS_SELECTOR, "h3:not(span)")
+        # TODO repair locator when bug fixed
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=680422
+        _library = (By.XPATH, "//div[preceding-sibling::h2[contains(text(),'Library Results')]]")
+
+        _name = (By.CSS_SELECTOR, "h3")
+        _by_link = (By.CSS_SELECTOR, "h3 > span > a")
+        _by_span_tag = (By.CSS_SELECTOR, "h3 > span")
         _source_btn = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
         
         @property
         def root_locator(self):
-            return self.selenium.find_elements(*self._addon)[self.index-1]
+            return self.selenium.find_elements(*self._library)[self.index-1]
     
         @property
         def name(self):
-            return self.root_locator.find_element(*self._name).text
+            # stripping the author from the name to be left with just the name
+            name = self.root_locator.find_element(*self._name).text
+            by_tag = self.root_locator.find_element(*self._by_span_tag).text
+            return str(name).replace(by_tag, "").rstrip()
 
+        @property
+        def author_name(self):
+            return self.root_locator.find_element(*self._by_link).text
+            
         def click_source(self):
-            self.root_locator.find_element(*self._edit_btn).click()
+            self.root_locator.find_element(*self._source_btn).click()
+            
+        def click_by_link(self):
+            self.root_locator.find_element(*self._by_link).click()
