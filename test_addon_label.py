@@ -50,8 +50,7 @@ class TestAddonLabel():
         
         credentials = loginpage_obj.credentials_of_user('default')
 
-        #Create an addon. Then go to dashoard and assert that the label is 'initial'. 
-      
+        #Create an addon. Then go to dashoard and assert that the label is 'initial'.    
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])
@@ -59,8 +58,9 @@ class TestAddonLabel():
 
         homepage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.is_the_current_page)
-        label_name = dashboardpage_obj.addon(1).name
-        Assert.contains(addon_name, label_name)
+       # label_name = dashboardpage_obj.addon(1).name
+       # Assert.contains(addon_name, label_name)
+        Assert.true(dashboardpage_obj.addon(addon_name).is_present(), "Addon %s not found" % addon_name)
         
         #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
         dashboardpage_obj.addon(1).click_edit()

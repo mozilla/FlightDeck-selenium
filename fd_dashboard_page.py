@@ -38,7 +38,6 @@ from fd_base_page import FlightDeckBasePage
 from page import Page
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-import string
 
 class DashboardPage(FlightDeckBasePage):
 
@@ -48,27 +47,21 @@ class DashboardPage(FlightDeckBasePage):
     _public_libraries_link = (By.LINK_TEXT, "Public Libraries")
     _private_addons_link = (By.LINK_TEXT, "Private Add-ons")
     _private_libraries_link = (By.LINK_TEXT, "Private Libraries")
-    
     _confirm_delete_btn = (By.ID, 'delete_package')
-    
-    _addons_list = (By.XPATH, "//section[@id='app-content']/ul[1]/li")
-    _libs_list = (By.XPATH, "//section[@id='app-content']/ul[2]/li")
-    
     _addons_public_counter = (By.ID, "public_addons_no")
     
-
-    def addon(self, index):
-        return self.Addon(self.testsetup, index)
+    def addon(self, arg):
+        return self.Addon(self.testsetup, arg)
 
     def library(self, index):
-        return self.Library(self.testsetup, index)
+        return self.Library(self.testsetup, arg)
         
     @property
     def addons_count_label(self):
         return self.selenium.find_element(*self._addons_public_counter).text
 
     def addons_element_count(self):
-        return len(self.selenium.find_elements(*self._addons_list))
+        return self.addon(None).element_count
         
     def click_private_addons_link(self):
         self.selenium.find_element(*self._private_addons_link).click()
@@ -81,16 +74,16 @@ class DashboardPage(FlightDeckBasePage):
 
     def confirm_delete(self):
         self.selenium.find_element(*self._confirm_delete_btn).click()
-          
 
     class Addon(Page):
     
-        def __init__(self, testsetup, index):
+        def __init__(self, testsetup, arg):
             Page.__init__(self, testsetup)
-            self.index = index
-           
-        _addon = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Add-ons']][1]/li")
-    
+            self.arg = arg
+ 
+        _addon = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Add-ons']][1]")
+        _ui_item = (By.CSS_SELECTOR, "li.UI_Item")
+
         _name = (By.CSS_SELECTOR, "h3:not(span)")
         _version = (By.CSS_SELECTOR, "h3 > span.version")
 
@@ -102,8 +95,21 @@ class DashboardPage(FlightDeckBasePage):
      
         @property
         def root_locator(self):
-            return self.selenium.find_elements(*self._addon)[self.index - 1]
-    
+            ul = self.selenium.find_element(*self._addon)
+            
+            if type(self.arg) is int:
+                return ul.find_elements(*self._ui_item)[self.arg - 1]
+            elif type(self.arg) is unicode:
+                return ul.find_element(By.XPATH, "//li[child::h3[contains(text(),'%s')]]" % self.arg)
+
+        def is_present(self):
+            return self.root_locator.is_displayed()
+
+        @property
+        def element_count(self):
+            ul = self.selenium.find_element(*self._addon)
+            return len(ul.find_elements(*self._ui_item))
+
         @property
         def name(self):
             # here we are stripping the <span class="version">
@@ -127,14 +133,13 @@ class DashboardPage(FlightDeckBasePage):
         def click_private(self):
             self.root_locator.find_element(*self._private_btn).click()
 
-
     class Library(Page):
     
         def __init__(self, testsetup, index):
             Page.__init__(self, testsetup)
-            self.index = index
+            self.index = index - 1
            
-        _addon = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]/li")
+        _library = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]/li")
     
         _name = (By.CSS_SELECTOR, "h3:not(span)")
         _version = (By.CSS_SELECTOR, "h3 > span.version")
@@ -145,7 +150,11 @@ class DashboardPage(FlightDeckBasePage):
      
         @property
         def root_locator(self):
-            return self.selenium.find_elements(*self._addon)[self.index - 1]
+            return self.selenium.find_elements(*self._library)[self.index - 1]
+
+        @property
+        def element_count(self):
+            return len(self.selenium.find_elements(*self._library))
     
         @property
         def name(self):
