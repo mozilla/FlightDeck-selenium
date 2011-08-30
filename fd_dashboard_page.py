@@ -139,7 +139,8 @@ class DashboardPage(FlightDeckBasePage):
             Page.__init__(self, testsetup)
             self.index = index - 1
            
-        _library = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]/li")
+        _library = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]")
+        _ui_item = (By.CSS_SELECTOR, "li.UI_Item")
     
         _name = (By.CSS_SELECTOR, "h3:not(span)")
         _version = (By.CSS_SELECTOR, "h3 > span.version")
@@ -150,12 +151,21 @@ class DashboardPage(FlightDeckBasePage):
      
         @property
         def root_locator(self):
-            return self.selenium.find_elements(*self._library)[self.index - 1]
+            ul = self.selenium.find_element(*self._library)
+            
+            if type(self.arg) is int:
+                return ul.find_elements(*self._ui_item)[self.arg - 1]
+            elif type(self.arg) is unicode:
+                return ul.find_element(By.XPATH, "//li[child::h3[contains(text(),'%s')]]" % self.arg)
+
+        def is_present(self):
+            return self.root_locator.is_displayed()
 
         @property
         def element_count(self):
-            return len(self.selenium.find_elements(*self._library))
-    
+            ul = self.selenium.find_element(*self._addon)
+            return len(ul.find_elements(*self._ui_item))
+
         @property
         def name(self):
             # here we are stripping the <span class="version">

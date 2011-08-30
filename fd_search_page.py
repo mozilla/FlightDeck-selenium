@@ -53,11 +53,11 @@ class SearchPage(FlightDeckBasePage):
     
     _results_message = (By.CSS_SELECTOR, "#SearchResults > p")
     
-    def addon(self, index):
-        return self.Addon(self.testsetup, index)
+    def addon(self, arg):
+        return self.Addon(self.testsetup, arg)
         
-    def library(self, index):
-        return self.Library(self.testsetup, index)        
+    def library(self, arg):
+        return self.Library(self.testsetup, arg)        
     
     def _item_locator_by_name(self, name):
         return (By.LINK_TEXT, name)
@@ -88,7 +88,6 @@ class SearchPage(FlightDeckBasePage):
         return int(str(label).replace("(","").replace(")",""))
 
     def library_element_count(self):
-        #return len(self.selenium.find_elements(*self._library_list))
         return self.library(None).count_elements
 
     @property
@@ -97,16 +96,16 @@ class SearchPage(FlightDeckBasePage):
         return int(str(label).replace("(","").replace(")",""))
         
 
-        
     class Addon(Page):
     
-        def __init__(self, testsetup, index):
+        def __init__(self, testsetup, arg):
             Page.__init__(self, testsetup)
-            self.index = index
+            self.arg = arg
            
-        _addon = (By.CSS_SELECTOR, "section#SearchResults div.addon")
+        _search_results = (By.CSS_SELECTOR, "section#SearchResults")
+        _addon = (By.CSS_SELECTOR, "div.addon")
     
-        _name = (By.CSS_SELECTOR, "h3")
+        _name = (By.CSS_SELECTOR, "h3 > a")
         _by_link = (By.CSS_SELECTOR, "h3 > span > a")
         _by_span_tag = (By.CSS_SELECTOR, "h3 > span")
         _test_btn = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")  
@@ -114,19 +113,25 @@ class SearchPage(FlightDeckBasePage):
         
         @property
         def root_locator(self):
-            return self.selenium.find_elements(*self._addon)[self.index-1]
-        
+            sr = self.selenium.find_element(*self._search_results)
+            
+            if type(self.arg) is int:
+                return sr.find_elements(*self._addon)[self.arg - 1]
+            elif type(self.arg) is unicode:
+                return sr.find_element(By.XPATH, "//div[contains(@class,'addon')][descendant::h3/a[text()='%s']]" % self.arg)
+
+        def is_present(self):
+            return self.root_locator.is_displayed()
+
         @property
         def count_elements(self):
-            return len(self.selenium.find_elements(*self._addon))
+            sr = self.selenium.find_element(*self._search_results)
+            return len(sr.find_elements(*self._addon))
                 
         @property
         def name(self):
-            # stripping the author from the name to be left with just the name
-            name = self.root_locator.find_element(*self._name).text
-            by_tag = self.root_locator.find_element(*self._by_span_tag).text
-            return str(name).replace(by_tag, "").rstrip()
-        
+            return self.root_locator.find_element(*self._name).text
+
         @property
         def author_name(self):
             return self.root_locator.find_element(*self._by_link).text
@@ -142,31 +147,38 @@ class SearchPage(FlightDeckBasePage):
 
     class Library(Page):
     
-        def __init__(self, testsetup, index):
+        def __init__(self, testsetup, arg):
             Page.__init__(self, testsetup)
-            self.index = index
+            self.arg = arg
 
-        _library = (By.CSS_SELECTOR, "section#SearchResults div.library")
+        _search_results = (By.CSS_SELECTOR, "section#SearchResults")
+        _library = (By.CSS_SELECTOR, "div.library")
 
-        _name = (By.CSS_SELECTOR, "h3")
+        _name = (By.CSS_SELECTOR, "h3 > a")
         _by_link = (By.CSS_SELECTOR, "h3 > span > a")
         _by_span_tag = (By.CSS_SELECTOR, "h3 > span")
         _source_btn = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
         
         @property
         def root_locator(self):
-            return self.selenium.find_elements(*self._library)[self.index-1]
-    
+            sr = self.selenium.find_element(*self._search_results)
+            
+            if type(self.arg) is int:
+                return sr.find_elements(*self._library)[self.arg - 1]
+            elif type(self.arg) is unicode:
+                return sr.find_element(By.XPATH, "//div[contains(@class,'library')][descendant::h3/a[text()='%s']]" % self.arg)
+        
+        def is_present(self):
+            return self.root_locator.is_displayed()
+        
         @property
         def count_elements(self):
-            return len(self.selenium.find_elements(*self._library))
-    
+            sr = self.selenium.find_element(*self._search_results)
+            return len(sr.find_elements(*self._library))
+                
         @property
         def name(self):
-            # stripping the author from the name to be left with just the name
-            name = self.root_locator.find_element(*self._name).text
-            by_tag = self.root_locator.find_element(*self._by_span_tag).text
-            return str(name).replace(by_tag, "").rstrip()
+            return self.root_locator.find_element(*self._name).text
 
         @property
         def author_name(self):

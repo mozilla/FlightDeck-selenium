@@ -60,7 +60,7 @@ class TestSearch():
         searchpage_obj.type_into_search(searchterm)
         searchpage_obj.click_search()
 
-        Assert.equal(searchpage_obj.addon(1).name, searchterm)
+        Assert.true(searchpage_obj.addon(searchterm).is_present(), "%s not found" % searchterm)
 
     def test_basic_search_string_library(self, testsetup):
         homepage_obj = fd_home_page.HomePage(testsetup)
@@ -79,7 +79,7 @@ class TestSearch():
         searchpage_obj.type_into_search(searchterm)
         searchpage_obj.click_search()
 
-        Assert.equal(searchpage_obj.library(1).name, searchterm)
+        Assert.true(searchpage_obj.library(searchterm).is_present(), "%s not found" % searchterm)
         
     def test_search_partial_string(self, testsetup):
         homepage_obj = fd_home_page.HomePage(testsetup)
@@ -97,7 +97,7 @@ class TestSearch():
         searchpage_obj.click_search()
         
         Assert.true(searchpage_obj.addons_element_count() > 1)
-        Assert.true(searchpage_obj.is_addon_present(top_addon_name), "Addon '%s' not found" % top_addon_name)
+        Assert.true(searchpage_obj.addon(top_addon_name).is_present(), "Addon '%s' not found" % top_addon_name)
                 
     def test_search_no_string(self, testsetup):
         homepage_obj = fd_home_page.HomePage(testsetup)
@@ -129,11 +129,11 @@ class TestSearch():
         searchpage_obj.click_search()
         
         searchpage_obj.click_filter_addons_link()
-        
+
+        # 20 items maximum per page        
         label_count = min(searchpage_obj.addons_count_label, 20)
         element_count = searchpage_obj.addons_element_count()
-        
-        # 20 items maximum per page
+
         Assert.equal(label_count, element_count)
         
     def test_search_library_filter(self, testsetup):
@@ -151,10 +151,10 @@ class TestSearch():
         
         searchpage_obj.click_filter_libraries_link()
         
+        # 20 items maximum per page
         label_count = min(searchpage_obj.library_count_label, 20)
         element_count = searchpage_obj.library_element_count()
         
-        # 20 items maximum per page
         Assert.equal(label_count, element_count)
     
     def test_search_author_link(self, testsetup):
@@ -168,8 +168,9 @@ class TestSearch():
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
 
-        author_name = searchpage_obj.addon(1).author_name
-        searchpage_obj.addon(1).click_by_link()
+        addon_name = searchpage_obj.addon(1).name
+        author_name = searchpage_obj.addon(addon_name).author_name
+        searchpage_obj.addon(addon_name).click_by_link()
         Assert.equal(userpage_obj.author_name, author_name)
         
     def test_search_library_author_link(self, testsetup):
@@ -182,8 +183,9 @@ class TestSearch():
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
         
-        author_name = searchpage_obj.library(1).author_name
-        searchpage_obj.library(1).click_by_link()
+        library_name = searchpage_obj.library(1).name
+        author_name = searchpage_obj.library(library_name).author_name
+        searchpage_obj.library(library_name).click_by_link()
         Assert.equal(userpage_obj.author_name, author_name)
 
     def test_search_addon_source_btn(self, testsetup):
@@ -200,7 +202,7 @@ class TestSearch():
         dashboard_obj.header.click_search()
 
         addon_name = searchpage_obj.addon(1).name
-        searchpage_obj.addon(1).click_source()
+        searchpage_obj.addon(addon_name).click_source()
         Assert.equal(editorpage_obj.addon_name, addon_name)
 
     def test_search_library_source_btn(self, testsetup):
@@ -217,5 +219,5 @@ class TestSearch():
         dashboard_obj.header.click_search()
     
         library_name = searchpage_obj.library(1).name
-        searchpage_obj.library(1).click_source()
+        searchpage_obj.library(library_name).click_source()
         Assert.equal(editorpage_obj.lib_name, library_name)
