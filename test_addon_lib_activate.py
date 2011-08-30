@@ -40,12 +40,12 @@ from unittestzero import Assert
 
 class TestAddonActivateDeactivate():
     
-    def testShouldCheckAddonDeactivateAndActivate(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
+    def testShouldCheckAddonDeactivateAndActivate(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
 
-        credentials = homepage_obj.credentials_of_user('default')
+        credentials = mozwebqa.credentials['default']
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
@@ -76,13 +76,13 @@ class TestAddonActivateDeactivate():
         Assert.equal(priv_addon_name, top_addon)
         
 
-    def testShouldCheckLibDeactivateAndActivate(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
+    def testShouldCheckLibDeactivateAndActivate(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
 
-        credentials = loginpage_obj.credentials_of_user('default')
-
+        credentials = mozwebqa.credentials['default']
+        
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
         loginpage_obj.login(credentials['email'], credentials['password'])

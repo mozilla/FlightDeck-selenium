@@ -40,13 +40,13 @@ from unittestzero import Assert
 
 class TestLibLabelcheck_lib_label():
 
-    def testAddonCount(self, testsetup):
+    def testAddonCount(self, mozwebqa):
         #This test is to assert that the count of the addons on dashboard is equal to the number of addons present on the page.
         #Create page objects
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
-        credentials = loginpage_obj.credentials_of_user('default')
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        credentials = mozwebqa.credentials['default']
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
