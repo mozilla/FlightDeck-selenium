@@ -40,15 +40,14 @@ from unittestzero import Assert
 
 class TestAddonLibDelete():
 
-    def testShouldCheckAddonDelete(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
-        addonpage_obj = fd_addon_editor_page.AddonEditorPage(testsetup)
+    def testShouldCheckAddonDelete(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
         
-        credentials = loginpage_obj.credentials_of_user('default')
-
-
+        credentials = mozwebqa.credentials['default']
+        
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])
@@ -70,17 +69,16 @@ class TestAddonLibDelete():
 
         Assert.equal(new_addon_name, addon_name)
 
-    def testShouldCheckLibDelete(self, testsetup):
+    def testShouldCheckLibDelete(self, mozwebqa):
 
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
-        libpage_obj = fd_lib_editor_page.LibraryEditorPage(testsetup)
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        libpage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
         
-        credentials = loginpage_obj.credentials_of_user('default')
+        credentials = mozwebqa.credentials['default']
         
         homepage_obj.go_to_home_page()
-
         homepage_obj.click_create_lib_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])
         lib_name = libpage_obj.lib_name

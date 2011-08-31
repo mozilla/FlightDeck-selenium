@@ -40,17 +40,18 @@ from unittestzero import Assert
 
 class TestAddonLabel():
 
-    def testShouldCheckAddonLabel(self, testsetup):
+    def testShouldCheckAddonLabel(self, mozwebqa):
         #This test is to check the labels of an add-on on the dashboard
         #Create page objects
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
-        addonpage_obj = fd_addon_editor_page.AddonEditorPage(testsetup)
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
         
-        credentials = loginpage_obj.credentials_of_user('default')
+        credentials = mozwebqa.credentials['default']
 
-        #Create an addon. Then go to dashoard and assert that the label is 'initial'.    
+        #Create an addon. Then go to dashoard and assert that the label is 'initial'. 
+
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])

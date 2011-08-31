@@ -40,16 +40,15 @@ from unittestzero import Assert
 
 class TestLibLabel():
 
-    def testShouldCheckLibraryLabel(self, testsetup):
+    def testShouldCheckLibraryLabel(self, mozwebqa):
         #This test is to check the labels of a library on the dashboard
         #Create page objects
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(testsetup)
-        libpage_obj = fd_lib_editor_page.LibraryEditorPage(testsetup)
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        libpage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
         
-        credentials = loginpage_obj.credentials_of_user('default')
-
+        credentials = mozwebqa.credentials['default']
          
         #Create a library. Then go to dashoard and assert that the label is 'initial'.
         homepage_obj.go_to_home_page()
