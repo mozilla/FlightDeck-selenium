@@ -53,7 +53,7 @@ class DashboardPage(FlightDeckBasePage):
     def addon(self, arg):
         return self.Addon(self.testsetup, arg)
 
-    def library(self, index):
+    def library(self, arg):
         return self.Library(self.testsetup, arg)
         
     @property
@@ -100,10 +100,13 @@ class DashboardPage(FlightDeckBasePage):
             if type(self.arg) is int:
                 return ul.find_elements(*self._ui_item)[self.arg - 1]
             elif type(self.arg) is unicode:
-                return ul.find_element(By.XPATH, "//li[child::h3[contains(text(),'%s')]]" % self.arg)
+                return ul.find_element(By.XPATH, "//li[child::h3[normalize-space(text()) = '%s']]" % self.arg)
 
-        def is_present(self):
-            return self.root_locator.is_displayed()
+        def is_displayed(self):
+            try:
+                return self.root_locator.is_displayed()
+            except:
+                return False
 
         @property
         def element_count(self):
@@ -135,9 +138,9 @@ class DashboardPage(FlightDeckBasePage):
 
     class Library(Page):
     
-        def __init__(self, testsetup, index):
+        def __init__(self, testsetup, arg):
             Page.__init__(self, testsetup)
-            self.index = index - 1
+            self.arg = arg
            
         _library = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]")
         _ui_item = (By.CSS_SELECTOR, "li.UI_Item")
@@ -156,10 +159,13 @@ class DashboardPage(FlightDeckBasePage):
             if type(self.arg) is int:
                 return ul.find_elements(*self._ui_item)[self.arg - 1]
             elif type(self.arg) is unicode:
-                return ul.find_element(By.XPATH, "//li[child::h3[contains(text(),'%s')]]" % self.arg)
+                return ul.find_element(By.XPATH, "//li[child::h3[normalize-space(text()) = '%s']]" % self.arg)
 
-        def is_present(self):
-            return self.root_locator.is_displayed()
+        def is_displayed(self):
+            try:
+                return self.root_locator.is_displayed()
+            except:
+                return False
 
         @property
         def element_count(self):

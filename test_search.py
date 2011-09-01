@@ -39,17 +39,20 @@
 import fd_home_page, fd_login_page, fd_search_page
 import fd_dashboard_page, fd_addon_editor_page, fd_lib_editor_page, fd_user_page
 from unittestzero import Assert
+xfail = pytest.mark.xfail
 
 
 class TestSearch():
 
-    def test_basic_search_string_addon(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboard_obj = fd_dashboard_page.DashboardPage(testsetup)
-        searchpage_obj = fd_search_page.SearchPage(testsetup)
+    @xfail(reason = "Bug 683860 - Add-ons/libraries not indexed in search for user FDTesting")
+    def test_basic_search_string_addon(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
-        credentials = loginpage_obj.credentials_of_user('default')
+        credentials = mozwebqa.credentials['default']
+        
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
         loginpage_obj.login(credentials['email'], credentials['password'])
@@ -60,15 +63,17 @@ class TestSearch():
         searchpage_obj.type_into_search(searchterm)
         searchpage_obj.click_search()
 
-        Assert.true(searchpage_obj.addon(searchterm).is_present(), "%s not found" % searchterm)
+        Assert.true(searchpage_obj.addon(searchterm).is_displayed(), "%s not found" % searchterm)
+    
+    @xfail(reason = "Bug 683860 - Add-ons/libraries not indexed in search for user FDTesting")
+    def test_basic_search_string_library(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
-    def test_basic_search_string_library(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboard_obj = fd_dashboard_page.DashboardPage(testsetup)
-        searchpage_obj = fd_search_page.SearchPage(testsetup)
+        credentials = mozwebqa.credentials['default']
 
-        credentials = loginpage_obj.credentials_of_user('default')
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
         loginpage_obj.login(credentials['email'], credentials['password'])
@@ -79,11 +84,12 @@ class TestSearch():
         searchpage_obj.type_into_search(searchterm)
         searchpage_obj.click_search()
 
-        Assert.true(searchpage_obj.library(searchterm).is_present(), "%s not found" % searchterm)
+        Assert.true(searchpage_obj.library(searchterm).is_displayed(), "%s not found" % searchterm)
         
-    def test_search_partial_string(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        searchpage_obj = fd_search_page.SearchPage(testsetup)
+    @xfail(reason = "Bug 681747 - Partial strings not matching against names in FD Search")   
+    def test_search_partial_string(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
         
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -97,11 +103,11 @@ class TestSearch():
         searchpage_obj.click_search()
         
         Assert.true(searchpage_obj.addons_element_count() > 1)
-        Assert.true(searchpage_obj.addon(top_addon_name).is_present(), "Addon '%s' not found" % top_addon_name)
+        Assert.true(searchpage_obj.addon(top_addon_name).is_displayed(), "Addon '%s' not found" % top_addon_name)
                 
-    def test_search_no_string(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        searchpage_obj = fd_search_page.SearchPage(testsetup)
+    def test_search_no_string(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
         
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -115,9 +121,9 @@ class TestSearch():
         Assert.equal(searchpage_obj.addons_element_count(), 5)
         Assert.equal(searchpage_obj.library_element_count(), 5)
     
-    def test_search_addon_filter(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        searchpage_obj = fd_search_page.SearchPage(testsetup)
+    def test_search_addon_filter(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
         
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -136,9 +142,9 @@ class TestSearch():
 
         Assert.equal(label_count, element_count)
         
-    def test_search_library_filter(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        searchpage_obj = fd_search_page.SearchPage(testsetup)
+    def test_search_library_filter(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
         
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -157,67 +163,69 @@ class TestSearch():
         
         Assert.equal(label_count, element_count)
     
-    def test_search_author_link(self, testsetup):
+    def test_search_author_link(self, mozwebqa):
         
         # go to addon result and click author link
         
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        userpage_obj = fd_user_page.UserPage(testsetup)
-        searchpage_obj = fd_search_page.SearchPage(testsetup)
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        userpage_obj = fd_user_page.UserPage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
         
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
 
         addon_name = searchpage_obj.addon(1).name
-        author_name = searchpage_obj.addon(addon_name).author_name
+        author_name = searchpage_obj.addon(1).author_name
         searchpage_obj.addon(addon_name).click_by_link()
         Assert.equal(userpage_obj.author_name, author_name)
         
-    def test_search_library_author_link(self, testsetup):
+    def test_search_library_author_link(self, mozwebqa):
         
         # go to library result and click author link
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        userpage_obj = fd_user_page.UserPage(testsetup)
-        searchpage_obj = fd_search_page.SearchPage(testsetup)
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        userpage_obj = fd_user_page.UserPage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
         
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
         
         library_name = searchpage_obj.library(1).name
-        author_name = searchpage_obj.library(library_name).author_name
+        author_name = searchpage_obj.library(1).author_name
         searchpage_obj.library(library_name).click_by_link()
         Assert.equal(userpage_obj.author_name, author_name)
 
-    def test_search_addon_source_btn(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboard_obj = fd_dashboard_page.DashboardPage(testsetup)
-        searchpage_obj = fd_search_page.SearchPage(testsetup)
-        editorpage_obj = fd_addon_editor_page.AddonEditorPage(testsetup)
+    def test_search_addon_source_btn(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        editorpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
 
-        credentials = loginpage_obj.credentials_of_user('default')
+        credentials = mozwebqa.credentials['default']
+        
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
         loginpage_obj.login(credentials['email'], credentials['password'])
         dashboard_obj.header.click_search()
 
         addon_name = searchpage_obj.addon(1).name
-        searchpage_obj.addon(addon_name).click_source()
+        searchpage_obj.addon(1).click_source()
         Assert.equal(editorpage_obj.addon_name, addon_name)
 
-    def test_search_library_source_btn(self, testsetup):
-        homepage_obj = fd_home_page.HomePage(testsetup)
-        loginpage_obj = fd_login_page.LoginPage(testsetup)
-        dashboard_obj = fd_dashboard_page.DashboardPage(testsetup)
-        searchpage_obj = fd_search_page.SearchPage(testsetup)
-        editorpage_obj = fd_lib_editor_page.LibraryEditorPage(testsetup)
+    def test_search_library_source_btn(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
+        dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        editorpage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
 
-        credentials = loginpage_obj.credentials_of_user('default')
+        credentials = mozwebqa.credentials['default']
+                
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
         loginpage_obj.login(credentials['email'], credentials['password'])
         dashboard_obj.header.click_search()
     
         library_name = searchpage_obj.library(1).name
-        searchpage_obj.library(library_name).click_source()
+        searchpage_obj.library(1).click_source()
         Assert.equal(editorpage_obj.lib_name, library_name)

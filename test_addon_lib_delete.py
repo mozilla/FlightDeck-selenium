@@ -56,12 +56,10 @@ class TestAddonLibDelete():
 
         #Go the the dashboard and delete the addon that you just created. Then check that the addon at the top of the list is not the same as the one you just deleted.
         homepage_obj.header.click_dashboard()
-        top_addon_name = dashboardpage_obj.addon(1).name
-        dashboardpage_obj.addon(1).click_delete()
+        dashboardpage_obj.addon(addon_name).click_delete()
         dashboardpage_obj.confirm_delete()
-        top_addon_name_after_delete = dashboardpage_obj.addon(1).name
-        Assert.not_equal(top_addon_name, top_addon_name_after_delete)
-        
+        Assert.false(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s found" % addon_name)
+                
         #Go to homepage and create a new addon and check that its name is the same as the one that was just deleted.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
@@ -84,12 +82,10 @@ class TestAddonLibDelete():
         lib_name = libpage_obj.lib_name
 
         homepage_obj.header.click_dashboard()
-        top_lib_name = dashboardpage_obj.library(1).name
-
-        dashboardpage_obj.library(1).click_delete()
+        dashboardpage_obj.library(lib_name).click_delete()
         dashboardpage_obj.confirm_delete()
-        top_lib_name_after_delete = dashboardpage_obj.library(1).name
-        Assert.not_equal(top_lib_name, top_lib_name_after_delete)
+        Assert.false(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s found" % lib_name)
+        
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
         

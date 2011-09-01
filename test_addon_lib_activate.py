@@ -49,31 +49,29 @@ class TestAddonActivateDeactivate():
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        
         loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.true(dashboardpage_obj.is_the_current_page)
+        
         #Get the name of the addon present at the top of the list on dashboard.
         #This will be used to compare whether the addon is removed from the top of list after making it private
         addon_name = dashboardpage_obj.addon(1).name
         
         #Click on the private button to make it private and then check that the addon is not in the list anymore
-        dashboardpage_obj.addon(1).click_private()
-        new_top_addon_name = dashboardpage_obj.addon(1).name
-        Assert.not_equal(addon_name, new_top_addon_name)
-        dashboardpage_obj.click_private_addons_link()
-
+        dashboardpage_obj.addon(addon_name).click_private()
+        Assert.false(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s found" % addon_name)
+        
         #Go to the private addons page and check that the addon that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the addon is present there.
-        priv_addon_name = dashboardpage_obj.addon(1).name
-        Assert.equal(addon_name, priv_addon_name)
+        dashboardpage_obj.click_private_addons_link()
+        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s not found" % addon_name)
         
-        dashboardpage_obj.addon(1).click_public()
-        new_priv_top_addon_name = dashboardpage_obj.addon(1).name
-        Assert.not_equal(priv_addon_name, new_priv_top_addon_name)
+        # Switch it back to public now, addon should disappear
+        dashboardpage_obj.addon(addon_name).click_public()
+        Assert.false(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s found" % addon_name)
         
+        # Should be on main dashboard page
         dashboardpage_obj.header.click_dashboard()
-        top_addon = dashboardpage_obj.addon(1).name
-        Assert.equal(priv_addon_name, top_addon)
+        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s not found" % addon_name)
         
 
     def testShouldCheckLibDeactivateAndActivate(self, mozwebqa):
@@ -93,22 +91,18 @@ class TestAddonActivateDeactivate():
         lib_name = dashboardpage_obj.library(1).name
         
         #Click on the private button to make it private and then check that the library is not in the list anymore
-        dashboardpage_obj.library(1).click_private()
-        new_top_lib_name = dashboardpage_obj.library(1).name
-        Assert.not_equal(lib_name, new_top_lib_name)
-        dashboardpage_obj.click_private_libraries_link()
-
+        dashboardpage_obj.library(lib_name).click_private()
+        Assert.false(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s found" % lib_name)
+        
         #Go to the private libraries page and check that the library that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the library is present there.
-        priv_lib_name = dashboardpage_obj.library(1).name
-
-        #print text_priv_addon
-        Assert.equal(lib_name, priv_lib_name)
+        dashboardpage_obj.click_private_libraries_link()
+        Assert.true(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s not found" % lib_name)
+   
+        # Switch it back to public - it should disappaer             
+        dashboardpage_obj.library(lib_name).click_public()
+        Assert.false(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s found" % lib_name)
         
-        dashboardpage_obj.library(1).click_public()
-        new_priv_top_lib_name = dashboardpage_obj.library(1).name
-        Assert.not_equal(priv_lib_name, new_priv_top_lib_name)
-        
+        # Go to main dashboard, should be present
         dashboardpage_obj.header.click_dashboard()
-        top_lib = dashboardpage_obj.library(1).name
-        Assert.equal(priv_lib_name, top_lib)
+        Assert.true(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s not found" % lib_name)

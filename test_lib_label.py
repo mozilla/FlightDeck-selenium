@@ -50,30 +50,25 @@ class TestLibLabel():
         
         credentials = mozwebqa.credentials['default']
          
-        #Create a library. Then go to dashoard and assert that the label is 'initial'.
+        #Create a library. Then go to dashoard and assert that the label is present.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])
-        text_lib = libpage_obj.lib_name
+        lib_name = libpage_obj.lib_name
         
         libpage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.is_the_current_page)
-        label_name = dashboardpage_obj.library(1).name
-        Assert.true(text_lib in label_name)
-        
+        Assert.true(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s not found" % lib_name)
+
         #Click on the edit button of the library.Then create a copy of that library and assert that the label is 'copy'
-        dashboardpage_obj.library(1).click_edit()
+        dashboardpage_obj.library(lib_name).click_edit()
         libpage_obj.click_copy_btn()
-        text_copy_lib = libpage_obj.lib_name
+        copy_lib_name = libpage_obj.lib_name
         
         try:
-            Assert.not_equal(text_lib, text_copy_lib)
+            Assert.not_equal(lib_name, copy_lib_name)
         except:
-            print 'A copy of the addon could not be created'
+            print 'A copy of the library could not be created'
         libpage_obj.header.click_dashboard()
-        label_name = dashboardpage_obj.library(1).name
 
-        Assert.contains("(copy 1)", label_name)
-
-
-
+        Assert.true(dashboardpage_obj.library(copy_lib_name).is_displayed(), "Library %s not found" % copy_lib_name)

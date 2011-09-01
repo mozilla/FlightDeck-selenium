@@ -120,7 +120,7 @@ class SearchPage(FlightDeckBasePage):
             elif type(self.arg) is unicode:
                 return sr.find_element(By.XPATH, "//div[contains(@class,'addon')][descendant::h3/a[text()='%s']]" % self.arg)
 
-        def is_present(self):
+        def is_displayed(self):
             return self.root_locator.is_displayed()
 
         @property
@@ -168,7 +168,7 @@ class SearchPage(FlightDeckBasePage):
             elif type(self.arg) is unicode:
                 return sr.find_element(By.XPATH, "//div[contains(@class,'library')][descendant::h3/a[text()='%s']]" % self.arg)
         
-        def is_present(self):
+        def is_displayed(self):
             return self.root_locator.is_displayed()
         
         @property
