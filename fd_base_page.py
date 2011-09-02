@@ -50,11 +50,15 @@ class FlightDeckBasePage(Page):
        
     class HeaderRegion(Page):
        
+        _home_link_locator = (By.CSS_SELECTOR, "#flightdeck-logo > a")
         _search_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(2) > span > a")
         _documentation_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(3) > span > a")
         _signin_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) > span > a")
         _myaccount_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) a[title='My Account']")
         _signout_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) a[title='Sign Out']")
+       
+        def click_home_logo(self):
+            self.selenium.find_element(*self._home_link_locator).click()
        
         def click_search(self):
             self.selenium.find_element(*self._search_link_locator).click()

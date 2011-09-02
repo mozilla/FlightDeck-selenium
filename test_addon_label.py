@@ -63,7 +63,7 @@ class TestAddonLabel():
         
         #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
         dashboardpage_obj.addon(addon_name).click_edit()
-        addonpage_obj.click_copy_btn()
+        addonpage_obj.click_copy()
         copy_addon_name = addonpage_obj.addon_name
 
         try:

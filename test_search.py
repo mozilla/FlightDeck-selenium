@@ -39,16 +39,18 @@
 import fd_home_page, fd_login_page, fd_search_page
 import fd_dashboard_page, fd_addon_editor_page, fd_lib_editor_page, fd_user_page
 from unittestzero import Assert
+import pytest
 xfail = pytest.mark.xfail
 
 
 class TestSearch():
 
-    @xfail(reason = "Bug 683860 - Add-ons/libraries not indexed in search for user FDTesting")
+    @xfail(reason = "Webdriver cannot trigger :hover, steps to setup addon can't be completed")
     def test_basic_search_string_addon(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
         credentials = mozwebqa.credentials['default']
@@ -57,7 +59,12 @@ class TestSearch():
         homepage_obj.header.click_signin()
         loginpage_obj.login(credentials['email'], credentials['password'])
 
-        searchterm = dashboard_obj.addon(1).name
+        #create a new addon with the valid criteria (version not initial)
+        dashboard_obj.header.click_home_logo()
+        homepage_obj.click_create_addon_btn()
+        addonpage_obj.type_addon_version("searchable")
+        addonpage_obj.click_save()
+        searchterm = addonpage_obj.addon_name
 
         homepage_obj.header.click_search()
         searchpage_obj.type_into_search(searchterm)
@@ -65,11 +72,12 @@ class TestSearch():
 
         Assert.true(searchpage_obj.addon(searchterm).is_displayed(), "%s not found" % searchterm)
     
-    @xfail(reason = "Bug 683860 - Add-ons/libraries not indexed in search for user FDTesting")
+    @xfail(reason = "Webdriver cannot trigger :hover, steps to setup addon can't be completed")
     def test_basic_search_string_library(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        librarypage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
         credentials = mozwebqa.credentials['default']
@@ -78,7 +86,12 @@ class TestSearch():
         homepage_obj.header.click_signin()
         loginpage_obj.login(credentials['email'], credentials['password'])
 
-        searchterm = dashboard_obj.library(1).name
+        #create a new library with the valid criteria (version not initial)
+        dashboard_obj.header.click_home_logo()
+        homepage_obj.click_create_lib_btn()
+        librarypage_obj.type_library_version("searchable")
+        librarypage_obj.click_save()
+        searchterm = librarypage_obj.lib_name
         
         homepage_obj.header.click_search()
         searchpage_obj.type_into_search(searchterm)
@@ -86,7 +99,6 @@ class TestSearch():
 
         Assert.true(searchpage_obj.library(searchterm).is_displayed(), "%s not found" % searchterm)
         
-    @xfail(reason = "Bug 681747 - Partial strings not matching against names in FD Search")   
     def test_search_partial_string(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)

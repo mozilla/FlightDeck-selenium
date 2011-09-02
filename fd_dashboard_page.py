@@ -39,6 +39,7 @@ from page import Page
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
+
 class DashboardPage(FlightDeckBasePage):
 
     _page_title = "Dashboard - Add-on Builder"
@@ -84,7 +85,7 @@ class DashboardPage(FlightDeckBasePage):
         _addon = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Add-ons']][1]")
         _ui_item = (By.CSS_SELECTOR, "li.UI_Item")
 
-        _name = (By.CSS_SELECTOR, "h3:not(span)")
+        _name = (By.CSS_SELECTOR, "h3")
         _version = (By.CSS_SELECTOR, "h3 > span.version")
 
         _test_btn = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")  
@@ -110,9 +111,12 @@ class DashboardPage(FlightDeckBasePage):
 
         @property
         def element_count(self):
-            ul = self.selenium.find_element(*self._addon)
-            return len(ul.find_elements(*self._ui_item))
-
+            try:
+                ul = self.selenium.find_element(*self._addon)
+                return len(ul.find_elements(*self._ui_item))
+            except:
+                return 0
+        
         @property
         def name(self):
             # here we are stripping the <span class="version">
@@ -145,9 +149,9 @@ class DashboardPage(FlightDeckBasePage):
         _library = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]")
         _ui_item = (By.CSS_SELECTOR, "li.UI_Item")
     
-        _name = (By.CSS_SELECTOR, "h3:not(span)")
+        _name = (By.CSS_SELECTOR, "h3")
         _version = (By.CSS_SELECTOR, "h3 > span.version")
-        _edit_btn = (By.CSS_SELECTOR, "li.UI_Edit_Version > a") 
+        _edit_btn = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
         _delete_btn = (By.CSS_SELECTOR, "li.UI_Delete > a")
         _public_btn = (By.CSS_SELECTOR, "li.UI_Activate > a")
         _private_btn = (By.CSS_SELECTOR, "li.UI_Disable > a")
@@ -169,8 +173,11 @@ class DashboardPage(FlightDeckBasePage):
 
         @property
         def element_count(self):
-            ul = self.selenium.find_element(*self._addon)
-            return len(ul.find_elements(*self._ui_item))
+            try:
+                ul = self.selenium.find_element(*self._addon)
+                return len(ul.find_elements(*self._ui_item))
+            except:
+                return 0
 
         @property
         def name(self):

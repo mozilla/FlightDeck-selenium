@@ -37,16 +37,27 @@
 from fd_base_page import FlightDeckBasePage
 from page import Page
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class AddonEditorPage(FlightDeckBasePage):
 
     _addon_name = (By.ID, 'package-info-name')
     _copy_btn = (By.ID, 'package-copy')
+    _save_btn = (By.ID, 'package-save')
+    _version_input = (By.ID, 'version_name')
 
     @property
     def addon_name(self):
         return self.selenium.find_element(*self._addon_name).text
 
-    def click_copy_btn(self):
+    def click_copy(self):
         self.selenium.find_element(*self._copy_btn).click()
+        
+    def click_save(self):
+        self.selenium.find_element(*self._save_btn).click()
+
+    def type_addon_version(self, version_label):
+        save_btn = self.selenium.find_element(*self._save_btn)
+        ActionChains(self.selenium).move_to_element(save_btn).perform()
+        self.selenium.find_element(*self._version_input).clear().send_keys(version_label)

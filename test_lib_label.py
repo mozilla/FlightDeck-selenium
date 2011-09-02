@@ -62,7 +62,7 @@ class TestLibLabel():
 
         #Click on the edit button of the library.Then create a copy of that library and assert that the label is 'copy'
         dashboardpage_obj.library(lib_name).click_edit()
-        libpage_obj.click_copy_btn()
+        libpage_obj.click_copy()
         copy_lib_name = libpage_obj.lib_name
         
         try:

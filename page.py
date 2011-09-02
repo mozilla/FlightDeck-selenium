@@ -38,13 +38,16 @@
 import time
 import base64
 
+
 class Page(object):
-    
-    
+   
+
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.selenium = testsetup.selenium
         self.base_url = testsetup.base_url
+
+        self.selenium.implicitly_wait(20)
     
     def get_page_title(self):
         return self.selenium.title

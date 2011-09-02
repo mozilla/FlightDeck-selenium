@@ -85,7 +85,7 @@ class SearchPage(FlightDeckBasePage):
     @property
     def addons_count_label(self):
         label = self.selenium.find_element(*self._addon_count_label).text
-        return int(str(label).replace("(","").replace(")",""))
+        return int(str(label).replace("(", "").replace(")", ""))
 
     def library_element_count(self):
         return self.library(None).count_elements
@@ -95,7 +95,6 @@ class SearchPage(FlightDeckBasePage):
         label = self.selenium.find_element(*self._library_count_label).text
         return int(str(label).replace("(","").replace(")",""))
         
-
     class Addon(Page):
     
         def __init__(self, testsetup, arg):

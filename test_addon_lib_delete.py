@@ -60,13 +60,6 @@ class TestAddonLibDelete():
         dashboardpage_obj.confirm_delete()
         Assert.false(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s found" % addon_name)
                 
-        #Go to homepage and create a new addon and check that its name is the same as the one that was just deleted.
-        homepage_obj.go_to_home_page()
-        homepage_obj.click_create_addon_btn()
-        new_addon_name = addonpage_obj.addon_name
-
-        Assert.equal(new_addon_name, addon_name)
-
     def testShouldCheckLibDelete(self, mozwebqa):
 
         homepage_obj = fd_home_page.HomePage(mozwebqa)
@@ -85,9 +78,3 @@ class TestAddonLibDelete():
         dashboardpage_obj.library(lib_name).click_delete()
         dashboardpage_obj.confirm_delete()
         Assert.false(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s found" % lib_name)
-        
-        homepage_obj.go_to_home_page()
-        homepage_obj.click_create_lib_btn()
-        
-        new_lib_name = libpage_obj.lib_name
-        Assert.equal(new_lib_name, lib_name)

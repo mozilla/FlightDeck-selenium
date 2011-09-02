@@ -44,6 +44,7 @@ class TestAddonActivateDeactivate():
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
 
         credentials = mozwebqa.credentials['default']
 
@@ -52,9 +53,11 @@ class TestAddonActivateDeactivate():
         loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.true(dashboardpage_obj.is_the_current_page)
         
-        #Get the name of the addon present at the top of the list on dashboard.
-        #This will be used to compare whether the addon is removed from the top of list after making it private
-        addon_name = dashboardpage_obj.addon(1).name
+        # Go back to homepage and create a new addon to work with.
+        dashboardpage_obj.header.click_home_logo()
+        homepage_obj.click_create_addon_btn()
+        addon_name = addonpage_obj.addon_name
+        addonpage_obj.header.click_dashboard()
         
         #Click on the private button to make it private and then check that the addon is not in the list anymore
         dashboardpage_obj.addon(addon_name).click_private()
@@ -78,6 +81,7 @@ class TestAddonActivateDeactivate():
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        librarypage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
 
         credentials = mozwebqa.credentials['default']
         
@@ -86,9 +90,11 @@ class TestAddonActivateDeactivate():
         loginpage_obj.login(credentials['email'], credentials['password'])
         Assert.true(dashboardpage_obj.is_the_current_page)
         
-        #Get the name of the library present at the top of the library list on dashboard.
-        #This will be used to compare whether the library is removed from the top of list after making it private
-        lib_name = dashboardpage_obj.library(1).name
+        # go back to homepage, create a new library to work with
+        dashboardpage_obj.header.click_home_logo()
+        homepage_obj.click_create_lib_btn()
+        lib_name = librarypage_obj.lib_name      
+        librarypage_obj.header.click_dashboard()
         
         #Click on the private button to make it private and then check that the library is not in the list anymore
         dashboardpage_obj.library(lib_name).click_private()
