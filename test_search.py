@@ -99,6 +99,7 @@ class TestSearch():
 
         Assert.true(searchpage_obj.library(searchterm).is_displayed(), "%s not found" % searchterm)
         
+    @xfail(reason = "Bug 681747 - Partial strings not matching against names in FD Search") 
     def test_search_partial_string(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
@@ -114,7 +115,7 @@ class TestSearch():
         searchpage_obj.type_into_search(search_string)
         searchpage_obj.click_search()
         
-        Assert.true(searchpage_obj.addons_element_count() > 1)
+        Assert.true(searchpage_obj.addons_element_count() >= 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed(), "Addon '%s' not found" % top_addon_name)
                 
     def test_search_no_string(self, mozwebqa):
