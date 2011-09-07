@@ -50,14 +50,12 @@ class TestAddonLabel():
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
-        
-        credentials = mozwebqa.credentials['default']
 
-        #Create an addon. Then go to dashoard and assert that the label is 'initial'. 
+        #Create an addon. Then go to dashboard and assert that the label is 'initial'. 
 
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
-        loginpage_obj.login(credentials['email'], credentials['password'])
+        loginpage_obj.login('default')
         addon_name = addonpage_obj.addon_name
 
         homepage_obj.header.click_dashboard()

@@ -87,7 +87,7 @@ class DashboardPage(FlightDeckBasePage):
         def __init__(self, testsetup, lookup):
             Page.__init__(self, testsetup)
             if type(lookup) is int:
-                self._root_locator = (self._base_locator[0], "%s[%s]" % (self._base_locator[1], lookup))
+                self._root_locator = (self._base_locator[0], "%s[%i]" % (self._base_locator[1], lookup))
             elif type(lookup) is unicode:
                 self._root_locator = (self._base_locator[0], "%s[h3[normalize-space(text()) = '%s']]" % (self._base_locator[1], lookup))
 
@@ -100,6 +100,15 @@ class DashboardPage(FlightDeckBasePage):
 
         def click_edit(self):
             self._root_element.find_element(*self._edit_locator).click()
+
+        def click_delete(self):
+            self._root_element.find_element(*self._delete_locator).click()
+
+        def click_public(self):
+            self._root_element.find_element(*self._public_locator).click()
+            
+        def click_private(self):
+            self._root_element.find_element(*self._private_locator).click()
 
         @property
         def name(self):

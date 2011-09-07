@@ -48,11 +48,10 @@ class TestLibLabelcheck_lib_label():
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
-        credentials = mozwebqa.credentials['default']
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login(credentials['email'], credentials['password'])
+        loginpage_obj.login('default')
         Assert.true(dashboardpage_obj.is_the_current_page)
 
         #Get the total count of the number of add-ons that are displayed on the dashboard.

@@ -53,11 +53,11 @@ class SearchPage(FlightDeckBasePage):
     
     _results_message_locator = (By.CSS_SELECTOR, "#SearchResults > p")
     
-    def addon(self, arg):
-        return self.Addon(self.testsetup, arg)
+    def addon(self, lookup):
+        return self.Addon(self.testsetup, lookup)
         
-    def library(self, arg):
-        return self.Library(self.testsetup, arg)        
+    def library(self, lookup):
+        return self.Library(self.testsetup, lookup)        
     
     def _item_locator_by_name(self, name):
         return (By.LINK_TEXT, name)
@@ -75,7 +75,7 @@ class SearchPage(FlightDeckBasePage):
         self.selenium.find_element(*self._filter_by_libraries_locator).click()
         
     def addons_element_count(self):
-        return self.addon(None).count_elements
+        return len(self.selenium.find_elements(*self.Addon._base_locator))
     
     @property
     def addons_count_label(self):
@@ -83,103 +83,59 @@ class SearchPage(FlightDeckBasePage):
         return int(label.strip('()'))
 
     def library_element_count(self):
-        return self.library(None).count_elements
+        return len(self.selenium.find_elements(*self.Library._base_locator))
 
     @property
     def library_count_label(self):
         label = self.selenium.find_element(*self._library_count_label_locator).text
         return int(label.strip('()'))
         
-    class Addon(Page):
-    
-        def __init__(self, testsetup, arg):
+    class SearchResultsRegion(Page):
+        
+        def __init__(self, testsetup, lookup):
             Page.__init__(self, testsetup)
-            self.arg = arg
+            if type(lookup) is int:
+                self._root_locator = (self._base_locator[0], "%s[%i]" % (self._base_locator[1], lookup))
+            elif type(lookup) is unicode:
+                self._root_locator = (self._base_locator[0], "%s[descendant::h3/a[text()='%s']]" % (self._base_locator[1], lookup))
+         
+        _name_locator = (By.CSS_SELECTOR, "h3 > a")
+        _author_link_locator = (By.CSS_SELECTOR, "h3 > span > a")
+        _source_locator = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")   
+              
+        def is_displayed(self):
+            return self.is_element_visible(self._root_locator)
+
+        @property
+        def name(self):
+            return self.root_element.find_element(*self._name_locator).text
+
+        @property
+        def author_name(self):
+            return self.root_element.find_element(*self._author_link_locator).text
+
+        def click_source(self):
+            self.root_element.find_element(*self._source_locator).click()
+
+        def click_author(self):
+            self.root_element.find_element(*self._author_link_locator).click()
            
-        _search_results_locator = (By.CSS_SELECTOR, "#SearchResults")
-        _addon = (By.CSS_SELECTOR, "div.addon")
-    
-        _name_locator = (By.CSS_SELECTOR, "h3 > a")
-        _author_link_locator = (By.CSS_SELECTOR, "h3 > span > a")
-        _by_span_tag_locator = (By.CSS_SELECTOR, "h3 > span")
+    class Addon(SearchResultsRegion):
+     
+        _base_locator = (By.XPATH, "//div[contains(@class,'addon')]")
         _test_btn = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")  
-        _source_locator = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
+     
+        @property
+        def root_element(self):
+            return self.selenium.find_element(*self._root_locator)
         
-        @property
-        def root_locator(self):
-            sr = self.selenium.find_element(*self._search_results_locator)
-            
-            if type(self.arg) is int:
-                return sr.find_elements(*self._addon)[self.arg - 1]
-            elif type(self.arg) is unicode:
-                return sr.find_element(By.XPATH, "//div[contains(@class,'addon')][descendant::h3/a[text()='%s']]" % self.arg)
-
-        def is_displayed(self):
-            return self.root_locator.is_displayed()
-
-        @property
-        def count_elements(self):
-            sr = self.selenium.find_element(*self._search_results_locator)
-            return len(sr.find_elements(*self._addon))
-                
-        @property
-        def name(self):
-            return self.root_locator.find_element(*self._name_locator).text
-
-        @property
-        def author_name(self):
-            return self.root_locator.find_element(*self._author_link_locator).text
-
-        def click_source(self):
-            self.root_locator.find_element(*self._source_locator).click()
-
         def click_test(self):
-            self.root_locator.find_element(*self._test_btn).click()
-
-        def click_author_link_locator(self):
-            self.root_locator.find_element(*self._author_link_locator).click()
-
-    class Library(Page):
+            self.root_element.find_element(*self._test_btn).click()
+        
+    class Library(SearchResultsRegion):
     
-        def __init__(self, testsetup, arg):
-            Page.__init__(self, testsetup)
-            self.arg = arg
-
-        _search_results_locator = (By.CSS_SELECTOR, "section#SearchResults")
-        _library = (By.CSS_SELECTOR, "div.library")
-
-        _name_locator = (By.CSS_SELECTOR, "h3 > a")
-        _author_link_locator = (By.CSS_SELECTOR, "h3 > span > a")
-        _by_span_tag_locator = (By.CSS_SELECTOR, "h3 > span")
-        _source_locator = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
-        
-        @property
-        def root_locator(self):
-            sr = self.selenium.find_element(*self._search_results_locator)
-            
-            if type(self.arg) is int:
-                return sr.find_elements(*self._library)[self.arg - 1]
-            elif type(self.arg) is unicode:
-                return sr.find_element(By.XPATH, "//div[contains(@class,'library')][descendant::h3/a[text()='%s']]" % self.arg)
-        
-        def is_displayed(self):
-            return self.root_locator.is_displayed()
-        
-        @property
-        def count_elements(self):
-            sr = self.selenium.find_element(*self._search_results_locator)
-            return len(sr.find_elements(*self._library))
-                
-        @property
-        def name(self):
-            return self.root_locator.find_element(*self._name_locator).text
+        _base_locator = (By.XPATH, "//div[contains(@class,'library')]")
 
         @property
-        def author_name(self):
-            return self.root_locator.find_element(*self._author_link_locator).text
-            
-        def click_source(self):
-            self.root_locator.find_element(*self._source_locator).click()
-            
-        def click_author_link_locator(self):
-            self.root_locator.find_element(*self._author_link_locator).click()
+        def root_element(self):
+            return self.selenium.find_element(*self._root_locator)

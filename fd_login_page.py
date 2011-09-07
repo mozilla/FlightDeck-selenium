@@ -44,7 +44,8 @@ class LoginPage(FlightDeckBasePage):
     _password_locator = (By.ID, 'id_password')
     _submit_locator = (By.NAME, 'save')
 
-    def login(self, username, password):
-        self.selenium.find_element(*self._username_locator).send_keys(username)
-        self.selenium.find_element(*self._password_locator).send_keys(password)
+    def login(self, user = "default"):
+        credentials = self.testsetup.credentials[user]
+        self.selenium.find_element(*self._username_locator).send_keys(credentials['email'])
+        self.selenium.find_element(*self._password_locator).send_keys(credentials['password'])
         self.selenium.find_element(*self._submit_locator).click()

@@ -51,12 +51,10 @@ class TestLibLabel():
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         libpage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
         
-        credentials = mozwebqa.credentials['default']
-         
         #Create a library. Then go to dashboard and assert that the label is present.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
-        loginpage_obj.login(credentials['email'], credentials['password'])
+        loginpage_obj.login('default')
         library_name = libpage_obj.library_name
         
         libpage_obj.header.click_dashboard()

@@ -50,11 +50,9 @@ class TestAddonActivateDeactivate():
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
 
-        credentials = mozwebqa.credentials['default']
-
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login(credentials['email'], credentials['password'])
+        loginpage_obj.login('default')
         Assert.true(dashboardpage_obj.is_the_current_page)
         
         # Go back to homepage and create a new addon to work with.
@@ -87,32 +85,30 @@ class TestAddonActivateDeactivate():
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         librarypage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
 
-        credentials = mozwebqa.credentials['default']
-        
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login(credentials['email'], credentials['password'])
+        loginpage_obj.login('default')
         Assert.true(dashboardpage_obj.is_the_current_page)
         
         # go back to homepage, create a new library to work with
         dashboardpage_obj.header.click_home_logo()
         homepage_obj.click_create_lib_btn()
-        lib_name = librarypage_obj.lib_name      
+        library_name = librarypage_obj.library_name      
         librarypage_obj.header.click_dashboard()
         
         #Click on the private button to make it private and then check that the library is not in the list anymore
-        dashboardpage_obj.library(lib_name).click_private()
-        Assert.false(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s found" % lib_name)
+        dashboardpage_obj.library(library_name).click_private()
+        Assert.false(dashboardpage_obj.library(library_name).is_displayed(), "Library %s found" % library_name)
         
         #Go to the private libraries page and check that the library that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the library is present there.
         dashboardpage_obj.click_private_libraries_link()
-        Assert.true(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s not found" % lib_name)
+        Assert.true(dashboardpage_obj.library(library_name).is_displayed(), "Library %s not found" % library_name)
    
         # Switch it back to public - it should disappaer             
-        dashboardpage_obj.library(lib_name).click_public()
-        Assert.false(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s found" % lib_name)
+        dashboardpage_obj.library(library_name).click_public()
+        Assert.false(dashboardpage_obj.library(library_name).is_displayed(), "Library %s found" % library_name)
         
         # Go to main dashboard, should be present
         dashboardpage_obj.header.click_dashboard()
-        Assert.true(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s not found" % lib_name)
+        Assert.true(dashboardpage_obj.library(library_name).is_displayed(), "Library %s not found" % library_name)

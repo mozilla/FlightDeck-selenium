@@ -58,11 +58,9 @@ class TestSearch():
         addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
-        credentials = mozwebqa.credentials['default']
-        
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login(credentials['email'], credentials['password'])
+        loginpage_obj.login('default')
 
         #create a new addon with the valid criteria (version not initial)
         dashboard_obj.header.click_home_logo()
@@ -85,11 +83,9 @@ class TestSearch():
         librarypage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
-        credentials = mozwebqa.credentials['default']
-
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login(credentials['email'], credentials['password'])
+        loginpage_obj.login('default')
 
         #create a new library with the valid criteria (version not initial)
         dashboard_obj.header.click_home_logo()
@@ -193,8 +189,8 @@ class TestSearch():
         homepage_obj.header.click_search()
 
         addon_name = searchpage_obj.addon(1).name
-        author_name = searchpage_obj.addon(1).author_name
-        searchpage_obj.addon(addon_name).click_by_link()
+        author_name = searchpage_obj.addon(addon_name).author_name
+        searchpage_obj.addon(addon_name).click_author()
         Assert.equal(userpage_obj.author_name, author_name)
         
     def test_search_library_author_link(self, mozwebqa):
@@ -208,8 +204,8 @@ class TestSearch():
         homepage_obj.header.click_search()
         
         library_name = searchpage_obj.library(1).name
-        author_name = searchpage_obj.library(1).author_name
-        searchpage_obj.library(library_name).click_by_link()
+        author_name = searchpage_obj.library(library_name).author_name
+        searchpage_obj.library(library_name).click_author()
         Assert.equal(userpage_obj.author_name, author_name)
 
     def test_search_addon_source_btn(self, mozwebqa):
@@ -218,16 +214,14 @@ class TestSearch():
         dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
         editorpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
-
-        credentials = mozwebqa.credentials['default']
         
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login(credentials['email'], credentials['password'])
+        loginpage_obj.login('default')
         dashboard_obj.header.click_search()
 
         addon_name = searchpage_obj.addon(1).name
-        searchpage_obj.addon(1).click_source()
+        searchpage_obj.addon(addon_name).click_source()
         Assert.equal(editorpage_obj.addon_name, addon_name)
 
     def test_search_library_source_btn(self, mozwebqa):
@@ -236,14 +230,12 @@ class TestSearch():
         dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
         editorpage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
-
-        credentials = mozwebqa.credentials['default']
                 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login(credentials['email'], credentials['password'])
+        loginpage_obj.login('default')
         dashboard_obj.header.click_search()
     
         library_name = searchpage_obj.library(1).name
-        searchpage_obj.library(1).click_source()
-        Assert.equal(editorpage_obj.lib_name, library_name)
+        searchpage_obj.library(library_name).click_source()
+        Assert.equal(editorpage_obj.library_name, library_name)

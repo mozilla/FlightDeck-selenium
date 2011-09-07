@@ -45,16 +45,16 @@ class Page(object):
         self.selenium = testsetup.selenium
         self.base_url = testsetup.base_url
 
-        self.selenium.implicitly_wait(20)
-    
     def get_page_title(self):
         return self.selenium.title
 
     @property
     def is_the_current_page(self):
         page_title = self.selenium.title
+        
         if not page_title == self._page_title:
             print "Expected page title: %s" % self._page_title
+            print "Actual page title: %s" % page_title
             raise Exception("Expected page title does not match actual page title.")
         else:
             return True
