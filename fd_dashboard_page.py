@@ -49,37 +49,36 @@ class DashboardPage(FlightDeckBasePage):
     _private_libraries_link = (By.LINK_TEXT, "Private Libraries")
     _confirm_delete_locator = (By.ID, 'delete_package')
     _addons_public_counter = (By.ID, "public_addons_no")
-   
+
     def addon(self, lookup):
         return self.Addon(self.testsetup, lookup)
 
     def library(self, lookup):
         return self.Library(self.testsetup, lookup)
-        
+
     @property
     def addons_count_label(self):
         return self.selenium.find_element(*self._addons_public_counter).text
 
     def addons_element_count(self):
         return len(self.selenium.find_elements(*self.Addon._base_locator))
-    
+
     def click_private_addons_link(self):
         self.selenium.find_element(*self._private_addons_link).click()
-    
+
     def click_private_libraries_link(self):
         self.selenium.find_element(*self._private_libraries_link).click()
-    
+
     def click_public_libraries_link(self):
         self.selenium.find_element(*self._public_libraries_link).click()
 
     def confirm_delete(self):
         self.selenium.find_element(*self._confirm_delete_locator).click()
 
-
     class DashboardContentRegion(Page):
         _name_locator = (By.CSS_SELECTOR, "h3")
-        _version_locator = (By.CSS_SELECTOR, "h3 > span.version") 
-        _edit_locator = (By.CSS_SELECTOR, "li.UI_Edit_Version > a") 
+        _version_locator = (By.CSS_SELECTOR, "h3 > span.version")
+        _edit_locator = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
         _delete_locator = (By.CSS_SELECTOR, "li.UI_Delete > a")
         _public_locator = (By.CSS_SELECTOR, "li.UI_Activate > a")
         _private_locator = (By.CSS_SELECTOR, "li.UI_Disable > a")
@@ -94,7 +93,7 @@ class DashboardPage(FlightDeckBasePage):
         @property
         def _root_element(self):
             return self.selenium.find_element(*self._root_locator)
-    
+
         def is_displayed(self):
             return self.is_element_visible(self._root_locator)
 
@@ -107,16 +106,14 @@ class DashboardPage(FlightDeckBasePage):
             # text from the h3 to get *just* the addon's name
             name = self._root_element.find_element(*self._name_locator).text
             version = self._root_element.find_element(*self._version_locator).text
-            return name.replace(version, "").rstrip() 
-
+            return name.replace(version, "").rstrip()
 
     class Addon(DashboardContentRegion):
         _base_locator = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Add-ons']][1]/li")
-        _test_locator = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a") 
+        _test_locator = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")
 
         def click_test(self):
             self.root_element.find_element(*DashboardContentRegion._test_locator).click()
 
-
-    class Library(DashboardContentRegion):    
+    class Library(DashboardContentRegion):
         _base_locator = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]/li")
