@@ -34,7 +34,6 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import fd_login_page
 from page import Page
 from selenium.webdriver.common.by import By
 

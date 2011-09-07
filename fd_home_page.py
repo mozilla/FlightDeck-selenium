@@ -35,7 +35,6 @@
 #
 # ***** END LICENSE BLOCK *****
 from fd_base_page import FlightDeckBasePage
-from page import Page
 from selenium.webdriver.common.by import By
 
 
