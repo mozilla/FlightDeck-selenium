@@ -34,7 +34,11 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import fd_home_page, fd_login_page, fd_dashboard_page, fd_addon_editor_page, fd_lib_editor_page
+import fd_home_page
+import fd_login_page
+import fd_dashboard_page
+import fd_addon_editor_page
+import fd_lib_editor_page
 from unittestzero import Assert
 
 
@@ -72,9 +76,10 @@ class TestAddonLibDelete():
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])
-        lib_name = libpage_obj.lib_name
+        lib_name = libpage_obj.library_name
 
         homepage_obj.header.click_dashboard()
         dashboardpage_obj.library(lib_name).click_delete()
         dashboardpage_obj.confirm_delete()
         Assert.false(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s found" % lib_name)
+        

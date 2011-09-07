@@ -42,16 +42,16 @@ from selenium.webdriver.common.by import By
 
 class SearchPage(FlightDeckBasePage):
 
-    _search_field_locator = (By.CSS_SELECTOR, "form#Search input[type='search']")
-    _search_btn = (By.CSS_SELECTOR, "form#Search button[type='submit']")
+    _search_field_locator = (By.CSS_SELECTOR, "#Search input[type='search']")
+    _search_button_locator = (By.CSS_SELECTOR, "#Search button[type='submit']")
     
-    _filter_by_addons = (By.LINK_TEXT, "Add-ons")
-    _filter_by_libraries = (By.LINK_TEXT, "Libraries")
+    _filter_by_addons_locator = (By.LINK_TEXT, "Add-ons")
+    _filter_by_libraries_locator = (By.LINK_TEXT, "Libraries")
     
-    _addon_count_label = (By.XPATH, "//strong[preceding-sibling::a[contains(text(),'Add-ons')]]")
-    _library_count_label = (By.XPATH, "//strong[preceding-sibling::a[contains(text(),'Libraries')]]")
+    _addon_count_label_locator = (By.XPATH, "//strong[preceding-sibling::a[contains(text(),'Add-ons')]]")
+    _library_count_label_locator = (By.XPATH, "//strong[preceding-sibling::a[contains(text(),'Libraries')]]")
     
-    _results_message = (By.CSS_SELECTOR, "#SearchResults > p")
+    _results_message_locator = (By.CSS_SELECTOR, "#SearchResults > p")
     
     def addon(self, arg):
         return self.Addon(self.testsetup, arg)
@@ -62,38 +62,33 @@ class SearchPage(FlightDeckBasePage):
     def _item_locator_by_name(self, name):
         return (By.LINK_TEXT, name)
     
-    def type_into_search(self, text):
+    def type_search_term(self, text):
         self.selenium.find_element(*self._search_field_locator).send_keys(text)
         
     def click_search(self):
-        self.selenium.find_element(*self._search_btn).click()
-        
-    def is_addon_present(self, name):
-        list = self.selenium.find_elements(*self._addon_list)
-        return list.find_element(*self._item_locator_by_name(name)).is_displayed()
+        self.selenium.find_element(*self._search_button_locator).click()
         
     def click_filter_addons_link(self):
-        self.selenium.find_element(*self._filter_by_addons).click()
+        self.selenium.find_element(*self._filter_by_addons_locator).click()
         
     def click_filter_libraries_link(self):
-        self.selenium.find_element(*self._filter_by_libraries).click()
+        self.selenium.find_element(*self._filter_by_libraries_locator).click()
         
     def addons_element_count(self):
-        #return len(self.selenium.find_elements(*self._addon_list))
         return self.addon(None).count_elements
     
     @property
     def addons_count_label(self):
-        label = self.selenium.find_element(*self._addon_count_label).text
-        return int(str(label).replace("(", "").replace(")", ""))
+        label = self.selenium.find_element(*self._addon_count_label_locator).text
+        return int(label.strip('()'))
 
     def library_element_count(self):
         return self.library(None).count_elements
 
     @property
     def library_count_label(self):
-        label = self.selenium.find_element(*self._library_count_label).text
-        return int(str(label).replace("(","").replace(")",""))
+        label = self.selenium.find_element(*self._library_count_label_locator).text
+        return int(label.strip('()'))
         
     class Addon(Page):
     
@@ -101,18 +96,18 @@ class SearchPage(FlightDeckBasePage):
             Page.__init__(self, testsetup)
             self.arg = arg
            
-        _search_results = (By.CSS_SELECTOR, "section#SearchResults")
+        _search_results_locator = (By.CSS_SELECTOR, "#SearchResults")
         _addon = (By.CSS_SELECTOR, "div.addon")
     
-        _name = (By.CSS_SELECTOR, "h3 > a")
-        _by_link = (By.CSS_SELECTOR, "h3 > span > a")
-        _by_span_tag = (By.CSS_SELECTOR, "h3 > span")
+        _name_locator = (By.CSS_SELECTOR, "h3 > a")
+        _author_link_locator = (By.CSS_SELECTOR, "h3 > span > a")
+        _by_span_tag_locator = (By.CSS_SELECTOR, "h3 > span")
         _test_btn = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")  
-        _source_btn = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
+        _source_locator = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
         
         @property
         def root_locator(self):
-            sr = self.selenium.find_element(*self._search_results)
+            sr = self.selenium.find_element(*self._search_results_locator)
             
             if type(self.arg) is int:
                 return sr.find_elements(*self._addon)[self.arg - 1]
@@ -124,25 +119,25 @@ class SearchPage(FlightDeckBasePage):
 
         @property
         def count_elements(self):
-            sr = self.selenium.find_element(*self._search_results)
+            sr = self.selenium.find_element(*self._search_results_locator)
             return len(sr.find_elements(*self._addon))
                 
         @property
         def name(self):
-            return self.root_locator.find_element(*self._name).text
+            return self.root_locator.find_element(*self._name_locator).text
 
         @property
         def author_name(self):
-            return self.root_locator.find_element(*self._by_link).text
+            return self.root_locator.find_element(*self._author_link_locator).text
 
         def click_source(self):
-            self.root_locator.find_element(*self._source_btn).click()
+            self.root_locator.find_element(*self._source_locator).click()
 
         def click_test(self):
             self.root_locator.find_element(*self._test_btn).click()
 
-        def click_by_link(self):
-            self.root_locator.find_element(*self._by_link).click()
+        def click_author_link_locator(self):
+            self.root_locator.find_element(*self._author_link_locator).click()
 
     class Library(Page):
     
@@ -150,17 +145,17 @@ class SearchPage(FlightDeckBasePage):
             Page.__init__(self, testsetup)
             self.arg = arg
 
-        _search_results = (By.CSS_SELECTOR, "section#SearchResults")
+        _search_results_locator = (By.CSS_SELECTOR, "section#SearchResults")
         _library = (By.CSS_SELECTOR, "div.library")
 
-        _name = (By.CSS_SELECTOR, "h3 > a")
-        _by_link = (By.CSS_SELECTOR, "h3 > span > a")
-        _by_span_tag = (By.CSS_SELECTOR, "h3 > span")
-        _source_btn = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
+        _name_locator = (By.CSS_SELECTOR, "h3 > a")
+        _author_link_locator = (By.CSS_SELECTOR, "h3 > span > a")
+        _by_span_tag_locator = (By.CSS_SELECTOR, "h3 > span")
+        _source_locator = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")
         
         @property
         def root_locator(self):
-            sr = self.selenium.find_element(*self._search_results)
+            sr = self.selenium.find_element(*self._search_results_locator)
             
             if type(self.arg) is int:
                 return sr.find_elements(*self._library)[self.arg - 1]
@@ -172,19 +167,19 @@ class SearchPage(FlightDeckBasePage):
         
         @property
         def count_elements(self):
-            sr = self.selenium.find_element(*self._search_results)
+            sr = self.selenium.find_element(*self._search_results_locator)
             return len(sr.find_elements(*self._library))
                 
         @property
         def name(self):
-            return self.root_locator.find_element(*self._name).text
+            return self.root_locator.find_element(*self._name_locator).text
 
         @property
         def author_name(self):
-            return self.root_locator.find_element(*self._by_link).text
+            return self.root_locator.find_element(*self._author_link_locator).text
             
         def click_source(self):
-            self.root_locator.find_element(*self._source_btn).click()
+            self.root_locator.find_element(*self._source_locator).click()
             
-        def click_by_link(self):
-            self.root_locator.find_element(*self._by_link).click()
+        def click_author_link_locator(self):
+            self.root_locator.find_element(*self._author_link_locator).click()

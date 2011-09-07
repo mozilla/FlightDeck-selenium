@@ -34,7 +34,10 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import fd_home_page, fd_login_page, fd_dashboard_page, fd_addon_editor_page
+import fd_home_page
+import fd_login_page
+import fd_dashboard_page
+import fd_addon_editor_page
 from unittestzero import Assert
 
 
@@ -70,7 +73,6 @@ class TestAddonLabel():
             Assert.not_equal(addon_name, copy_addon_name)
         except:
             print 'A copy of the addon could not be created'
-        homepage_obj.header.click_dashboard()
-        
+        homepage_obj.header.click_dashboard()  
         Assert.true(dashboardpage_obj.addon(copy_addon_name).is_displayed(), "Addon %s not found" % copy_addon_name)
         

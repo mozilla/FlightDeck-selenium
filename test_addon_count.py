@@ -34,7 +34,9 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import fd_home_page, fd_login_page, fd_dashboard_page
+import fd_home_page
+import fd_login_page
+import fd_dashboard_page
 from unittestzero import Assert
 
 

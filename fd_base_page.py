@@ -34,12 +34,12 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+import fd_login_page
 from page import Page
-from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
+
 class FlightDeckBasePage(Page):
-       
     
     def go_to_home_page(self):
         self.selenium.get(self.base_url)

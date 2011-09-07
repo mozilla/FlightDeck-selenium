@@ -43,21 +43,21 @@ from selenium.webdriver.common.action_chains import ActionChains
 class LibraryEditorPage(FlightDeckBasePage):
 
     _library_name = (By.ID, 'package-info-name')
-    _copy_btn = (By.ID, 'package-copy')
-    _save_btn = (By.ID, 'package-save')
-    _version_input = (By.ID, 'version_name')
+    _copy_locator = (By.ID, 'package-copy')
+    _save_locator= (By.ID, 'package-save')
+    _version_locator = (By.ID, 'version_name')
 
     @property
-    def lib_name(self):
+    def library_name(self):
         return self.selenium.find_element(*self._library_name).text
 
     def click_copy(self):
-        self.selenium.find_element(*self._copy_btn).click()
+        self.selenium.find_element(*self._copy_locator).click()
 
     def click_save(self):
-        self.selenium.find_element(*self._save_btn).click()
+        self.selenium.find_element(*self._save_locator).click()
 
     def type_library_version(self, version_label):
-        save_btn = self.selenium.find_element(*self._save_btn)
-        ActionChains(self.selenium).move_to_element(save_btn).perform()
-        self.selenium.find_element(*self._version_input).clear().send_keys(version_label)
+        save_button = self.selenium.find_element(*self._save_btn)
+        ActionChains(self.selenium).move_to_element(save_button).perform()
+        self.selenium.find_element(*self._version_locator).clear().send_keys(version_label)

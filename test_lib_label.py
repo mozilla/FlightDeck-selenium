@@ -34,7 +34,10 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import fd_home_page, fd_login_page, fd_dashboard_page, fd_lib_editor_page
+import fd_home_page
+import fd_login_page
+import fd_dashboard_page
+import fd_lib_editor_page
 from unittestzero import Assert
 
 
@@ -50,25 +53,25 @@ class TestLibLabel():
         
         credentials = mozwebqa.credentials['default']
          
-        #Create a library. Then go to dashoard and assert that the label is present.
+        #Create a library. Then go to dashboard and assert that the label is present.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
         loginpage_obj.login(credentials['email'], credentials['password'])
-        lib_name = libpage_obj.lib_name
+        library_name = libpage_obj.library_name
         
         libpage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.is_the_current_page)
-        Assert.true(dashboardpage_obj.library(lib_name).is_displayed(), "Library %s not found" % lib_name)
+        Assert.true(dashboardpage_obj.library(library_name).is_displayed(), "Library %s not found" % library_name)
 
         #Click on the edit button of the library.Then create a copy of that library and assert that the label is 'copy'
-        dashboardpage_obj.library(lib_name).click_edit()
+        dashboardpage_obj.library(library_name).click_edit()
         libpage_obj.click_copy()
-        copy_lib_name = libpage_obj.lib_name
+        copy_library_name = libpage_obj.library_name
         
         try:
-            Assert.not_equal(lib_name, copy_lib_name)
+            Assert.not_equal(library_name, copy_library_name)
         except:
             print 'A copy of the library could not be created'
         libpage_obj.header.click_dashboard()
 
-        Assert.true(dashboardpage_obj.library(copy_lib_name).is_displayed(), "Library %s not found" % copy_lib_name)
+        Assert.true(dashboardpage_obj.library(copy_library_name).is_displayed(), "Library %s not found" % copy_library_name)

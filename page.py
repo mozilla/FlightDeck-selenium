@@ -35,13 +35,11 @@
 #
 # ***** END LICENSE BLOCK *****
 
-import time
-import base64
+from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException
 
 
 class Page(object):
    
-
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.selenium = testsetup.selenium
@@ -60,3 +58,10 @@ class Page(object):
             raise Exception("Expected page title does not match actual page title.")
         else:
             return True
+ 
+    def is_element_visible(self, locator):
+        try:
+            return self.selenium.find_element(*locator).is_displayed()
+        except NoSuchElementException, ElementNotVisibleException:
+            return False
+        

@@ -17,7 +17,7 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla.
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Zac Campbell
@@ -36,8 +36,13 @@
 #
 # ***** END LICENSE BLOCK *****
 
-import fd_home_page, fd_login_page, fd_search_page
-import fd_dashboard_page, fd_addon_editor_page, fd_lib_editor_page, fd_user_page
+import fd_home_page
+import fd_login_page
+import fd_search_page
+import fd_dashboard_page
+import fd_addon_editor_page
+import fd_lib_editor_page
+import fd_user_page
 from unittestzero import Assert
 import pytest
 xfail = pytest.mark.xfail
@@ -67,7 +72,7 @@ class TestSearch():
         searchterm = addonpage_obj.addon_name
 
         homepage_obj.header.click_search()
-        searchpage_obj.type_into_search(searchterm)
+        searchpage_obj.type_search_term(searchterm)
         searchpage_obj.click_search()
 
         Assert.true(searchpage_obj.addon(searchterm).is_displayed(), "%s not found" % searchterm)
@@ -94,7 +99,7 @@ class TestSearch():
         searchterm = librarypage_obj.lib_name
         
         homepage_obj.header.click_search()
-        searchpage_obj.type_into_search(searchterm)
+        searchpage_obj.type_search_term(searchterm)
         searchpage_obj.click_search()
 
         Assert.true(searchpage_obj.library(searchterm).is_displayed(), "%s not found" % searchterm)
@@ -112,7 +117,7 @@ class TestSearch():
         
         top_addon_name = searchpage_obj.addon(1).name
         search_string = top_addon_name[0:4]
-        searchpage_obj.type_into_search(search_string)
+        searchpage_obj.type_search_term(search_string)
         searchpage_obj.click_search()
         
         Assert.true(searchpage_obj.addons_element_count() >= 1)
@@ -144,7 +149,7 @@ class TestSearch():
         # search with a generic but safe string 'test'
         # filter by add-on results and check number
         
-        searchpage_obj.type_into_search("test")
+        searchpage_obj.type_search_term("test")
         searchpage_obj.click_search()
         
         searchpage_obj.click_filter_addons_link()
@@ -165,7 +170,7 @@ class TestSearch():
         # search with a generic but safe string 'test'
         # filter by add-on results and check number
         
-        searchpage_obj.type_into_search("test")
+        searchpage_obj.type_search_term("test")
         searchpage_obj.click_search()
         
         searchpage_obj.click_filter_libraries_link()

@@ -41,8 +41,8 @@ from selenium.webdriver.common.by import By
 class UserPage(FlightDeckBasePage):
     # Page for viewing user's addons and libraries
 
-    _username = (By.CSS_SELECTOR, "#app-sidebar > h2")
+    _username_locator = (By.CSS_SELECTOR, "#app-sidebar > h2")
 
     @property
     def author_name(self):
-        return self.selenium.find_element(*self._username).text 
+        return self.selenium.find_element(*self._username_locator).text 
