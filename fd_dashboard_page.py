@@ -51,17 +51,17 @@ class DashboardPage(FlightDeckBasePage):
     _addons_public_counter = (By.ID, "public_addons_no")
    
     def addon(self, lookup):
-        return DashboardContentRegion.Addon(self.testsetup, lookup)
+        return self.Addon(self.testsetup, lookup)
 
     def library(self, lookup):
-        return DashboardContentRegion.Library(self.testsetup, lookup)
+        return self.Library(self.testsetup, lookup)
         
     @property
     def addons_count_label(self):
         return self.selenium.find_element(*self._addons_public_counter).text
 
     def addons_element_count(self):
-        return len(self.selenium.find_elements(*DashboardContentRegion._addons_locator))
+        return len(self.selenium.find_elements(*self.Addon._base_locator))
     
     def click_private_addons_link(self):
         self.selenium.find_element(*self._private_addons_link).click()
@@ -75,73 +75,48 @@ class DashboardPage(FlightDeckBasePage):
     def confirm_delete(self):
         self.selenium.find_element(*self._confirm_delete_locator).click()
 
-class DashboardContentRegion(Page):
 
-    def __init__(self, testsetup):
-        Page.__init__(self, testsetup)
-
-    _addons_locator = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Add-ons']][1]/li")
-    _library_locator = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]/li")
-
-    _name_locator = (By.CSS_SELECTOR, "h3")
-    _version_locator = (By.CSS_SELECTOR, "h3 > span.version")
-    _test_locator = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")  
-    _edit_locator = (By.CSS_SELECTOR, "li.UI_Edit_Version > a") 
-    _delete_locator = (By.CSS_SELECTOR, "li.UI_Delete > a")
-    _public_locator = (By.CSS_SELECTOR, "li.UI_Activate > a")
-    _private_locator = (By.CSS_SELECTOR, "li.UI_Disable > a")
-
-    def Addon(self):
-        return Addon(testsetup, lookup)
-        
-    def Library(self):
-        return Library(testsetup, lookup)
-
-    class Addon(Page):
-        
-        def __init__(self, testsetup, lookup):
-            Page.__init__(self, testsetup)
-            self.lookup = lookup
-            if type(self.lookup) is int:
-                self.root_locator = (DashboardContentRegion._addons_locator[0], "%s[%s]" % (DashboardContentRegion._addons_locator, self.lookup))
-            elif type(self.lookup) is unicode:
-                self.root_locator = (DashboardContentRegion._addons_locator[0], "%s[h3[normalize-space(text()) = '%s']]" % (DashboardContentRegion._addons_locator[1], self.lookup))
-        
-        @property
-        def root_element(self):
-            return self.selenium.find_element(*self.root_locator)
-    
-        def is_displayed(self):
-            return self.is_element_visible(self.root_locator)
-    
-        def click_test(self):
-            self.root_element.find_element(*DashboardContentRegion._test_locator).click()
-        
-    class Library(Page):    
+    class DashboardContentRegion(Page):
+        _name_locator = (By.CSS_SELECTOR, "h3")
+        _version_locator = (By.CSS_SELECTOR, "h3 > span.version") 
+        _edit_locator = (By.CSS_SELECTOR, "li.UI_Edit_Version > a") 
+        _delete_locator = (By.CSS_SELECTOR, "li.UI_Delete > a")
+        _public_locator = (By.CSS_SELECTOR, "li.UI_Activate > a")
+        _private_locator = (By.CSS_SELECTOR, "li.UI_Disable > a")
 
         def __init__(self, testsetup, lookup):
             Page.__init__(self, testsetup)
-            self.lookup = lookup
-            if type(self.lookup) is int:
-                self.root_locator = (DashboardContentRegion._library_locator[0], "%s[%s]" % (DashboardContentRegion._library_locator, self.lookup))
-            elif type(self.lookup) is unicode:
-                self.root_locator = (DashboardContentRegion._library_locator[0], "%s[h3[normalize-space(text()) = '%s']]" % (DashboardContentRegion._library_locator[1], self.lookup))
-            print self.root_locator
-    
-        @property
-        def root_element(self):
-            return self.selenium.find_element(*self.root_locator)
+            if type(lookup) is int:
+                self._root_locator = (self._base_locator[0], "%s[%s]" % (self._base_locator[1], lookup))
+            elif type(lookup) is unicode:
+                self._root_locator = (self._base_locator[0], "%s[h3[normalize-space(text()) = '%s']]" % (self._base_locator[1], lookup))
 
-        def is_displayed(self):
-            return self.is_element_visible(self.root_locator)
+        @property
+        def _root_element(self):
+            return self.selenium.find_element(*self._root_locator)
     
+        def is_displayed(self):
+            return self.is_element_visible(self._root_locator)
+
+        def click_edit(self):
+            self._root_element.find_element(*self._edit_locator).click()
+
         @property
         def name(self):
             # here we are stripping thowse <span class="version">
             # text from the h3 to get *just* the addon's name
-            name = self.root_element.find_element(*DashboardContentRegion._name_locator).text
-            version = self.root_element.find_element(*DashboardContentRegion._version_locator).text
-            return name.replace(version, "").rstrip()    
-        
-        def click_edit(self):
-            self.root_element.find_element(*DashboardContentRegion._edit_locator).click()
+            name = self._root_element.find_element(*self._name_locator).text
+            version = self._root_element.find_element(*self._version_locator).text
+            return name.replace(version, "").rstrip() 
+
+
+    class Addon(DashboardContentRegion):
+        _base_locator = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Add-ons']][1]/li")
+        _test_locator = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a") 
+
+        def click_test(self):
+            self.root_element.find_element(*DashboardContentRegion._test_locator).click()
+
+
+    class Library(DashboardContentRegion):    
+        _base_locator = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]/li")
