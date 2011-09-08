@@ -61,7 +61,7 @@ class TestAddonLibDelete():
         homepage_obj.header.click_dashboard()
         dashboardpage_obj.addon(addon_name).click_delete()
         dashboardpage_obj.confirm_delete()
-        Assert.false(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s found" % addon_name)
+        Assert.false(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s found" % addon_name)
                 
     def testShouldCheckLibDelete(self, mozwebqa):
 
@@ -78,5 +78,5 @@ class TestAddonLibDelete():
         homepage_obj.header.click_dashboard()
         dashboardpage_obj.library(library_name).click_delete()
         dashboardpage_obj.confirm_delete()
-        Assert.false(dashboardpage_obj.library(library_name).is_displayed(), "Library %s found" % library_name)
+        Assert.false(dashboardpage_obj.library(library_name).is_displayed, "Library %s found" % library_name)
         

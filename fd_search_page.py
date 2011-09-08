@@ -102,6 +102,10 @@ class SearchPage(FlightDeckBasePage):
         _name_locator = (By.CSS_SELECTOR, "h3 > a")
         _author_link_locator = (By.CSS_SELECTOR, "h3 > span > a")
         _source_locator = (By.CSS_SELECTOR, "li.UI_Edit_Version > a")   
+     
+        @property
+        def root_element(self):
+            return self.selenium.find_element(*self._root_locator)
               
         def is_displayed(self):
             return self.is_element_visible(self._root_locator)
@@ -124,10 +128,6 @@ class SearchPage(FlightDeckBasePage):
      
         _base_locator = (By.XPATH, "//div[contains(@class,'addon')]")
         _test_btn = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")  
-     
-        @property
-        def root_element(self):
-            return self.selenium.find_element(*self._root_locator)
         
         def click_test(self):
             self.root_element.find_element(*self._test_btn).click()
@@ -135,7 +135,3 @@ class SearchPage(FlightDeckBasePage):
     class Library(SearchResultsRegion):
     
         _base_locator = (By.XPATH, "//div[contains(@class,'library')]")
-
-        @property
-        def root_element(self):
-            return self.selenium.find_element(*self._root_locator)

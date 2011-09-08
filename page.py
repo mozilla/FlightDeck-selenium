@@ -35,7 +35,8 @@
 #
 # ***** END LICENSE BLOCK *****
 
-from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import ElementNotVisibleException
 
 
 class Page(object):
@@ -64,4 +65,3 @@ class Page(object):
             return self.selenium.find_element(*locator).is_displayed()
         except NoSuchElementException, ElementNotVisibleException:
             return False
-        

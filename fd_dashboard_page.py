@@ -95,6 +95,7 @@ class DashboardPage(FlightDeckBasePage):
         def _root_element(self):
             return self.selenium.find_element(*self._root_locator)
 
+        @property
         def is_displayed(self):
             return self.is_element_visible(self._root_locator)
 

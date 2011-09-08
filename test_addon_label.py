@@ -60,7 +60,7 @@ class TestAddonLabel():
 
         homepage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.is_the_current_page)
-        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s not found" % addon_name)
+        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
         
         #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
         dashboardpage_obj.addon(addon_name).click_edit()
@@ -72,5 +72,5 @@ class TestAddonLabel():
         except:
             print 'A copy of the addon could not be created'
         homepage_obj.header.click_dashboard()  
-        Assert.true(dashboardpage_obj.addon(copy_addon_name).is_displayed(), "Addon %s not found" % copy_addon_name)
+        Assert.true(dashboardpage_obj.addon(copy_addon_name).is_displayed, "Addon %s not found" % copy_addon_name)
         

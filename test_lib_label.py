@@ -59,7 +59,7 @@ class TestLibLabel():
         
         libpage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.is_the_current_page)
-        Assert.true(dashboardpage_obj.library(library_name).is_displayed(), "Library %s not found" % library_name)
+        Assert.true(dashboardpage_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
 
         #Click on the edit button of the library.Then create a copy of that library and assert that the label is 'copy'
         dashboardpage_obj.library(library_name).click_edit()
@@ -72,4 +72,4 @@ class TestLibLabel():
             print 'A copy of the library could not be created'
         libpage_obj.header.click_dashboard()
 
-        Assert.true(dashboardpage_obj.library(copy_library_name).is_displayed(), "Library %s not found" % copy_library_name)
+        Assert.true(dashboardpage_obj.library(copy_library_name).is_displayed, "Library %s not found" % copy_library_name)

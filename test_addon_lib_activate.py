@@ -63,20 +63,20 @@ class TestAddonActivateDeactivate():
         
         #Click on the private button to make it private and then check that the addon is not in the list anymore
         dashboardpage_obj.addon(addon_name).click_private()
-        Assert.false(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s found" % addon_name)
+        Assert.false(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s found" % addon_name)
         
         #Go to the private addons page and check that the addon that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the addon is present there.
         dashboardpage_obj.click_private_addons_link()
-        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s not found" % addon_name)
+        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
         
         # Switch it back to public now, addon should disappear
         dashboardpage_obj.addon(addon_name).click_public()
-        Assert.false(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s found" % addon_name)
+        Assert.false(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s found" % addon_name)
         
         # Should be on main dashboard page
         dashboardpage_obj.header.click_dashboard()
-        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed(), "Addon %s not found" % addon_name)
+        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
         
 
     def testShouldCheckLibDeactivateAndActivate(self, mozwebqa):
@@ -98,17 +98,17 @@ class TestAddonActivateDeactivate():
         
         #Click on the private button to make it private and then check that the library is not in the list anymore
         dashboardpage_obj.library(library_name).click_private()
-        Assert.false(dashboardpage_obj.library(library_name).is_displayed(), "Library %s found" % library_name)
+        Assert.false(dashboardpage_obj.library(library_name).is_displayed, "Library %s found" % library_name)
         
         #Go to the private libraries page and check that the library that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the library is present there.
         dashboardpage_obj.click_private_libraries_link()
-        Assert.true(dashboardpage_obj.library(library_name).is_displayed(), "Library %s not found" % library_name)
+        Assert.true(dashboardpage_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
    
         # Switch it back to public - it should disappaer             
         dashboardpage_obj.library(library_name).click_public()
-        Assert.false(dashboardpage_obj.library(library_name).is_displayed(), "Library %s found" % library_name)
+        Assert.false(dashboardpage_obj.library(library_name).is_displayed, "Library %s found" % library_name)
         
         # Go to main dashboard, should be present
         dashboardpage_obj.header.click_dashboard()
-        Assert.true(dashboardpage_obj.library(library_name).is_displayed(), "Library %s not found" % library_name)
+        Assert.true(dashboardpage_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
