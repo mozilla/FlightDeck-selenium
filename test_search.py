@@ -239,3 +239,4 @@ class TestSearch():
         library_name = searchpage_obj.library(1).name
         searchpage_obj.library(library_name).click_source()
         Assert.equal(editorpage_obj.library_name, library_name)
+        
