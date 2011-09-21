@@ -78,6 +78,7 @@ class TestAddonActivateDeactivate():
         dashboardpage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
         
+        dashboardpage_obj.delete_test_data()
 
     def testShouldCheckLibDeactivateAndActivate(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
@@ -112,3 +113,5 @@ class TestAddonActivateDeactivate():
         # Go to main dashboard, should be present
         dashboardpage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
+        
+        dashboardpage_obj.delete_test_data()

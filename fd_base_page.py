@@ -40,8 +40,19 @@ from selenium.webdriver.common.by import By
 
 class FlightDeckBasePage(Page):
     
+    _garbage = []
+    
     def go_to_home_page(self):
         self.selenium.get(self.base_url)
+    
+    def add_id(self, id):
+        if id not in self._garbage:    
+            self._garbage.append(id)
+    
+    def delete_test_data(self):
+        # first loop through and delete all addon/libs added
+        for i in self._garbage:
+            self.selenium.get("%s/package/delete/%s/" % (self.base_url, i))
        
     @property
     def header(self):
