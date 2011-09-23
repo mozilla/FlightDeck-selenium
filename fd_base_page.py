@@ -64,7 +64,7 @@ class FlightDeckBasePage(Page):
                 session.urlopen(delete_url)
             except urllib2.HTTPError:
                 # suppress any exceptions because we don't want the test to fail
-                pass
+                print "Delete package %s failed" % i
 
     @property
     def header(self):
