@@ -43,7 +43,7 @@ from unittestzero import Assert
 
 
 class TestAddonActivateDeactivate():
-    
+
     def testShouldCheckAddonDeactivateAndActivate(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
@@ -54,30 +54,30 @@ class TestAddonActivateDeactivate():
         homepage_obj.header.click_signin()
         loginpage_obj.login('default')
         Assert.true(dashboardpage_obj.is_the_current_page)
-        
+
         # Go back to homepage and create a new addon to work with.
         dashboardpage_obj.header.click_home_logo()
         homepage_obj.click_create_addon_btn()
         addon_name = addonpage_obj.addon_name
         addonpage_obj.header.click_dashboard()
-        
+
         #Click on the private button to make it private and then check that the addon is not in the list anymore
         dashboardpage_obj.addon(addon_name).click_private()
         Assert.false(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s found" % addon_name)
-        
+
         #Go to the private addons page and check that the addon that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the addon is present there.
         dashboardpage_obj.click_private_addons_link()
         Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
-        
+
         # Switch it back to public now, addon should disappear
         dashboardpage_obj.addon(addon_name).click_public()
         Assert.false(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s found" % addon_name)
-        
+
         # Should be on main dashboard page
         dashboardpage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
-        
+
         dashboardpage_obj.delete_test_data()
 
     def testShouldCheckLibDeactivateAndActivate(self, mozwebqa):
@@ -90,28 +90,28 @@ class TestAddonActivateDeactivate():
         homepage_obj.header.click_signin()
         loginpage_obj.login('default')
         Assert.true(dashboardpage_obj.is_the_current_page)
-        
+
         # go back to homepage, create a new library to work with
         dashboardpage_obj.header.click_home_logo()
         homepage_obj.click_create_lib_btn()
-        library_name = librarypage_obj.library_name      
+        library_name = librarypage_obj.library_name
         librarypage_obj.header.click_dashboard()
-        
+
         #Click on the private button to make it private and then check that the library is not in the list anymore
         dashboardpage_obj.library(library_name).click_private()
         Assert.false(dashboardpage_obj.library(library_name).is_displayed, "Library %s found" % library_name)
-        
+
         #Go to the private libraries page and check that the library that you just made private is present there.
         #Click on public to make it public and check on the dashboard that the library is present there.
         dashboardpage_obj.click_private_libraries_link()
         Assert.true(dashboardpage_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
-   
-        # Switch it back to public - it should disappaer             
+
+        # Switch it back to public - it should disappaer
         dashboardpage_obj.library(library_name).click_public()
         Assert.false(dashboardpage_obj.library(library_name).is_displayed, "Library %s found" % library_name)
-        
+
         # Go to main dashboard, should be present
         dashboardpage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
-        
+
         dashboardpage_obj.delete_test_data()

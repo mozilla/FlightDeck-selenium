@@ -40,11 +40,16 @@ from selenium.webdriver.common.by import By
 
 class LoginPage(FlightDeckBasePage):
 
+    _page_url = "/user/signin/"
+
     _username_locator = (By.ID, 'id_username')
     _password_locator = (By.ID, 'id_password')
     _submit_locator = (By.NAME, 'save')
 
-    def login(self, user = "default"):
+    def login(self, user="default"):
+        if self._page_url not in self.selenium.current_url:
+            self.selenium.get(self.base_url + self._page_url)
+
         credentials = self.testsetup.credentials[user]
         self.selenium.find_element(*self._username_locator).send_keys(credentials['email'])
         self.selenium.find_element(*self._password_locator).send_keys(credentials['password'])

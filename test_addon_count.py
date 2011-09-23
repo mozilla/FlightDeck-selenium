@@ -62,4 +62,3 @@ class TestLibLabelcheck_lib_label():
 
         #Assert that the total addons on the page matches the counter on the left hand side.
         Assert.equal(str(addon_count), str(counter))
-

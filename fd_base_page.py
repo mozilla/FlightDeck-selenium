@@ -36,53 +36,81 @@
 # ***** END LICENSE BLOCK *****
 from page import Page
 from selenium.webdriver.common.by import By
+import urllib
+import urllib2
+import cookielib
 
 
 class FlightDeckBasePage(Page):
-    
+
     _garbage = []
-    
+
     def go_to_home_page(self):
         self.selenium.get(self.base_url)
-    
+
     def add_id(self, id):
-        if id not in self._garbage:    
+        if id not in self._garbage:
             self._garbage.append(id)
-    
+
     def delete_test_data(self):
+        # use urllib so we can do all this stuff silently without selenium
+        session = self._get_urllib2_session()
+
         # first loop through and delete all addon/libs added
         for i in self._garbage:
-            self.selenium.get("%s/package/delete/%s/" % (self.base_url, i))
-       
+            delete_url = "%s/package/delete/%s/" % (self.base_url, i)
+            try:
+                print "deleting %s" % delete_url
+                session.urlopen(delete_url)
+            except urllib2.HTTPError:
+                # suppress any exceptions because we don't want the test to fail
+                pass
+
     @property
     def header(self):
         return FlightDeckBasePage.HeaderRegion(self.testsetup)
-       
+
     class HeaderRegion(Page):
-       
+
         _home_link_locator = (By.CSS_SELECTOR, "#flightdeck-logo > a")
         _search_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(2) > span > a")
         _documentation_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(3) > span > a")
         _signin_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) > span > a")
         _myaccount_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) a[title='My Account']")
         _signout_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) a[title='Sign Out']")
-       
+
         def click_home_logo(self):
             self.selenium.find_element(*self._home_link_locator).click()
-       
+
         def click_search(self):
             self.selenium.find_element(*self._search_link_locator).click()
-           
+
         def click_documentation(self):
             self.selenium.find_element(*self._documentation_link_locator).click()
-               
+
         def click_signin(self):
             self.selenium.find_element(*self._signin_link_locator).click()
-           
+
         def click_dashboard(self):
             self.selenium.find_element(*self._myaccount_link_locator).click()
-       
+
         def click_signout(self):
             self.selenium.find_element(*self._signout_link_locator).click()
-       
-            
+
+    def _get_urllib2_session(self, user="default"):
+        credentials = self.testsetup.credentials[user]
+        cookies = urllib2.HTTPCookieProcessor()
+        opener = urllib2.build_opener(cookies)
+        urllib2.install_opener(opener)
+
+        login_url = self.base_url + "/user/signin/"
+        urllib2.urlopen(login_url)
+
+        csrftoken = [x.value for x in cookies.cookiejar if x.name == 'csrftoken'][0]
+        form_data = urllib.urlencode({'username': credentials['email'], "password": credentials['password'], "csrfmiddlewaretoken": csrftoken})
+
+        req = urllib2.Request(login_url, form_data)
+        req.add_header('Referer', login_url)
+
+        urllib2.urlopen(req)
+        return urllib2

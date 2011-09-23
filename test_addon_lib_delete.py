@@ -49,11 +49,12 @@ class TestAddonLibDelete():
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
-        
+
+        loginpage_obj.login('default')
+
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
-        loginpage_obj.login('default')
-        
+
         #Get the name of the addon on the editor page.
         addon_name = addonpage_obj.addon_name
 
@@ -62,21 +63,22 @@ class TestAddonLibDelete():
         dashboardpage_obj.addon(addon_name).click_delete()
         dashboardpage_obj.confirm_delete()
         Assert.false(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s found" % addon_name)
-                
+
     def testShouldCheckLibDelete(self, mozwebqa):
 
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         libpage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
-        
+
+        homepage_obj.go_to_home_page()
+        loginpage_obj.login('default')
+
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
-        loginpage_obj.login('default')
         library_name = libpage_obj.library_name
 
         homepage_obj.header.click_dashboard()
         dashboardpage_obj.library(library_name).click_delete()
         dashboardpage_obj.confirm_delete()
         Assert.false(dashboardpage_obj.library(library_name).is_displayed, "Library %s found" % library_name)
-        

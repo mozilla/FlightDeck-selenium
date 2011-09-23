@@ -51,17 +51,17 @@ class TestAddonLabel():
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
 
-        #Create an addon. Then go to dashboard and assert that the label is 'initial'. 
+        loginpage_obj.login('default')
 
+        #Create an addon. Then go to dashboard and assert that the label is 'initial'.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
-        loginpage_obj.login('default')
         addon_name = addonpage_obj.addon_name
 
         homepage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.is_the_current_page)
         Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
-        
+
         #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
         dashboardpage_obj.addon(addon_name).click_edit()
         addonpage_obj.click_copy()
@@ -71,6 +71,7 @@ class TestAddonLabel():
             Assert.not_equal(addon_name, copy_addon_name)
         except:
             print 'A copy of the addon could not be created'
-        homepage_obj.header.click_dashboard()  
+        homepage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.addon(copy_addon_name).is_displayed, "Addon %s not found" % copy_addon_name)
-        
+
+        dashboardpage_obj.delete_test_data()

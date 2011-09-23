@@ -50,13 +50,14 @@ class TestLibLabel():
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         libpage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
-        
+
+        loginpage_obj.login('default')
+
         #Create a library. Then go to dashboard and assert that the label is present.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
-        loginpage_obj.login('default')
         library_name = libpage_obj.library_name
-        
+
         libpage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.is_the_current_page)
         Assert.true(dashboardpage_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
@@ -65,7 +66,7 @@ class TestLibLabel():
         dashboardpage_obj.library(library_name).click_edit()
         libpage_obj.click_copy()
         copy_library_name = libpage_obj.library_name
-        
+
         try:
             Assert.not_equal(library_name, copy_library_name)
         except:
@@ -73,3 +74,5 @@ class TestLibLabel():
         libpage_obj.header.click_dashboard()
 
         Assert.true(dashboardpage_obj.library(copy_library_name).is_displayed, "Library %s not found" % copy_library_name)
+        
+        dashboardpage_obj.delete_test_data()
