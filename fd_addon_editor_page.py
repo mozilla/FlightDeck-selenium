@@ -38,7 +38,6 @@ from fd_base_page import FlightDeckBasePage
 from page import Page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-import re
 
 
 class AddonEditorPage(FlightDeckBasePage):
@@ -54,9 +53,8 @@ class AddonEditorPage(FlightDeckBasePage):
 
     def click_copy(self):
         self.selenium.find_element(*self._copy_locator).click()
-        m = re.search("([0-9]{7})", self.selenium.current_url)
-        self.add_id(m.group())
-        
+        self.add_id()
+
     def click_save(self):
         self.selenium.find_element(*self._save_locator).click()
 

@@ -39,6 +39,7 @@ from selenium.webdriver.common.by import By
 import urllib
 import urllib2
 import cookielib
+import re
 
 
 class FlightDeckBasePage(Page):
@@ -48,13 +49,16 @@ class FlightDeckBasePage(Page):
     def go_to_home_page(self):
         self.selenium.get(self.base_url)
 
-    def add_id(self, id):
+    def add_id(self):
+        m = re.search("([0-9]{7})", self.selenium.current_url)
+        id = m.group()
+
         if id not in self._garbage:
             self._garbage.append(id)
 
     def delete_test_data(self):
         # use urllib so we can do all this stuff silently without selenium
-        session = self._get_urllib2_session()
+        session = self._get_session()
 
         # first loop through and delete all addon/libs added
         for i in self._garbage:
@@ -97,7 +101,7 @@ class FlightDeckBasePage(Page):
         def click_signout(self):
             self.selenium.find_element(*self._signout_link_locator).click()
 
-    def _get_urllib2_session(self, user="default"):
+    def _get_session(self, user="default"):
         credentials = self.testsetup.credentials[user]
         cookies = urllib2.HTTPCookieProcessor()
         opener = urllib2.build_opener(cookies)
@@ -106,6 +110,7 @@ class FlightDeckBasePage(Page):
         login_url = self.base_url + "/user/signin/"
         urllib2.urlopen(login_url)
 
+        # we must open the login_url, collect the csrf token and then submit with login creds and the token
         csrftoken = [x.value for x in cookies.cookiejar if x.name == 'csrftoken'][0]
         form_data = urllib.urlencode({'username': credentials['email'], "password": credentials['password'], "csrfmiddlewaretoken": csrftoken})
 

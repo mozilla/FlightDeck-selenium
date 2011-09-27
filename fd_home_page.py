@@ -36,7 +36,7 @@
 # ***** END LICENSE BLOCK *****
 from fd_base_page import FlightDeckBasePage
 from selenium.webdriver.common.by import By
-import re
+
 
 class HomePage(FlightDeckBasePage):
 
@@ -45,10 +45,8 @@ class HomePage(FlightDeckBasePage):
 
     def click_create_addon_btn(self):
         self.selenium.find_element(*self._create_addon_btn).click()
-        m = re.search("([0-9]{7})", self.selenium.current_url)
-        self.add_id(m.group())
-        
+        self.add_id()
+
     def click_create_lib_btn(self):
         self.selenium.find_element(*self._create_lib_btn).click()
-        m = re.search("([0-9]{7})", self.selenium.current_url)
-        self.add_id(m.group())
+        self.add_id()

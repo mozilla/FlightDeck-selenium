@@ -38,14 +38,13 @@ from fd_base_page import FlightDeckBasePage
 from page import Page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-import re
 
 
 class LibraryEditorPage(FlightDeckBasePage):
 
     _library_name = (By.ID, 'package-info-name')
     _copy_locator = (By.ID, 'package-copy')
-    _save_locator= (By.ID, 'package-save')
+    _save_locator = (By.ID, 'package-save')
     _version_locator = (By.ID, 'version_name')
 
     @property
@@ -54,8 +53,7 @@ class LibraryEditorPage(FlightDeckBasePage):
 
     def click_copy(self):
         self.selenium.find_element(*self._copy_locator).click()
-        m = re.search("([0-9]{7})", self.selenium.current_url)
-        self.add_id(m.group())
+        self.add_id()
 
     def click_save(self):
         self.selenium.find_element(*self._save_locator).click()

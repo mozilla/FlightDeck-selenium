@@ -159,7 +159,8 @@ class TestSearch():
         element_count = searchpage_obj.addons_element_count()
 
         Assert.equal(label_count, element_count)
-
+        
+    @xfail(reason = "Bug 689508 - label and search results mismatch")
     def test_search_library_filter(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
