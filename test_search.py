@@ -140,7 +140,7 @@ class TestSearch():
         Assert.equal(searchpage_obj.addons_element_count(), 5)
         Assert.equal(searchpage_obj.library_element_count(), 5)
 
-    def test_search_addon_filter(self, mozwebqa):
+    def test_search_addon_filter_results_match(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
@@ -150,7 +150,7 @@ class TestSearch():
         # search with a generic but safe string 'test'
         # filter by add-on results and check number
 
-        searchpage_obj.type_search_term('test')
+        searchpage_obj.clear_search()
         searchpage_obj.click_search()
 
         searchpage_obj.click_filter_addons_link()
@@ -162,7 +162,7 @@ class TestSearch():
         Assert.equal(label_count, element_count, "The label did not match the number of elements found")
         
     @xfail(reason = 'Bug 689508 - label and search results mismatch')
-    def test_search_library_filter(self, mozwebqa):
+    def test_search_library_filter_results_match(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 

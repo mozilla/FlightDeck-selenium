@@ -64,7 +64,10 @@ class SearchPage(FlightDeckBasePage):
     
     def type_search_term(self, text):
         self.selenium.find_element(*self._search_field_locator).send_keys(text)
-        
+    
+    def clear_search(self):
+        self.selenium.find_element(*self._search_field_locator).clear()
+    
     def click_search(self):
         self.selenium.find_element(*self._search_button_locator).click()
         
