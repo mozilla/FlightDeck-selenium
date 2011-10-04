@@ -60,7 +60,7 @@ class TestSearch():
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login('default')
+        loginpage_obj.login()
 
         #create a new addon with the valid criteria (version not initial)
         dashboard_obj.header.click_home_logo()
@@ -87,7 +87,7 @@ class TestSearch():
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login('default')
+        loginpage_obj.login()
 
         #create a new library with the valid criteria (version not initial)
         dashboard_obj.header.click_home_logo()
@@ -222,7 +222,7 @@ class TestSearch():
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login('default')
+        loginpage_obj.login()
         dashboard_obj.header.click_search()
 
         addon_name = searchpage_obj.addon(1).name
@@ -240,7 +240,7 @@ class TestSearch():
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login('default')
+        loginpage_obj.login()
         dashboard_obj.header.click_search()
 
         library_name = searchpage_obj.library(1).name

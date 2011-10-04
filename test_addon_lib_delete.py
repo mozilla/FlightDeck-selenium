@@ -50,7 +50,7 @@ class TestAddonLibDelete():
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
 
-        loginpage_obj.login('default')
+        loginpage_obj.login()
 
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
@@ -72,7 +72,7 @@ class TestAddonLibDelete():
         libpage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        loginpage_obj.login('default')
+        loginpage_obj.login()
 
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()

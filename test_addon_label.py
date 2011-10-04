@@ -51,7 +51,7 @@ class TestAddonLabel():
         dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
         addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
 
-        loginpage_obj.login('default')
+        loginpage_obj.login()
 
         #Create an addon. Then go to dashboard and assert that the label is 'initial'.
         homepage_obj.go_to_home_page()

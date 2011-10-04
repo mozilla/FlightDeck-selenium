@@ -51,7 +51,7 @@ class TestLibLabelcheck_lib_label():
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        loginpage_obj.login('default')
+        loginpage_obj.login()
         Assert.true(dashboardpage_obj.is_the_current_page)
 
         #Get the total count of the number of add-ons that are displayed on the dashboard.
