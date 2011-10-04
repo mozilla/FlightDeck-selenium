@@ -50,8 +50,8 @@ xfail = pytest.mark.xfail
 
 class TestSearch():
 
-    @xfail(reason = "Webdriver cannot trigger :hover, steps to setup addon can't be completed")
-    def test_basic_search_string_addon(self, mozwebqa):
+    @xfail(reason = 'Webdriver cannot trigger :hover, steps to setup addon can\'t be completed')
+    def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
@@ -65,7 +65,7 @@ class TestSearch():
         #create a new addon with the valid criteria (version not initial)
         dashboard_obj.header.click_home_logo()
         homepage_obj.click_create_addon_btn()
-        addonpage_obj.type_addon_version("searchable")
+        addonpage_obj.type_addon_version('searchable')
         addonpage_obj.click_save()
         searchterm = addonpage_obj.addon_name
 
@@ -73,12 +73,12 @@ class TestSearch():
         searchpage_obj.type_search_term(searchterm)
         searchpage_obj.click_search()
 
-        Assert.true(searchpage_obj.addon(searchterm).is_displayed(), "%s not found" % searchterm)
+        Assert.true(searchpage_obj.addon(searchterm).is_displayed(), '%s not found' % searchterm)
 
         searchpage_obj.delete_test_data()
 
-    @xfail(reason = "Webdriver cannot trigger :hover, steps to setup addon can't be completed")
-    def test_basic_search_string_library(self, mozwebqa):
+    @xfail(reason = 'Webdriver cannot trigger :hover, steps to setup addon can\'t be completed')
+    def test_basic_search_string_returns_library(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
@@ -92,7 +92,7 @@ class TestSearch():
         #create a new library with the valid criteria (version not initial)
         dashboard_obj.header.click_home_logo()
         homepage_obj.click_create_lib_btn()
-        librarypage_obj.type_library_version("searchable")
+        librarypage_obj.type_library_version('searchable')
         librarypage_obj.click_save()
         searchterm = librarypage_obj.lib_name
 
@@ -100,12 +100,12 @@ class TestSearch():
         searchpage_obj.type_search_term(searchterm)
         searchpage_obj.click_search()
 
-        Assert.true(searchpage_obj.library(searchterm).is_displayed(), "%s not found" % searchterm)
+        Assert.true(searchpage_obj.library(searchterm).is_displayed(), '%s not found' % searchterm)
 
         searchpage_obj.delete_test_data()
 
-    @xfail(reason = "Bug 681747 - Partial strings not matching against names in FD Search")
-    def test_search_partial_string(self, mozwebqa):
+    @xfail(reason = 'Bug 681747 - Partial strings not matching against names in FD Search')
+    def test_search_partial_string_returns_addon(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
@@ -116,14 +116,14 @@ class TestSearch():
         # results should be returned including the original addon
 
         top_addon_name = searchpage_obj.addon(1).name
-        search_string = top_addon_name[0:4]
+        search_string = top_addon_name[:4]
         searchpage_obj.type_search_term(search_string)
         searchpage_obj.click_search()
 
         Assert.true(searchpage_obj.addons_element_count() >= 1)
-        Assert.true(searchpage_obj.addon(top_addon_name).is_displayed(), "Addon '%s' not found" % top_addon_name)
+        Assert.true(searchpage_obj.addon(top_addon_name).is_displayed(), 'Addon \'%s\' not found' % top_addon_name)
 
-    def test_search_no_string(self, mozwebqa):
+    def test_empty_search_returns_all_results(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
@@ -134,6 +134,7 @@ class TestSearch():
         # default display is for 5 addons/5 libraries
         # same as filtering by 'Combined'
 
+        searchpage_obj.type_search_term("")
         searchpage_obj.click_search()
 
         Assert.equal(searchpage_obj.addons_element_count(), 5)
@@ -149,7 +150,7 @@ class TestSearch():
         # search with a generic but safe string 'test'
         # filter by add-on results and check number
 
-        searchpage_obj.type_search_term("test")
+        searchpage_obj.type_search_term('test')
         searchpage_obj.click_search()
 
         searchpage_obj.click_filter_addons_link()
@@ -158,9 +159,9 @@ class TestSearch():
         label_count = min(searchpage_obj.addons_count_label, 20)
         element_count = searchpage_obj.addons_element_count()
 
-        Assert.equal(label_count, element_count)
+        Assert.equal(label_count, element_count, "The label did not match the number of elements found")
         
-    @xfail(reason = "Bug 689508 - label and search results mismatch")
+    @xfail(reason = 'Bug 689508 - label and search results mismatch')
     def test_search_library_filter(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
@@ -171,7 +172,7 @@ class TestSearch():
         # search with a generic but safe string 'test'
         # filter by add-on results and check number
 
-        searchpage_obj.type_search_term("test")
+        searchpage_obj.type_search_term('test')
         searchpage_obj.click_search()
 
         searchpage_obj.click_filter_libraries_link()
@@ -180,10 +181,9 @@ class TestSearch():
         label_count = min(searchpage_obj.library_count_label, 20)
         element_count = searchpage_obj.library_element_count()
 
-        Assert.equal(label_count, element_count)
+        Assert.equal(label_count, element_count, "The label did not match the number of elements found")
 
-    def test_search_author_link(self, mozwebqa):
-
+    def test_clicking_addon_author_link_displays_author_profile(self, mozwebqa):
         # go to addon result and click author link
 
         homepage_obj = fd_home_page.HomePage(mozwebqa)
@@ -198,7 +198,7 @@ class TestSearch():
         searchpage_obj.addon(addon_name).click_author()
         Assert.equal(userpage_obj.author_name, author_name)
 
-    def test_search_library_author_link(self, mozwebqa):
+    def test_clicking_lib_author_link_displays_author_profile(self, mozwebqa):
 
         # go to library result and click author link
         homepage_obj = fd_home_page.HomePage(mozwebqa)
@@ -213,7 +213,8 @@ class TestSearch():
         searchpage_obj.library(library_name).click_author()
         Assert.equal(userpage_obj.author_name, author_name)
 
-    def test_search_addon_source_btn(self, mozwebqa):
+    @xfail(reason = "Bug 691714: Page load event issue on Search results")
+    def test_clicking_addon_source_displays_editor(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
@@ -231,7 +232,8 @@ class TestSearch():
 
         searchpage_obj.delete_test_data()
 
-    def test_search_library_source_btn(self, mozwebqa):
+    @xfail(reason = "Bug 691714: Page load event issue on Search results")
+    def test_clicking_library_source_displays_editor(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
