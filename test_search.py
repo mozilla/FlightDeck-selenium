@@ -123,6 +123,25 @@ class TestSearch():
         Assert.true(searchpage_obj.addons_element_count() >= 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed(), 'Addon \'%s\' not found' % top_addon_name)
 
+    @xfail(reason = 'Bug 681747 - Partial strings not matching against names in FD Search')
+    def test_search_partial_string_returns_library(self, mozwebqa):
+        homepage_obj = fd_home_page.HomePage(mozwebqa)
+        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+
+        homepage_obj.go_to_home_page()
+        homepage_obj.header.click_search()
+
+        # get library name, split string in half and search with it
+        # results should be returned including the original addon
+
+        top_library_name = searchpage_obj.library(1).name
+        search_string = top_library_name[:4]
+        searchpage_obj.type_search_term(search_string)
+        searchpage_obj.click_search()
+
+        Assert.true(searchpage_obj.library_element_count() >= 1)
+        Assert.true(searchpage_obj.addon(top_library_name).is_displayed(), 'Library \'%s\' not found' % top_library_name)
+
     def test_empty_search_returns_all_results(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
@@ -134,7 +153,7 @@ class TestSearch():
         # default display is for 5 addons/5 libraries
         # same as filtering by 'Combined'
 
-        searchpage_obj.type_search_term("")
+        searchpage_obj.clear_search()
         searchpage_obj.click_search()
 
         Assert.equal(searchpage_obj.addons_element_count(), 5)
@@ -150,7 +169,7 @@ class TestSearch():
         # search with a generic but safe string 'test'
         # filter by add-on results and check number
 
-        searchpage_obj.clear_search()
+        searchpage_obj.type_search_term('test')
         searchpage_obj.click_search()
 
         searchpage_obj.click_filter_addons_link()
@@ -159,8 +178,8 @@ class TestSearch():
         label_count = min(searchpage_obj.addons_count_label, 20)
         element_count = searchpage_obj.addons_element_count()
 
-        Assert.equal(label_count, element_count, "The label did not match the number of elements found")
-        
+        Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
+
     @xfail(reason = 'Bug 689508 - label and search results mismatch')
     def test_search_library_filter_results_match(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
@@ -181,7 +200,7 @@ class TestSearch():
         label_count = min(searchpage_obj.library_count_label, 20)
         element_count = searchpage_obj.library_element_count()
 
-        Assert.equal(label_count, element_count, "The label did not match the number of elements found")
+        Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
     def test_clicking_addon_author_link_displays_author_profile(self, mozwebqa):
         # go to addon result and click author link
@@ -198,7 +217,7 @@ class TestSearch():
         searchpage_obj.addon(addon_name).click_author()
         Assert.equal(userpage_obj.author_name, author_name)
 
-    def test_clicking_lib_author_link_displays_author_profile(self, mozwebqa):
+    def test_clicking_library_author_link_displays_author_profile(self, mozwebqa):
 
         # go to library result and click author link
         homepage_obj = fd_home_page.HomePage(mozwebqa)
