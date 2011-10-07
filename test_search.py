@@ -78,7 +78,7 @@ class TestSearch():
         searchpage_obj.delete_test_data()
 
     @xfail(reason = 'Webdriver cannot trigger :hover, steps to setup addon can\'t be completed')
-    def test_basic_search_string_returns_library(self, mozwebqa):
+    def test_search_by_library_name_returns_library(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         loginpage_obj = fd_login_page.LoginPage(mozwebqa)
         dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
@@ -105,7 +105,7 @@ class TestSearch():
         searchpage_obj.delete_test_data()
 
     @xfail(reason = 'Bug 681747 - Partial strings not matching against names in FD Search')
-    def test_search_partial_string_returns_addon(self, mozwebqa):
+    def test_search_partial_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
@@ -124,7 +124,7 @@ class TestSearch():
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed(), 'Addon \'%s\' not found' % top_addon_name)
 
     @xfail(reason = 'Bug 681747 - Partial strings not matching against names in FD Search')
-    def test_search_partial_string_returns_library(self, mozwebqa):
+    def test_search_partial_library_name_returns_library(self, mozwebqa):
         homepage_obj = fd_home_page.HomePage(mozwebqa)
         searchpage_obj = fd_search_page.SearchPage(mozwebqa)
 
