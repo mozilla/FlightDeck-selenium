@@ -36,6 +36,7 @@
 # ***** END LICENSE BLOCK *****
 from page import Page
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 import urllib
 import urllib2
 import cookielib
@@ -100,6 +101,9 @@ class FlightDeckBasePage(Page):
 
         def click_signout(self):
             self.selenium.find_element(*self._signout_link_locator).click()
+
+        def click_create_addon(self):
+            ActionChains(self.selenium).move_to_element(self.selenium.find_element_by_xpath('//li/span[contains(text(), "Create")]')).perform()
 
     def _get_session(self, user="default"):
         credentials = self.testsetup.credentials[user]
