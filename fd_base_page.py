@@ -103,7 +103,10 @@ class FlightDeckBasePage(Page):
             self.selenium.find_element(*self._signout_link_locator).click()
 
         def click_create_addon(self):
-            ActionChains(self.selenium).move_to_element(self.selenium.find_element_by_xpath('//li/span[contains(text(), "Create")]')).perform()
+            create_link = self.selenium.find_element_by_xpath('//li/span[contains(text(), "Create")]')
+            ActionChains(self.selenium).move_to_element(create_link).perform()
+            self.selenium.find_element_by_link_text("Add-on").click()
+            
 
     def _get_session(self, user="default"):
         credentials = self.testsetup.credentials[user]

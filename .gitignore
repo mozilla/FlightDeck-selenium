@@ -1,5 +1,8 @@
 settings_local.py
 .coverage
 .figleaf
+.gitignore
 *.pyc
 *.swp
+/debug
+results.html
