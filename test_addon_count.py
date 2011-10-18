@@ -34,9 +34,9 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import fd_home_page
-import fd_login_page
-import fd_dashboard_page
+from pages.home_page import HomePage
+from pages.login_page import LoginPage
+from pages.dashboard_page import DashboardPage
 from unittestzero import Assert
 
 
@@ -45,9 +45,9 @@ class TestLibLabelcheck_lib_label():
     def testAddonCount(self, mozwebqa):
         #This test is to assert that the count of the addons on dashboard is equal to the number of addons present on the page.
         #Create page objects
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboardpage_obj = DashboardPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()

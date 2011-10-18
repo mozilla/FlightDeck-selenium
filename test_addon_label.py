@@ -34,10 +34,10 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import fd_home_page
-import fd_login_page
-import fd_dashboard_page
-import fd_addon_editor_page
+from pages.home_page import HomePage
+from pages.login_page import LoginPage
+from pages.dashboard_page import DashboardPage
+from pages.addon_editor_page import AddonEditorPage
 from unittestzero import Assert
 
 
@@ -46,10 +46,10 @@ class TestAddonLabel():
     def testShouldCheckAddonLabel(self, mozwebqa):
         #This test is to check the labels of an add-on on the dashboard
         #Create page objects
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
-        addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboardpage_obj = DashboardPage(mozwebqa)
+        addonpage_obj = AddonEditorPage(mozwebqa)
 
         loginpage_obj.login()
 

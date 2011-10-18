@@ -35,14 +35,13 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-
-import fd_home_page
-import fd_login_page
-import fd_search_page
-import fd_dashboard_page
-import fd_addon_editor_page
-import fd_lib_editor_page
-import fd_user_page
+from pages.home_page import HomePage
+from pages.login_page import LoginPage
+from pages.search_page import SearchPage
+from pages.dashboard_page import DashboardPage
+from pages.addon_editor_page import AddonEditorPage
+from pages.library_editor_page import LibraryEditorPage
+from pages.user_page import UserPage
 from unittestzero import Assert
 import pytest
 xfail = pytest.mark.xfail
@@ -52,11 +51,11 @@ class TestSearch():
 
     @xfail(reason = 'Webdriver cannot trigger :hover, steps to setup addon can\'t be completed')
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
-        dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
-        addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboard_obj = DashboardPage(mozwebqa)
+        addonpage_obj = AddonEditorPage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
@@ -79,11 +78,11 @@ class TestSearch():
 
     @xfail(reason = 'Webdriver cannot trigger :hover, steps to setup addon can\'t be completed')
     def test_search_by_library_name_returns_library(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
-        dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
-        librarypage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboard_obj = DashboardPage(mozwebqa)
+        librarypage_obj = LibraryEditorPage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
@@ -106,8 +105,8 @@ class TestSearch():
 
     @xfail(reason = 'Bug 681747 - Partial strings not matching against names in FD Search')
     def test_search_partial_addon_name_returns_addon(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -125,8 +124,8 @@ class TestSearch():
 
     @xfail(reason = 'Bug 681747 - Partial strings not matching against names in FD Search')
     def test_search_partial_library_name_returns_library(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -143,8 +142,8 @@ class TestSearch():
         Assert.true(searchpage_obj.addon(top_library_name).is_displayed(), 'Library \'%s\' not found' % top_library_name)
 
     def test_empty_search_returns_all_results(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -160,8 +159,8 @@ class TestSearch():
         Assert.equal(searchpage_obj.library_element_count(), 5)
 
     def test_search_addon_filter_results_match(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -182,8 +181,8 @@ class TestSearch():
 
     @xfail(reason = 'Bug 689508 - label and search results mismatch')
     def test_search_library_filter_results_match(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -205,9 +204,9 @@ class TestSearch():
     def test_clicking_addon_author_link_displays_author_profile(self, mozwebqa):
         # go to addon result and click author link
 
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        userpage_obj = fd_user_page.UserPage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        userpage_obj = UserPage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -220,9 +219,9 @@ class TestSearch():
     def test_clicking_library_author_link_displays_author_profile(self, mozwebqa):
 
         # go to library result and click author link
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        userpage_obj = fd_user_page.UserPage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        userpage_obj = UserPage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_search()
@@ -234,11 +233,11 @@ class TestSearch():
 
     @xfail(reason = "Bug 691714: Page load event issue on Search results")
     def test_clicking_addon_source_displays_editor(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
-        dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
-        editorpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboard_obj = DashboardPage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
+        editorpage_obj = AddonEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
@@ -253,11 +252,11 @@ class TestSearch():
 
     @xfail(reason = "Bug 691714: Page load event issue on Search results")
     def test_clicking_library_source_displays_editor(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
-        dashboard_obj = fd_dashboard_page.DashboardPage(mozwebqa)
-        searchpage_obj = fd_search_page.SearchPage(mozwebqa)
-        editorpage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboard_obj = DashboardPage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
+        editorpage_obj = LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
