@@ -45,6 +45,7 @@ from pages.user_page import UserPage
 from unittestzero import Assert
 import pytest
 xfail = pytest.mark.xfail
+prod = pytest.mark.prod
 
 
 class TestSearch():
@@ -103,6 +104,7 @@ class TestSearch():
 
         searchpage_obj.delete_test_data()
 
+    @prod
     @xfail(reason = 'Bug 681747 - Partial strings not matching against names in FD Search')
     def test_search_partial_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
@@ -122,6 +124,7 @@ class TestSearch():
         Assert.true(searchpage_obj.addons_element_count() >= 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed(), 'Addon \'%s\' not found' % top_addon_name)
 
+    @prod
     @xfail(reason = 'Bug 681747 - Partial strings not matching against names in FD Search')
     def test_search_partial_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
@@ -141,6 +144,7 @@ class TestSearch():
         Assert.true(searchpage_obj.library_element_count() >= 1)
         Assert.true(searchpage_obj.addon(top_library_name).is_displayed(), 'Library \'%s\' not found' % top_library_name)
 
+    @prod
     def test_empty_search_returns_all_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
@@ -158,6 +162,7 @@ class TestSearch():
         Assert.equal(searchpage_obj.addons_element_count(), 5)
         Assert.equal(searchpage_obj.library_element_count(), 5)
 
+    @prod
     def test_search_addon_filter_results_match(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
@@ -179,6 +184,7 @@ class TestSearch():
 
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
+    @prod
     @xfail(reason = 'Bug 689508 - label and search results mismatch')
     def test_search_library_filter_results_match(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
@@ -201,6 +207,7 @@ class TestSearch():
 
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
+    @prod
     def test_clicking_addon_author_link_displays_author_profile(self, mozwebqa):
         # go to addon result and click author link
 
@@ -216,6 +223,7 @@ class TestSearch():
         searchpage_obj.addon(addon_name).click_author()
         Assert.equal(userpage_obj.author_name, author_name)
 
+    @prod
     def test_clicking_library_author_link_displays_author_profile(self, mozwebqa):
 
         # go to library result and click author link

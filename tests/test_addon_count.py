@@ -38,10 +38,12 @@ from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from unittestzero import Assert
-
+import pytest
+prod = pytest.mark.prod
 
 class TestLibLabelcheck_lib_label():
 
+    @prod
     def testAddonCount(self, mozwebqa):
         #This test is to assert that the count of the addons on dashboard is equal to the number of addons present on the page.
         #Create page objects
