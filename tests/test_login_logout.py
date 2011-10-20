@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 # ***** BEGIN LICENSE BLOCK *****
 # Version: MPL 1.1/GPL 2.0/LGPL 2.1
 #
@@ -12,14 +13,14 @@
 # for the specific language governing rights and limitations under the
 # License.
 #
-# The Original Code is Mozilla WebQA Tests.
+# The Original Code is Mozilla WebQA Selenium Tests.
 #
-# The Initial Developer of the Original Code is Mozilla Foundation.
+# The Initial Developer of the Original Code is
+# Mozilla.
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): David Burns
-#                 Zac Campbell
+# Contributor(s): Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,24 +35,39 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from pages.base_page import FlightDeckBasePage
-from selenium.webdriver.common.by import By
+from pages.home_page import HomePage
+from pages.login_page import LoginPage
+from pages.dashboard_page import DashboardPage
+from unittestzero import Assert
+import pytest
+prod = pytest.mark.prod
 
 
-class LoginPage(FlightDeckBasePage):
+# These are login/logout tests with more detailed assertions intended for production runs
+class TestLoginLogout:
 
-    _page_title = "Sign In - Add-on Builder"
-    _page_url = "/user/signin/"
+    @prod
+    def test_login(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboard_obj = DashboardPage(mozwebqa)
 
-    _username_locator = (By.ID, 'id_username')
-    _password_locator = (By.ID, 'id_password')
-    _submit_locator = (By.NAME, 'save')
+        homepage_obj.go_to_home_page()
+        homepage_obj.header.click_signin()
+        #Assert.true(loginpage_obj.is_the_current_page)
+        loginpage_obj.login()
 
-    def login(self, user="default"):
-        if self._page_url not in self.selenium.current_url:
-            self.selenium.get(self.base_url + self._page_url)
+        Assert.true(dashboard_obj.header.logged_in)
+        Assert.equal(dashboard_obj.logged_in_username, mozwebqa.credentials['default']['name'])
 
-        credentials = self.testsetup.credentials[user]
-        self.selenium.find_element(*self._username_locator).send_keys(credentials['email'])
-        self.selenium.find_element(*self._password_locator).send_keys(credentials['password'])
-        self.selenium.find_element(*self._submit_locator).click()
+    @prod
+    def test_logout(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboard_obj = DashboardPage(mozwebqa)
+
+        loginpage_obj.login()
+        Assert.true(dashboard_obj.header.logged_in)
+        dashboard_obj.header.click_signout()
+
+        Assert.true(homepage_obj.header.logged_out)
