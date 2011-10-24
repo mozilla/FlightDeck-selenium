@@ -34,10 +34,10 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import fd_home_page
-import fd_login_page
-import fd_dashboard_page
-import fd_lib_editor_page
+from pages.home_page import HomePage
+from pages.login_page import LoginPage
+from pages.dashboard_page import DashboardPage
+from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 
 
@@ -46,10 +46,10 @@ class TestLibLabel():
     def testShouldCheckLibraryLabel(self, mozwebqa):
         #This test is to check the labels of a library on the dashboard
         #Create page objects
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
-        libpage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboardpage_obj = DashboardPage(mozwebqa)
+        libpage_obj = LibraryEditorPage(mozwebqa)
 
         loginpage_obj.login()
 

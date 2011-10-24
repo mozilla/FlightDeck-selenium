@@ -34,23 +34,44 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from fd_base_page import FlightDeckBasePage
-from selenium.webdriver.common.by import By
+from pages.home_page import HomePage
+from pages.login_page import LoginPage
+from pages.dashboard_page import DashboardPage
+from pages.addon_editor_page import AddonEditorPage
+from unittestzero import Assert
 
 
-class LoginPage(FlightDeckBasePage):
+class TestAddonLabel():
 
-    _page_url = "/user/signin/"
+    def testShouldCheckAddonLabel(self, mozwebqa):
+        #This test is to check the labels of an add-on on the dashboard
+        #Create page objects
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboardpage_obj = DashboardPage(mozwebqa)
+        addonpage_obj = AddonEditorPage(mozwebqa)
 
-    _username_locator = (By.ID, 'id_username')
-    _password_locator = (By.ID, 'id_password')
-    _submit_locator = (By.NAME, 'save')
+        loginpage_obj.login()
 
-    def login(self, user="default"):
-        if self._page_url not in self.selenium.current_url:
-            self.selenium.get(self.base_url + self._page_url)
+        #Create an addon. Then go to dashboard and assert that the label is 'initial'.
+        homepage_obj.go_to_home_page()
+        homepage_obj.click_create_addon_btn()
+        addon_name = addonpage_obj.addon_name
 
-        credentials = self.testsetup.credentials[user]
-        self.selenium.find_element(*self._username_locator).send_keys(credentials['email'])
-        self.selenium.find_element(*self._password_locator).send_keys(credentials['password'])
-        self.selenium.find_element(*self._submit_locator).click()
+        homepage_obj.header.click_dashboard()
+        Assert.true(dashboardpage_obj.is_the_current_page)
+        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
+
+        #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
+        dashboardpage_obj.addon(addon_name).click_edit()
+        addonpage_obj.click_copy()
+        copy_addon_name = addonpage_obj.addon_name
+
+        try:
+            Assert.not_equal(addon_name, copy_addon_name)
+        except:
+            print 'A copy of the addon could not be created'
+        homepage_obj.header.click_dashboard()
+        Assert.true(dashboardpage_obj.addon(copy_addon_name).is_displayed, "Addon %s not found" % copy_addon_name)
+
+        dashboardpage_obj.delete_test_data()

@@ -20,7 +20,7 @@ Run
 
 followed by
 
-    sudo pip install -r requirements/mozwebqa.txt
+    sudo pip install -r requirements.txt
     
 __note__
 
@@ -42,10 +42,18 @@ Change the path/name to the downloaded Selenium server file.
 [Selenium Downloads]: http://code.google.com/p/selenium/downloads/list
 
 ### Running tests locally
+The mozwebqa py.test plugin manages the link to Selenium/webdriver. Pass in the [parameters] for the browser you require.
+Place your Mozilla Addons account details into credentials.yaml (but don't check them into github!)
 
-To run tests locally its a simple case of calling the command below from this directory
+The following command will run all flight deck/builder tests:
 
-    py.test . 
+    py.test . --browsername=? --browserver=? --platform=? --credentials=credentials.yaml
+
+Example:
+
+    py.test  --browsername=FIREFOX --browserver=7 --platform=MAC --credentials=credentials.yaml --baseurl="https://builder-addons-dev.allizom.org/"
+
+[Mozwebqa browser parameters]: https://github.com/davehunt/pytest-mozwebqa/blob/master/README.md
 
 
 Writing Tests

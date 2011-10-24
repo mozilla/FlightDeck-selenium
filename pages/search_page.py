@@ -34,7 +34,7 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from fd_base_page import FlightDeckBasePage
+from pages.base_page import FlightDeckBasePage
 from page import Page
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By

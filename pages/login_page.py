@@ -18,7 +18,8 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): Zac Campbell
+# Contributor(s): David Burns
+#                 Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -33,15 +34,23 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from fd_base_page import FlightDeckBasePage
+from pages.base_page import FlightDeckBasePage
 from selenium.webdriver.common.by import By
 
 
-class UserPage(FlightDeckBasePage):
-    # Page for viewing user's addons and libraries
+class LoginPage(FlightDeckBasePage):
 
-    _username_locator = (By.CSS_SELECTOR, "#app-sidebar > h2")
+    _page_url = "/user/signin/"
 
-    @property
-    def author_name(self):
-        return self.selenium.find_element(*self._username_locator).text 
+    _username_locator = (By.ID, 'id_username')
+    _password_locator = (By.ID, 'id_password')
+    _submit_locator = (By.NAME, 'save')
+
+    def login(self, user="default"):
+        if self._page_url not in self.selenium.current_url:
+            self.selenium.get(self.base_url + self._page_url)
+
+        credentials = self.testsetup.credentials[user]
+        self.selenium.find_element(*self._username_locator).send_keys(credentials['email'])
+        self.selenium.find_element(*self._password_locator).send_keys(credentials['password'])
+        self.selenium.find_element(*self._submit_locator).click()
