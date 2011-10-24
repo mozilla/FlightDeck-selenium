@@ -34,44 +34,30 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import fd_home_page
-import fd_login_page
-import fd_dashboard_page
-import fd_addon_editor_page
-from unittestzero import Assert
+from pages.base_page import FlightDeckBasePage
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 
 
-class TestAddonLabel():
+class LibraryEditorPage(FlightDeckBasePage):
 
-    def testShouldCheckAddonLabel(self, mozwebqa):
-        #This test is to check the labels of an add-on on the dashboard
-        #Create page objects
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
-        addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
+    _library_name = (By.ID, 'package-info-name')
+    _copy_locator = (By.ID, 'package-copy')
+    _save_locator = (By.ID, 'package-save')
+    _version_locator = (By.ID, 'version_name')
 
-        loginpage_obj.login()
+    @property
+    def library_name(self):
+        return self.selenium.find_element(*self._library_name).text
 
-        #Create an addon. Then go to dashboard and assert that the label is 'initial'.
-        homepage_obj.go_to_home_page()
-        homepage_obj.click_create_addon_btn()
-        addon_name = addonpage_obj.addon_name
+    def click_copy(self):
+        self.selenium.find_element(*self._copy_locator).click()
+        self.add_id()
 
-        homepage_obj.header.click_dashboard()
-        Assert.true(dashboardpage_obj.is_the_current_page)
-        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
+    def click_save(self):
+        self.selenium.find_element(*self._save_locator).click()
 
-        #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
-        dashboardpage_obj.addon(addon_name).click_edit()
-        addonpage_obj.click_copy()
-        copy_addon_name = addonpage_obj.addon_name
-
-        try:
-            Assert.not_equal(addon_name, copy_addon_name)
-        except:
-            print 'A copy of the addon could not be created'
-        homepage_obj.header.click_dashboard()
-        Assert.true(dashboardpage_obj.addon(copy_addon_name).is_displayed, "Addon %s not found" % copy_addon_name)
-
-        dashboardpage_obj.delete_test_data()
+    def type_library_version(self, version_label):
+        save_button = self.selenium.find_element(*self._save_btn)
+        ActionChains(self.selenium).move_to_element(save_button).perform()
+        self.selenium.find_element(*self._version_locator).clear().send_keys(version_label)

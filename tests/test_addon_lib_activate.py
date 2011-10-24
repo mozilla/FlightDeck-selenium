@@ -34,21 +34,21 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import fd_home_page
-import fd_login_page
-import fd_dashboard_page
-import fd_lib_editor_page
-import fd_addon_editor_page
+from pages.home_page import HomePage
+from pages.login_page import LoginPage
+from pages.dashboard_page import DashboardPage
+from pages.addon_editor_page import AddonEditorPage
+from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 
 
 class TestAddonActivateDeactivate():
 
     def testShouldCheckAddonDeactivateAndActivate(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
-        addonpage_obj = fd_addon_editor_page.AddonEditorPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboardpage_obj = DashboardPage(mozwebqa)
+        addonpage_obj = AddonEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
@@ -81,10 +81,10 @@ class TestAddonActivateDeactivate():
         dashboardpage_obj.delete_test_data()
 
     def testShouldCheckLibDeactivateAndActivate(self, mozwebqa):
-        homepage_obj = fd_home_page.HomePage(mozwebqa)
-        loginpage_obj = fd_login_page.LoginPage(mozwebqa)
-        dashboardpage_obj = fd_dashboard_page.DashboardPage(mozwebqa)
-        librarypage_obj = fd_lib_editor_page.LibraryEditorPage(mozwebqa)
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboardpage_obj = DashboardPage(mozwebqa)
+        librarypage_obj = LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()

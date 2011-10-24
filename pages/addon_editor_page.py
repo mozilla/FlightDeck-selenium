@@ -34,22 +34,21 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from fd_base_page import FlightDeckBasePage
-from page import Page
+from pages.base_page import FlightDeckBasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
 
-class LibraryEditorPage(FlightDeckBasePage):
+class AddonEditorPage(FlightDeckBasePage):
 
-    _library_name = (By.ID, 'package-info-name')
+    _addon_name = (By.ID, 'package-info-name')
     _copy_locator = (By.ID, 'package-copy')
     _save_locator = (By.ID, 'package-save')
     _version_locator = (By.ID, 'version_name')
 
     @property
-    def library_name(self):
-        return self.selenium.find_element(*self._library_name).text
+    def addon_name(self):
+        return self.selenium.find_element(*self._addon_name).text
 
     def click_copy(self):
         self.selenium.find_element(*self._copy_locator).click()
@@ -58,7 +57,7 @@ class LibraryEditorPage(FlightDeckBasePage):
     def click_save(self):
         self.selenium.find_element(*self._save_locator).click()
 
-    def type_library_version(self, version_label):
-        save_button = self.selenium.find_element(*self._save_btn)
+    def type_addon_version(self, version_label):
+        save_button = self.selenium.find_element(*self._save_locator)
         ActionChains(self.selenium).move_to_element(save_button).perform()
         self.selenium.find_element(*self._version_locator).clear().send_keys(version_label)

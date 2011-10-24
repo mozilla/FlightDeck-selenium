@@ -18,8 +18,7 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): David Burns
-#                 Zac Campbell
+# Contributor(s): Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,31 +33,15 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from fd_base_page import FlightDeckBasePage
-from page import Page
+from pages.base_page import FlightDeckBasePage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 
 
-class AddonEditorPage(FlightDeckBasePage):
+class UserPage(FlightDeckBasePage):
+    # Page for viewing user's addons and libraries
 
-    _addon_name = (By.ID, 'package-info-name')
-    _copy_locator = (By.ID, 'package-copy')
-    _save_locator = (By.ID, 'package-save')
-    _version_locator = (By.ID, 'version_name')
+    _username_locator = (By.CSS_SELECTOR, "#app-sidebar > h2")
 
     @property
-    def addon_name(self):
-        return self.selenium.find_element(*self._addon_name).text
-
-    def click_copy(self):
-        self.selenium.find_element(*self._copy_locator).click()
-        self.add_id()
-
-    def click_save(self):
-        self.selenium.find_element(*self._save_locator).click()
-
-    def type_addon_version(self, version_label):
-        save_button = self.selenium.find_element(*self._save_locator)
-        ActionChains(self.selenium).move_to_element(save_button).perform()
-        self.selenium.find_element(*self._version_locator).clear().send_keys(version_label)
+    def author_name(self):
+        return self.selenium.find_element(*self._username_locator).text 
