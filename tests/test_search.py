@@ -141,6 +141,7 @@ class TestSearch():
         Assert.true(searchpage_obj.library_element_count() >= 1)
         Assert.true(searchpage_obj.addon(top_library_name).is_displayed(), 'Library \'%s\' not found' % top_library_name)
 
+    @xfail(reason = "Bug 695283 - Search not indexing add-ons")
     def test_empty_search_returns_all_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
@@ -201,6 +202,7 @@ class TestSearch():
 
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
+    @xfail(reason = "Bug 695283 - Search not indexing add-ons")
     def test_clicking_addon_author_link_displays_author_profile(self, mozwebqa):
         # go to addon result and click author link
 
