@@ -91,6 +91,10 @@ class FlightDeckBasePage(Page):
         def logged_out(self):
             return self.is_element_visible(*self._signin_link_locator)
 
+        @property
+        def documentation_link(self):
+            return self.selenium.find_element(*self._documentation_link_locator).get_attribute('href')
+
         def click_home_logo(self):
             self.selenium.find_element(*self._home_link_locator).click()
 

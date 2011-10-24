@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 # ***** BEGIN LICENSE BLOCK *****
 # Version: MPL 1.1/GPL 2.0/LGPL 2.1
 #
@@ -12,14 +13,14 @@
 # for the specific language governing rights and limitations under the
 # License.
 #
-# The Original Code is Mozilla WebQA Tests.
+# The Original Code is Mozilla WebQA Selenium Tests.
 #
-# The Initial Developer of the Original Code is Mozilla Foundation.
+# The Initial Developer of the Original Code is
+# Mozilla.
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): David Burns
-#                 Zac Campbell
+# Contributor(s): Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,29 +35,31 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from pages.base_page import FlightDeckBasePage
-from selenium.webdriver.common.by import By
+from pages.home_page import HomePage
+from pages.dashboard_page import DashboardPage
+from unittestzero import Assert
+import pytest
+prod = pytest.mark.prod
 
 
-class HomePage(FlightDeckBasePage):
+class TestHomepage:
 
-    _create_addon_btn = (By.CSS_SELECTOR, "div.right_column div.fd_button > a")
-    _create_lib_btn = (By.CSS_SELECTOR, "div.UI_Bottom_Info a[title='Create Library']")
-    _browse_addons_list = (By.XPATH, "//ul[preceding-sibling::h2[text()='Browse Add-ons']]/li[@class='UI_Item']")
-    _browse_libraries_list = (By.XPATH, "//ul[preceding-sibling::h2[text()='Browse Libraries']]/li[@class='UI_Item']")
+    @prod
+    def test_doc_link_redirects(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
 
-    @property
-    def browse_addons_count(self):
-        return len(self.selenium.find_elements(*self._browse_addons_list))
+        homepage_obj.go_to_home_page()
+        link = homepage_obj.header.documentation_link
+        homepage_obj.selenium.get(link)
 
-    @property
-    def browse_libraries_count(self):
-        return len(self.selenium.find_elements(*self._browse_libraries_list))
+        Assert.contains("https://addons.mozilla.org/en-US/developers/docs/sdk/1.2/", homepage_obj.selenium.current_url)
 
-    def click_create_addon_btn(self):
-        self.selenium.find_element(*self._create_addon_btn).click()
-        self.add_id()
+    @prod
+    def test_addons_libraries_listed_on_home(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
 
-    def click_create_lib_btn(self):
-        self.selenium.find_element(*self._create_lib_btn).click()
-        self.add_id()
+        homepage_obj.go_to_home_page()
+
+        #3 of each should be present
+        Assert.equal(homepage_obj.browse_addons_count, 3)
+        Assert.equal(homepage_obj.browse_libraries_count, 3)
