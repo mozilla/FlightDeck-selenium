@@ -202,7 +202,7 @@ class TestSearch():
 
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
-    @xfail(reason = "Bug 695283 - Search not indexing add-ons")
+    @xfail(reason = "Bug 695283 - Add-ons not being indexed")
     def test_clicking_addon_author_link_displays_author_profile(self, mozwebqa):
         # go to addon result and click author link
 
