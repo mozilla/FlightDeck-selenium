@@ -60,4 +60,5 @@ class AddonEditorPage(FlightDeckBasePage):
     def type_addon_version(self, version_label):
         save_button = self.selenium.find_element(*self._save_locator)
         ActionChains(self.selenium).move_to_element(save_button).perform()
-        self.selenium.find_element(*self._version_locator).clear().send_keys(version_label)
+        self.selenium.find_element(*self._version_locator).clear()
+        self.selenium.find_element(*self._version_locator).send_keys(version_label)

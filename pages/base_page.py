@@ -78,6 +78,7 @@ class FlightDeckBasePage(Page):
     class HeaderRegion(Page):
 
         _home_link_locator = (By.CSS_SELECTOR, "#flightdeck-logo > a")
+        _create_locator = (By.XPATH, "//li[child::span[contains(text(), 'Create')]]")
         _search_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(2) > span > a")
         _documentation_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(3) > span > a")
         _signin_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) > span > a")
@@ -103,10 +104,14 @@ class FlightDeckBasePage(Page):
             self.selenium.find_element(*self._signout_link_locator).click()
 
         def click_create_addon(self):
-            create_link = self.selenium.find_element_by_xpath('//li/span[contains(text(), "Create")]')
-            ActionChains(self.selenium).move_to_element(create_link).perform()
+            create_link = self.selenium.find_element(*self._create_locator)
+            ActionChains(self.selenium).move_to_element_with_offset(create_link, 5, 5).perform()
             self.selenium.find_element_by_link_text("Add-on").click()
-            
+
+        def click_create_library(self):
+            create_link = self.selenium.find_element(*self._create_locator)
+            ActionChains(self.selenium).move_to_element_with_offset(create_link, 5, 5).perform()
+            self.selenium.find_element_by_link_text("Library").click()
 
     def _get_session(self, user="default"):
         credentials = self.testsetup.credentials[user]
