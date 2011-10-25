@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 # ***** BEGIN LICENSE BLOCK *****
 # Version: MPL 1.1/GPL 2.0/LGPL 2.1
 #
@@ -12,14 +13,14 @@
 # for the specific language governing rights and limitations under the
 # License.
 #
-# The Original Code is Mozilla WebQA Tests.
+# The Original Code is Mozilla WebQA Selenium Tests.
 #
-# The Initial Developer of the Original Code is Mozilla Foundation.
+# The Initial Developer of the Original Code is
+# Mozilla.
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): David Burns
-#                 Zac Campbell
+# Contributor(s): Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,24 +35,31 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from pages.base_page import FlightDeckBasePage
-from selenium.webdriver.common.by import By
+from pages.home_page import HomePage
+from pages.dashboard_page import DashboardPage
+from unittestzero import Assert
+import pytest
+prod = pytest.mark.prod
 
 
-class LoginPage(FlightDeckBasePage):
+class TestHomepage:
 
-    _page_title = "Sign In - Add-on Builder"
-    _page_url = "/user/signin/"
+    @prod
+    def test_doc_link_redirects(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
 
-    _username_locator = (By.ID, 'id_username')
-    _password_locator = (By.ID, 'id_password')
-    _submit_locator = (By.NAME, 'save')
+        homepage_obj.go_to_home_page()
+        link = homepage_obj.header.documentation_link
+        homepage_obj.selenium.get(link)
 
-    def login(self, user="default"):
-        if self._page_url not in self.selenium.current_url:
-            self.selenium.get(self.base_url + self._page_url)
+        Assert.contains("https://addons.mozilla.org/en-US/developers/docs/sdk/1.2/", homepage_obj.selenium.current_url)
 
-        credentials = self.testsetup.credentials[user]
-        self.selenium.find_element(*self._username_locator).send_keys(credentials['email'])
-        self.selenium.find_element(*self._password_locator).send_keys(credentials['password'])
-        self.selenium.find_element(*self._submit_locator).click()
+    @prod
+    def test_addons_libraries_listed_on_home(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
+
+        homepage_obj.go_to_home_page()
+
+        #3 of each should be present
+        Assert.equal(homepage_obj.browse_addons_count, 3)
+        Assert.equal(homepage_obj.browse_libraries_count, 3)

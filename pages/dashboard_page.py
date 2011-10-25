@@ -50,12 +50,17 @@ class DashboardPage(FlightDeckBasePage):
     _private_libraries_link = (By.LINK_TEXT, "Private Libraries")
     _confirm_delete_locator = (By.ID, 'delete_package')
     _addons_public_counter = (By.ID, "public_addons_no")
+    _logged_in_username_locator = (By.CSS_SELECTOR, "li.name")
 
     def addon(self, lookup):
         return self.Addon(self.testsetup, lookup)
 
     def library(self, lookup):
         return self.Library(self.testsetup, lookup)
+        
+    @property
+    def logged_in_username(self):
+        return self.selenium.find_element(*self._logged_in_username_locator).text
 
     @property
     def addons_count_label(self):
