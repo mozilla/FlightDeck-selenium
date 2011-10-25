@@ -102,7 +102,7 @@ class DashboardPage(FlightDeckBasePage):
 
         @property
         def is_displayed(self):
-            return self.is_element_visible(self._root_locator)
+            return self.is_element_visible(*self._root_locator)
 
         def click_edit(self):
             self._root_element.find_element(*self._edit_locator).click()
