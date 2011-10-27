@@ -60,7 +60,7 @@ class Page(object):
         else:
             return True
  
-    def is_element_visible(self, locator):
+    def is_element_visible(self, *locator):
         try:
             return self.selenium.find_element(*locator).is_displayed()
         except NoSuchElementException, ElementNotVisibleException:

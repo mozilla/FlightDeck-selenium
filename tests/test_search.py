@@ -278,3 +278,47 @@ class TestSearch():
         Assert.equal(editorpage_obj.library_name, library_name)
 
         searchpage_obj.delete_test_data()
+
+    @prod
+    def test_copies_slider_filters_results(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
+
+        homepage_obj.go_to_home_page()
+        homepage_obj.header.click_search()
+
+        initial_addon_count = searchpage_obj.addons_count_label
+        initial_library_count = searchpage_obj.library_count_label
+        searchpage_obj.move_copies_slider(1)
+
+        Assert.true(initial_addon_count > searchpage_obj.addons_count_label)
+        Assert.true(initial_library_count > searchpage_obj.library_count_label)
+
+    @prod
+    def test_used_packages_slider_filters_results(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
+
+        homepage_obj.go_to_home_page()
+        homepage_obj.header.click_search()
+        searchpage_obj.click_filter_libraries_link()
+
+        initial_library_count = searchpage_obj.library_count_label
+        searchpage_obj.move_used_packages_slider(10)
+
+        Assert.true(initial_library_count > searchpage_obj.library_count_label)
+
+    @prod
+    def test_activity_slider_filters_results(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
+
+        homepage_obj.go_to_home_page()
+        homepage_obj.header.click_search()
+
+        initial_addon_count = searchpage_obj.addons_count_label
+        initial_library_count = searchpage_obj.library_count_label
+        searchpage_obj.move_activity_slider(1)
+
+        Assert.true(initial_addon_count > searchpage_obj.addons_count_label)
+        Assert.true(initial_library_count > searchpage_obj.library_count_label)
