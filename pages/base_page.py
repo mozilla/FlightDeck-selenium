@@ -78,7 +78,7 @@ class FlightDeckBasePage(Page):
     class HeaderRegion(Page):
 
         _home_link_locator = (By.CSS_SELECTOR, "#flightdeck-logo > a")
-        _create_locator = (By.XPATH, "//li[child::span[contains(text(), 'Create')]]")
+        _create_locator = (By.CSS_SELECTOR, "div.UI_middleWrapper > nav > ul > li > span")
         _search_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(2) > span > a")
         _documentation_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(3) > span > a")
         _signin_link_locator = (By.CSS_SELECTOR, "header#app-header nav > ul > li:nth-child(4) > span > a")
