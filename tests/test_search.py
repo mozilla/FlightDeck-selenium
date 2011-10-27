@@ -94,7 +94,7 @@ class TestSearch():
         homepage_obj.click_create_lib_btn()
         librarypage_obj.type_library_version('searchable')
         librarypage_obj.click_save()
-        searchterm = librarypage_obj.lib_name
+        searchterm = librarypage_obj.library_name
 
         homepage_obj.header.click_search()
         searchpage_obj.type_search_term(searchterm)
