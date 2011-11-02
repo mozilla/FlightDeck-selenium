@@ -280,6 +280,7 @@ class TestSearch():
         searchpage_obj.delete_test_data()
 
     @prod
+    @xfail(reason = "Bug 698757: Dupicate query (causes stale WebElement)")
     def test_copies_slider_filters_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
@@ -295,6 +296,7 @@ class TestSearch():
         Assert.true(initial_library_count > searchpage_obj.library_count_label)
 
     @prod
+    @xfail(reason = "Bug 698757: Dupicate query (causes stale WebElement)")
     def test_used_packages_slider_filters_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
@@ -309,6 +311,7 @@ class TestSearch():
         Assert.true(initial_library_count > searchpage_obj.library_count_label)
 
     @prod
+    @xfail(reason = "Bug 698757: Dupicate query (causes stale WebElement)")
     def test_activity_slider_filters_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
