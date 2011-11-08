@@ -43,6 +43,7 @@ from pages.addon_editor_page import AddonEditorPage
 from pages.library_editor_page import LibraryEditorPage
 from pages.user_page import UserPage
 from unittestzero import Assert
+import time
 import pytest
 xfail = pytest.mark.xfail
 prod = pytest.mark.prod
@@ -50,7 +51,6 @@ prod = pytest.mark.prod
 
 class TestSearch():
 
-    @xfail(reason = 'Webdriver cannot trigger :hover, steps to setup addon can\'t be completed')
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
@@ -69,6 +69,9 @@ class TestSearch():
         addonpage_obj.click_save()
         searchterm = addonpage_obj.addon_name
 
+        # dev team recommends short wait to be sure that it gets indexed in time
+        time.sleep(5)
+
         homepage_obj.header.click_search()
         searchpage_obj.type_search_term(searchterm)
         searchpage_obj.click_search()
@@ -77,7 +80,6 @@ class TestSearch():
 
         searchpage_obj.delete_test_data()
 
-    @xfail(reason = 'Webdriver cannot trigger :hover, steps to setup addon can\'t be completed')
     def test_search_by_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
@@ -95,6 +97,9 @@ class TestSearch():
         librarypage_obj.type_library_version('searchable')
         librarypage_obj.click_save()
         searchterm = librarypage_obj.library_name
+
+        # dev team recommends short wait to be sure that it gets indexed in time
+        time.sleep(5)
 
         homepage_obj.header.click_search()
         searchpage_obj.type_search_term(searchterm)
@@ -145,7 +150,6 @@ class TestSearch():
         Assert.true(searchpage_obj.addon(top_library_name).is_displayed(), 'Library \'%s\' not found' % top_library_name)
 
     @prod
-    @xfail(reason = "Bug 695283 - Search not indexing add-ons")
     def test_empty_search_returns_all_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
@@ -186,7 +190,6 @@ class TestSearch():
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
     @prod
-    @xfail(reason = 'Bug 689508 - label and search results mismatch')
     def test_search_library_filter_results_match(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
@@ -209,7 +212,6 @@ class TestSearch():
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
     @prod
-    @xfail(reason = "Bug 695283 - Search not indexing add-ons")
     def test_clicking_addon_author_link_displays_author_profile(self, mozwebqa):
         # go to addon result and click author link
 
@@ -241,7 +243,6 @@ class TestSearch():
         searchpage_obj.library(library_name).click_author()
         Assert.equal(userpage_obj.author_name, author_name)
 
-    @xfail(reason = "Bug 691714: Page load event issue on Search results")
     def test_clicking_addon_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
@@ -260,7 +261,6 @@ class TestSearch():
 
         searchpage_obj.delete_test_data()
 
-    @xfail(reason = "Bug 691714: Page load event issue on Search results")
     def test_clicking_library_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)

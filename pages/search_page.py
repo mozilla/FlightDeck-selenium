@@ -134,7 +134,7 @@ class SearchPage(FlightDeckBasePage):
             return self.selenium.find_element(*self._root_locator)
 
         def is_displayed(self):
-            return self.is_element_visible(self._root_locator)
+            return self.is_element_visible(*self._root_locator)
 
         @property
         def name(self):
