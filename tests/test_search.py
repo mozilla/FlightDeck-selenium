@@ -212,6 +212,7 @@ class TestSearch():
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
     @prod
+    @xfail(reason = "Bug 698757: Duplicate query (causes stale WebElement)")
     def test_clicking_addon_author_link_displays_author_profile(self, mozwebqa):
         # go to addon result and click author link
 
