@@ -228,6 +228,7 @@ class TestSearch():
         Assert.equal(userpage_obj.author_name, author_name)
 
     @prod
+    @xfail(reason = "Bug 698757: Dupicate query (causes stale WebElement)")
     def test_clicking_library_author_link_displays_author_profile(self, mozwebqa):
 
         # go to library result and click author link
