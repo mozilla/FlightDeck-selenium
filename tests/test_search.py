@@ -130,7 +130,6 @@ class TestSearch():
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed(), 'Addon \'%s\' not found' % top_addon_name)
 
     @prod
-    @xfail(reason = 'Bug 681747 - Partial strings not matching against names in FD Search')
     def test_search_partial_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
