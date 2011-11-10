@@ -212,7 +212,6 @@ class TestSearch():
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
     @prod
-    @xfail(reason = "Bug 698757: Duplicate query (causes stale WebElement)")
     def test_clicking_addon_author_link_displays_author_profile(self, mozwebqa):
         # go to addon result and click author link
 
@@ -229,7 +228,6 @@ class TestSearch():
         Assert.equal(userpage_obj.author_name, author_name)
 
     @prod
-    @xfail(reason = "Bug 698757: Duplicate query (causes stale WebElement)")
     def test_clicking_library_author_link_displays_author_profile(self, mozwebqa):
 
         # go to library result and click author link
@@ -282,7 +280,6 @@ class TestSearch():
         searchpage_obj.delete_test_data()
 
     @prod
-    @xfail(reason = "Bug 698757: Duplicate query (causes stale WebElement)")
     def test_copies_slider_filters_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
@@ -298,7 +295,6 @@ class TestSearch():
         Assert.true(initial_library_count > searchpage_obj.library_count_label)
 
     @prod
-    @xfail(reason = "Bug 698757: Duplicate query (causes stale WebElement)")
     def test_used_packages_slider_filters_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
@@ -313,7 +309,6 @@ class TestSearch():
         Assert.true(initial_library_count > searchpage_obj.library_count_label)
 
     @prod
-    @xfail(reason = "Bug 698757: Duplicate query (causes stale WebElement)")
     def test_activity_slider_filters_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
