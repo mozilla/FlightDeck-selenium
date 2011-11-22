@@ -35,6 +35,7 @@
 #
 # ***** END LICENSE BLOCK *****
 from pages.base_page import FlightDeckBasePage
+from pages.regions.editor_tab_region import EditorTabRegion
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -63,3 +64,6 @@ class AddonEditorPage(FlightDeckBasePage):
         version_field = self.selenium.find_element(*self._version_locator)
         version_field.clear()
         version_field.send_keys(version_label)
+
+    def tab(self, lookup):
+        return EditorTabRegion(self.testsetup, lookup)

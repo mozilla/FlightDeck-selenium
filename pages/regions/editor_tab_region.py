@@ -35,30 +35,24 @@
 #
 # ***** END LICENSE BLOCK *****
 
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import ElementNotVisibleException
+from page import Page
+from selenium.webdriver.common.by import By
 
 
-class Page(object):
-   
-    def __init__(self, testsetup):
-        self.testsetup = testsetup
-        self.selenium = testsetup.selenium
-        self.base_url = testsetup.base_url
+class EditorTabRegion(Page):
+
+    _tab_selector = (By.CSS_SELECTOR, 'div.tab-container span.tab')
+    _textarea = (By.CSS_SELECTOR, 'div.ace_text-layer')
+
+    def __init__(self, testsetup, lookup):
+        Page.__init__(self, testsetup)
+        self.lookup = lookup - 1
+        self._root_element = self.selenium.find_elements(*self._tab_selector)[self.lookup]
 
     @property
-    def is_the_current_page(self):
-        page_title = self.selenium.title
-        
-        if not page_title == self._page_title:
-            print "Expected page title: %s" % self._page_title
-            print "Actual page title: %s" % page_title
-            raise Exception("Expected page title does not match actual page title.")
-        else:
-            return True
- 
-    def is_element_visible(self, *locator):
-        try:
-            return self.selenium.find_element(*locator).is_displayed()
-        except NoSuchElementException, ElementNotVisibleException:
-            return False
+    def content(self):
+        return self.selenium.find_element(*self._textarea).text
+
+    @property
+    def selected(self):
+        return 'selected' in self._root_element.get_attribute('class')
