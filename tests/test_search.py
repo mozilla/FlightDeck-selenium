@@ -255,7 +255,7 @@ class TestSearch():
         dashboard_obj.header.click_search()
 
         addon_name = searchpage_obj.addon(1).name
-        searchpage_obj.addon(addon_name).click_source()
+        searchpage_obj.addon(addon_name).click()
         Assert.equal(editorpage_obj.addon_name, addon_name)
 
         searchpage_obj.delete_test_data()
@@ -273,7 +273,7 @@ class TestSearch():
         dashboard_obj.header.click_search()
 
         library_name = searchpage_obj.library(1).name
-        searchpage_obj.library(library_name).click_source()
+        searchpage_obj.library(library_name).click()
         Assert.equal(editorpage_obj.library_name, library_name)
 
         searchpage_obj.delete_test_data()
