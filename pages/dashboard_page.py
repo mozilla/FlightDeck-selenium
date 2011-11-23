@@ -49,7 +49,6 @@ class DashboardPage(FlightDeckBasePage):
     _public_libraries_link = (By.LINK_TEXT, "Public Libraries")
     _private_addons_link = (By.LINK_TEXT, "Private Add-ons")
     _private_libraries_link = (By.LINK_TEXT, "Private Libraries")
-    _confirm_delete_locator = (By.ID, 'delete_package')
     _addons_public_counter = (By.ID, "public_addons_no")
     _logged_in_username_locator = (By.CSS_SELECTOR, "li.name")
 
@@ -79,9 +78,6 @@ class DashboardPage(FlightDeckBasePage):
     def click_public_libraries_link(self):
         self.selenium.find_element(*self._public_libraries_link).click()
 
-    def confirm_delete(self):
-        self.selenium.find_element(*self._confirm_delete_locator).click()
-
     class DashboardContentRegion(Page):
         _name_locator = (By.CSS_SELECTOR, "h3")
         _version_locator = (By.CSS_SELECTOR, "h3 > span.version")
@@ -89,6 +85,7 @@ class DashboardPage(FlightDeckBasePage):
         _delete_locator = (By.CSS_SELECTOR, "li.UI_Delete > a")
         _public_locator = (By.CSS_SELECTOR, "li.UI_Activate > a")
         _private_locator = (By.CSS_SELECTOR, "li.UI_Disable > a")
+        _confirm_delete_locator = (By.ID, 'delete_package')
 
         def __init__(self, testsetup, lookup):
             Page.__init__(self, testsetup)
@@ -110,6 +107,9 @@ class DashboardPage(FlightDeckBasePage):
 
         def click_delete(self):
             self._root_element.find_element(*self._delete_locator).click()
+
+        def confirm_delete(self):
+            self.selenium.find_element(*self._confirm_delete_locator).click()
             WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._root_locator))
 
         def click_public(self):
