@@ -38,6 +38,7 @@
 from pages.base_page import FlightDeckBasePage
 from page import Page
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class DashboardPage(FlightDeckBasePage):
@@ -57,7 +58,7 @@ class DashboardPage(FlightDeckBasePage):
 
     def library(self, lookup):
         return self.Library(self.testsetup, lookup)
-        
+
     @property
     def logged_in_username(self):
         return self.selenium.find_element(*self._logged_in_username_locator).text
@@ -109,12 +110,15 @@ class DashboardPage(FlightDeckBasePage):
 
         def click_delete(self):
             self._root_element.find_element(*self._delete_locator).click()
+            WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._root_locator))
 
         def click_public(self):
             self._root_element.find_element(*self._public_locator).click()
-            
+            WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._root_locator))
+
         def click_private(self):
             self._root_element.find_element(*self._private_locator).click()
+            WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._root_locator))
 
         @property
         def name(self):
