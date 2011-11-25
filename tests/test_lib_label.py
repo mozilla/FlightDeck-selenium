@@ -59,7 +59,7 @@ class TestLibLabel():
         library_name = libpage_obj.library_name
 
         libpage_obj.header.click_dashboard()
-        #Assert.true(dashboardpage_obj.is_the_current_page)
+        Assert.true(dashboardpage_obj.is_the_current_page)
         Assert.true(dashboardpage_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
 
         #Click on the edit button of the library.Then create a copy of that library and assert that the label is 'copy'

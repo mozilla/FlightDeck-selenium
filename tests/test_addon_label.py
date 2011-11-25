@@ -59,7 +59,7 @@ class TestAddonLabel():
         addon_name = addonpage_obj.addon_name
 
         homepage_obj.header.click_dashboard()
-        #Assert.true(dashboardpage_obj.is_the_current_page)
+        Assert.true(dashboardpage_obj.is_the_current_page)
         Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
 
         #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
