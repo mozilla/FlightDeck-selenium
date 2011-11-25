@@ -47,9 +47,6 @@ class Page(object):
         self.selenium = testsetup.selenium
         self.base_url = testsetup.base_url
 
-    def get_page_title(self):
-        return self.selenium.title
-
     @property
     def is_the_current_page(self):
         if self._page_title != '':

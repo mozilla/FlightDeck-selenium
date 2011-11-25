@@ -70,7 +70,7 @@ class TestSearch():
         searchterm = addonpage_obj.addon_name
 
         # dev team recommends short wait to be sure that it gets indexed in time
-        time.sleep(5)
+        time.sleep(10)
 
         homepage_obj.header.click_search()
         searchpage_obj.type_search_term(searchterm)
@@ -99,7 +99,7 @@ class TestSearch():
         searchterm = librarypage_obj.library_name
 
         # dev team recommends short wait to be sure that it gets indexed in time
-        time.sleep(5)
+        time.sleep(10)
 
         homepage_obj.header.click_search()
         searchpage_obj.type_search_term(searchterm)
@@ -110,7 +110,6 @@ class TestSearch():
         searchpage_obj.delete_test_data()
 
     @prod
-    @xfail(reason = 'Bug 681747 - Partial strings not matching against names in FD Search')
     def test_search_partial_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
@@ -146,7 +145,7 @@ class TestSearch():
         searchpage_obj.click_search()
 
         Assert.true(searchpage_obj.library_element_count() >= 1)
-        Assert.true(searchpage_obj.addon(top_library_name).is_displayed(), 'Library \'%s\' not found' % top_library_name)
+        Assert.true(searchpage_obj.library(top_library_name).is_displayed(), 'Library \'%s\' not found' % top_library_name)
 
     @prod
     def test_empty_search_returns_all_results(self, mozwebqa):
@@ -224,7 +223,7 @@ class TestSearch():
         addon_name = searchpage_obj.addon(1).name
         author_name = searchpage_obj.addon(addon_name).author_name
         searchpage_obj.addon(addon_name).click_author()
-        Assert.equal(userpage_obj.author_name, author_name)
+        Assert.equal(userpage_obj.author_name.lower(), author_name)
 
     @prod
     def test_clicking_library_author_link_displays_author_profile(self, mozwebqa):
@@ -240,7 +239,7 @@ class TestSearch():
         library_name = searchpage_obj.library(1).name
         author_name = searchpage_obj.library(library_name).author_name
         searchpage_obj.library(library_name).click_author()
-        Assert.equal(userpage_obj.author_name, author_name)
+        Assert.equal(userpage_obj.author_name.lower(), author_name)
 
     def test_clicking_addon_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
@@ -255,7 +254,7 @@ class TestSearch():
         dashboard_obj.header.click_search()
 
         addon_name = searchpage_obj.addon(1).name
-        searchpage_obj.addon(addon_name).click_source()
+        searchpage_obj.addon(addon_name).click()
         Assert.equal(editorpage_obj.addon_name, addon_name)
 
         searchpage_obj.delete_test_data()
@@ -273,7 +272,7 @@ class TestSearch():
         dashboard_obj.header.click_search()
 
         library_name = searchpage_obj.library(1).name
-        searchpage_obj.library(library_name).click_source()
+        searchpage_obj.library(library_name).click()
         Assert.equal(editorpage_obj.library_name, library_name)
 
         searchpage_obj.delete_test_data()
