@@ -126,7 +126,7 @@ class SearchPage(FlightDeckBasePage):
                 self._root_locator = (self._base_locator[0], "%s[descendant::h3/a[text()='%s']]" % (self._base_locator[1], lookup))
 
         _name_locator = (By.CSS_SELECTOR, "h3 > a")
-        _author_link_locator = (By.CSS_SELECTOR, "h3 > span > a")
+        _author_link_locator = (By.CSS_SELECTOR, "ul.search_meta li:nth-child(1) > a")
 
         @property
         def root_element(self):

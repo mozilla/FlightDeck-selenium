@@ -40,7 +40,7 @@ from selenium.common.exceptions import ElementNotVisibleException
 
 
 class Page(object):
-   
+
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.selenium = testsetup.selenium
@@ -49,16 +49,27 @@ class Page(object):
     @property
     def is_the_current_page(self):
         page_title = self.selenium.title
-        
+
         if not page_title == self._page_title:
             print "Expected page title: %s" % self._page_title
             print "Actual page title: %s" % page_title
             raise Exception("Expected page title does not match actual page title.")
         else:
             return True
- 
+
     def is_element_visible(self, *locator):
         try:
             return self.selenium.find_element(*locator).is_displayed()
         except NoSuchElementException, ElementNotVisibleException:
             return False
+
+    def is_element_present(self, *locator):
+        self.selenium.implicitly_wait(0)
+        try:
+            self.selenium.find_element(*locator)
+            return True
+        except NoSuchElementException:
+            return False
+        finally:
+            # set back to where you once belonged
+            self.selenium.implicitly_wait(self.testsetup.default_implicit_wait)
