@@ -52,7 +52,7 @@ class TestHomepage:
         link = homepage_obj.header.documentation_link
         homepage_obj.selenium.get(link)
 
-        Assert.contains("https://addons.mozilla.org/en-US/developers/docs/sdk/1.2/", homepage_obj.selenium.current_url)
+        Assert.contains("https://addons.mozilla.org/en-US/developers/docs/sdk/latest/", homepage_obj.selenium.current_url)
 
     @prod
     def test_addons_libraries_listed_on_home(self, mozwebqa):
