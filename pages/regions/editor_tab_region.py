@@ -18,8 +18,7 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): David Burns
-#                 Zac Campbell
+# Contributor(s): Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,36 +33,25 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from pages.base_page import FlightDeckBasePage
-from pages.regions.editor_tab_region import EditorTabRegion
+
+from page import Page
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 
 
-class AddonEditorPage(FlightDeckBasePage):
+class EditorTabRegion(Page):
 
-    _addon_name = (By.ID, 'package-info-name')
-    _copy_locator = (By.ID, 'package-copy')
-    _save_locator = (By.ID, 'package-save')
-    _version_locator = (By.ID, 'version_name')
+    _tab_selector = (By.CSS_SELECTOR, 'div.tab-container span.tab')
+    _textarea = (By.CSS_SELECTOR, 'div.ace_text-layer')
+
+    def __init__(self, testsetup, lookup):
+        Page.__init__(self, testsetup)
+        self.lookup = lookup - 1
+        self._root_element = self.selenium.find_elements(*self._tab_selector)[self.lookup]
 
     @property
-    def addon_name(self):
-        return self.selenium.find_element(*self._addon_name).text
+    def content(self):
+        return self.selenium.find_element(*self._textarea).text
 
-    def click_copy(self):
-        self.selenium.find_element(*self._copy_locator).click()
-        self.add_id()
-
-    def click_save(self):
-        self.selenium.find_element(*self._save_locator).click()
-
-    def type_addon_version(self, version_label):
-        save_button = self.selenium.find_element(*self._save_locator)
-        ActionChains(self.selenium).move_to_element(save_button).perform()
-        version_field = self.selenium.find_element(*self._version_locator)
-        version_field.clear()
-        version_field.send_keys(version_label)
-
-    def tab(self, lookup):
-        return EditorTabRegion(self.testsetup, lookup)
+    @property
+    def selected(self):
+        return 'selected' in self._root_element.get_attribute('class')

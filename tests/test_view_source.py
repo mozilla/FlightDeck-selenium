@@ -34,36 +34,41 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from pages.base_page import FlightDeckBasePage
-from pages.regions.editor_tab_region import EditorTabRegion
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
+from pages.home_page import HomePage
+from pages.search_page import SearchPage
+from pages.library_editor_page import LibraryEditorPage
+from pages.addon_editor_page import AddonEditorPage
+from unittestzero import Assert
 
 
-class AddonEditorPage(FlightDeckBasePage):
+class TestViewSource():
 
-    _addon_name = (By.ID, 'package-info-name')
-    _copy_locator = (By.ID, 'package-copy')
-    _save_locator = (By.ID, 'package-save')
-    _version_locator = (By.ID, 'version_name')
+    def test_view_addon_source(self, mozwebqa):
+        #This test is to check viewing the source of an addon while not logged in
+        homepage_obj = HomePage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
+        addoneditor_obj = AddonEditorPage(mozwebqa)
 
-    @property
-    def addon_name(self):
-        return self.selenium.find_element(*self._addon_name).text
+        #Go to search page and click view source on the first addon listed
+        homepage_obj.go_to_home_page()
+        homepage_obj.header.click_search()
+        
+        searchpage_obj.addon(1).click()
 
-    def click_copy(self):
-        self.selenium.find_element(*self._copy_locator).click()
-        self.add_id()
+        Assert.true(addoneditor_obj.tab(1).selected)        
+        Assert.not_none(addoneditor_obj.tab(1).content)
 
-    def click_save(self):
-        self.selenium.find_element(*self._save_locator).click()
+    def test_view_source_library(self, mozwebqa):
+        #This test is to check viewing the source of a library while not logged in
+        homepage_obj = HomePage(mozwebqa)
+        searchpage_obj = SearchPage(mozwebqa)
+        libraryeditor_obj = LibraryEditorPage(mozwebqa)
 
-    def type_addon_version(self, version_label):
-        save_button = self.selenium.find_element(*self._save_locator)
-        ActionChains(self.selenium).move_to_element(save_button).perform()
-        version_field = self.selenium.find_element(*self._version_locator)
-        version_field.clear()
-        version_field.send_keys(version_label)
-
-    def tab(self, lookup):
-        return EditorTabRegion(self.testsetup, lookup)
+        #Go to search page and click view source on the first library listed
+        homepage_obj.go_to_home_page()
+        homepage_obj.header.click_search()
+        
+        searchpage_obj.library(1).click()
+        
+        Assert.true(libraryeditor_obj.tab(1).selected)
+        Assert.not_none(libraryeditor_obj.tab(1).content)
