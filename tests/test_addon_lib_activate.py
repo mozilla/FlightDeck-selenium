@@ -53,7 +53,7 @@ class TestAddonActivateDeactivate():
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
         loginpage_obj.login()
-        #Assert.true(dashboardpage_obj.is_the_current_page)
+        Assert.true(dashboardpage_obj.is_the_current_page)
 
         # Go back to homepage and create a new addon to work with.
         dashboardpage_obj.header.click_home_logo()
@@ -89,7 +89,7 @@ class TestAddonActivateDeactivate():
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
         loginpage_obj.login()
-        #Assert.true(dashboardpage_obj.is_the_current_page)
+        Assert.true(dashboardpage_obj.is_the_current_page)
 
         # go back to homepage, create a new library to work with
         dashboardpage_obj.header.click_home_logo()

@@ -54,9 +54,10 @@ class TestLoginLogout:
 
         homepage_obj.go_to_home_page()
         homepage_obj.header.click_signin()
-        #Assert.true(loginpage_obj.is_the_current_page)
+        Assert.true(loginpage_obj.is_the_current_page)
         loginpage_obj.login()
 
+        Assert.true(dashboard_obj.is_the_current_page)
         Assert.true(dashboard_obj.header.logged_in)
         Assert.equal(dashboard_obj.logged_in_username, mozwebqa.credentials['default']['name'])
 
