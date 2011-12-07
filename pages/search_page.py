@@ -34,12 +34,12 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from pages.base_page import FlightDeckBasePage
-from page import Page
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 import time
+from page import Page
+from pages.base_page import FlightDeckBasePage
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
 
 class SearchPage(FlightDeckBasePage):
 
