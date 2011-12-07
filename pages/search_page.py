@@ -90,7 +90,7 @@ class SearchPage(FlightDeckBasePage):
         self.type_search_term(search_term)
         self.click_search()
 
-    def search_and_wait_for_package(self, name, package):
+    def search_until_package_exists(self, name, package):
         timeout = time.time() + (self.testsetup.timeout / 1000)
         sleep_time = 10 - self.testsetup.default_implicit_wait
         

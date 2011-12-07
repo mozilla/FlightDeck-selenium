@@ -71,7 +71,7 @@ class TestSearch():
         addonpage_obj.header.click_home_logo()
         homepage_obj.header.click_search()
 
-        searchpage_obj.search_and_wait_for_package(searchterm, searchpage_obj.addon(searchterm))
+        searchpage_obj.search_until_package_exists(searchterm, searchpage_obj.addon(searchterm))
         Assert.true(searchpage_obj.addon(searchterm).is_displayed, '%s not found before timeout' % searchterm)
 
         searchpage_obj.delete_test_data()
@@ -97,7 +97,7 @@ class TestSearch():
         librarypage_obj.header.click_home_logo()
         homepage_obj.header.click_search()
 
-        searchpage_obj.search_and_wait_for_package(searchterm, searchpage_obj.library(searchterm))
+        searchpage_obj.search_until_package_exists(searchterm, searchpage_obj.library(searchterm))
         Assert.true(searchpage_obj.library(searchterm).is_displayed, '%s not found before timeout' % searchterm)
 
         searchpage_obj.delete_test_data()
