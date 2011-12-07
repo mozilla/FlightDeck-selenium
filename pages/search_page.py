@@ -92,7 +92,6 @@ class SearchPage(FlightDeckBasePage):
 
     def search_until_package_exists(self, name, package):
         timeout = time.time() + (self.testsetup.timeout / 1000)
-        sleep_time = 10 - self.testsetup.default_implicit_wait
         
         while time.time() < timeout:
             self.search_for_term(name)
@@ -100,7 +99,6 @@ class SearchPage(FlightDeckBasePage):
             if package.is_displayed:
                 break
             else:
-                time.sleep(sleep_time)
                 self.header.click_search()
 
     @property
