@@ -43,7 +43,6 @@ from pages.addon_editor_page import AddonEditorPage
 from pages.library_editor_page import LibraryEditorPage
 from pages.user_page import UserPage
 from unittestzero import Assert
-import time
 import pytest
 xfail = pytest.mark.xfail
 prod = pytest.mark.prod
@@ -69,14 +68,11 @@ class TestSearch():
         addonpage_obj.click_save()
         searchterm = addonpage_obj.addon_name
 
-        # dev team recommends short wait to be sure that it gets indexed in time
-        time.sleep(10)
-
+        addonpage_obj.header.click_home_logo()
         homepage_obj.header.click_search()
-        searchpage_obj.type_search_term(searchterm)
-        searchpage_obj.click_search()
 
-        Assert.true(searchpage_obj.addon(searchterm).is_displayed(), '%s not found' % searchterm)
+        searchpage_obj.search_until_package_exists(searchterm, searchpage_obj.addon(searchterm))
+        Assert.true(searchpage_obj.addon(searchterm).is_displayed, '%s not found before timeout' % searchterm)
 
         searchpage_obj.delete_test_data()
 
@@ -98,14 +94,11 @@ class TestSearch():
         librarypage_obj.click_save()
         searchterm = librarypage_obj.library_name
 
-        # dev team recommends short wait to be sure that it gets indexed in time
-        time.sleep(10)
-
+        librarypage_obj.header.click_home_logo()
         homepage_obj.header.click_search()
-        searchpage_obj.type_search_term(searchterm)
-        searchpage_obj.click_search()
 
-        Assert.true(searchpage_obj.library(searchterm).is_displayed(), '%s not found' % searchterm)
+        searchpage_obj.search_until_package_exists(searchterm, searchpage_obj.library(searchterm))
+        Assert.true(searchpage_obj.library(searchterm).is_displayed, '%s not found before timeout' % searchterm)
 
         searchpage_obj.delete_test_data()
 
@@ -126,7 +119,7 @@ class TestSearch():
         searchpage_obj.click_search()
 
         Assert.true(searchpage_obj.addons_element_count() >= 1)
-        Assert.true(searchpage_obj.addon(top_addon_name).is_displayed(), 'Addon \'%s\' not found' % top_addon_name)
+        Assert.true(searchpage_obj.addon(top_addon_name).is_displayed, 'Addon \'%s\' not found' % top_addon_name)
 
     @prod
     def test_search_partial_library_name_returns_library(self, mozwebqa):
@@ -145,7 +138,7 @@ class TestSearch():
         searchpage_obj.click_search()
 
         Assert.true(searchpage_obj.library_element_count() >= 1)
-        Assert.true(searchpage_obj.library(top_library_name).is_displayed(), 'Library \'%s\' not found' % top_library_name)
+        Assert.true(searchpage_obj.library(top_library_name).is_displayed, 'Library \'%s\' not found' % top_library_name)
 
     @prod
     def test_empty_search_returns_all_results(self, mozwebqa):

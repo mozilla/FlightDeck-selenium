@@ -34,12 +34,12 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from pages.base_page import FlightDeckBasePage
+import time
 from page import Page
+from pages.base_page import FlightDeckBasePage
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-
+from selenium.webdriver.common.by import By
 
 class SearchPage(FlightDeckBasePage):
 
@@ -84,6 +84,22 @@ class SearchPage(FlightDeckBasePage):
 
     def addons_element_count(self):
         return len(self.selenium.find_elements(*self.Addon._base_locator))
+
+    def search_for_term(self, search_term):
+        self.clear_search()
+        self.type_search_term(search_term)
+        self.click_search()
+
+    def search_until_package_exists(self, name, package):
+        timeout = time.time() + (self.testsetup.timeout / 1000)
+        
+        while time.time() < timeout:
+            self.search_for_term(name)
+
+            if package.is_displayed:
+                break
+            else:
+                self.header.click_search()
 
     @property
     def addons_count_label(self):
@@ -132,6 +148,7 @@ class SearchPage(FlightDeckBasePage):
         def root_element(self):
             return self.selenium.find_element(*self._root_locator)
 
+        @property
         def is_displayed(self):
             return self.is_element_visible(*self._root_locator)
 
