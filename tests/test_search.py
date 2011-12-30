@@ -218,6 +218,7 @@ class TestSearch():
         searchpage_obj.addon(addon_name).click_author()
         Assert.equal(userpage_obj.author_name.lower(), author_name)
 
+    @xfail(reason="Bug 661619 - [traceback] MultipleObjectsReturned: get() returned more than one Profile -- it returned 2! Lookup parameters were {}")
     @prod
     def test_clicking_library_author_link_displays_author_profile(self, mozwebqa):
 
