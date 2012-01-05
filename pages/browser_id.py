@@ -37,9 +37,10 @@
 #
 # ***** END LICENSE BLOCK *****
 
+from selenium.webdriver.common.by import By
 
 from page import Page
-from selenium.webdriver.common.by import By
+
 
 class BrowserID(Page):
 
