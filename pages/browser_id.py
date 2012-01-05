@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 # ***** BEGIN LICENSE BLOCK *****
 # Version: MPL 1.1/GPL 2.0/LGPL 2.1
 #
@@ -12,14 +13,15 @@
 # for the specific language governing rights and limitations under the
 # License.
 #
-# The Original Code is Mozilla WebQA Tests.
+# The Original Code is Mozilla WebQA Selenium Tests.
 #
-# The Initial Developer of the Original Code is Mozilla Foundation.
+# The Initial Developer of the Original Code is
+# Mozilla.
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): David Burns
-#                 Zac Campbell
+# Contributor(s): Bebe <florin.strugariu@softvision.ro>
+#                 Teodosia Pop <teodosia.pop@softvision.ro>
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,26 +36,34 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from pages.base_page import FlightDeckBasePage
+
+
+from page import Page
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
 
-class LoginPage(FlightDeckBasePage):
+class BrowserID(Page):
 
-    _page_title = "Sign In - Add-on Builder"
-    _page_url = "/user/signin/"
-    
-    _browser_id_link_locator = (By.ID, 'UI_BrowserID_Img')
+    _pop_up_id = '_mozid_signin'
+    _email_locator = (By.ID, 'email')
+    _password_locator = (By.ID, 'password')
 
-    def login(self, user="default"):
-        if self._page_url not in self.selenium.current_url:
-            self.selenium.get(self.base_url + self._page_url)
+    _log_in_button_locator = (By.CSS_SELECTOR, 'button.returning')
+    _next_button_locator = (By.CSS_SELECTOR, 'button.start')
+    _sign_in_locator = (By.ID, 'signInButton')
 
-        self.selenium.find_element(*self._browser_id_link_locator).click()
+    def __init__(self, testsetup):
+        Page.__init__(self, testsetup)
+        self.selenium.switch_to_window(self._pop_up_id)
 
-        from pages.browser_id import BrowserID
-        pop_up = BrowserID(self.testsetup)
-        pop_up.login_browser_id(user)
-        pop_up.sign_in()
+    def login_browser_id(self, user):
+        credentials = self.testsetup.credentials[user]
 
-        WebDriverWait(self.selenium, 10).until(lambda s: self.header.logged_in)
+        self.selenium.find_element(*self._email_locator).send_keys(credentials['email'])
+        self.selenium.find_element(*self._next_button_locator).click()
+
+        self.selenium.find_element(*self._password_locator).send_keys(credentials['password'])
+        self.selenium.find_element(*self._log_in_button_locator).click()
+
+    def sign_in(self):
+        self.selenium.find_element(*self._sign_in_locator).click()
+        self.selenium.switch_to_window('')
