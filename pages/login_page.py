@@ -38,11 +38,12 @@ from pages.base_page import FlightDeckBasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
+
 class LoginPage(FlightDeckBasePage):
 
     _page_title = "Sign In - Add-on Builder"
     _page_url = "/user/signin/"
-    
+
     _browser_id_link_locator = (By.ID, 'UI_BrowserID_Img')
 
     def login(self, user="default"):
