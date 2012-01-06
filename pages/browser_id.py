@@ -44,7 +44,6 @@ from page import Page
 
 class BrowserID(Page):
 
-    _pop_up_id = '_mozid_signin'
     _email_locator = (By.ID, 'email')
     _password_locator = (By.ID, 'password')
 
@@ -54,7 +53,11 @@ class BrowserID(Page):
 
     def __init__(self, testsetup):
         Page.__init__(self, testsetup)
-        self.selenium.switch_to_window(self._pop_up_id)
+
+        handles = self.selenium.window_handles
+        for i in handles:
+            self.selenium.switch_to_window(i)
+            if self.selenium.title == "BrowserID": break
 
     def login_browser_id(self, user):
         credentials = self.testsetup.credentials[user]
