@@ -122,18 +122,18 @@ class DashboardPage(FlightDeckBasePage):
 
         @property
         def name(self):
-            # here we are stripping thowse <span class="version">
+            # here we are stripping the <span class="version">
             # text from the h3 to get *just* the addon's name
             name = self._root_element.find_element(*self._name_locator).text
             version = self._root_element.find_element(*self._version_locator).text
             return name.replace(version, "").rstrip()
 
     class Addon(DashboardContentRegion):
-        _base_locator = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Add-ons']][1]/li")
+        _base_locator = (By.XPATH, "//section[@id='app-content']/ul[preceding-sibling::h2[contains(text(),'Add-ons')]][1]/li")
         _test_locator = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")
 
         def click_test(self):
             self.root_element.find_element(*DashboardContentRegion._test_locator).click()
 
     class Library(DashboardContentRegion):
-        _base_locator = (By.XPATH, "//ul[preceding-sibling::h2[text()='Your Latest Libraries']][1]/li")
+        _base_locator = (By.XPATH, "//section[@id='app-content']/ul[preceding-sibling::h2[contains(text(),'Libraries')]][1]/li")
