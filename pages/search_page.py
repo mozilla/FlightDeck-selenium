@@ -40,6 +40,8 @@ from pages.base_page import FlightDeckBasePage
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+
 
 class SearchPage(FlightDeckBasePage):
 
@@ -57,6 +59,7 @@ class SearchPage(FlightDeckBasePage):
     _activity_knob_locator = (By.CSS_SELECTOR, "#ActivityFilter div.knob")
 
     _results_message_locator = (By.CSS_SELECTOR, "#SearchResults > p")
+    _results_loading_locator = (By.CSS_SELECTOR, '#SearchResults.loading')
 
     def addon(self, lookup):
         return self.Addon(self.testsetup, lookup)
@@ -75,12 +78,15 @@ class SearchPage(FlightDeckBasePage):
 
     def click_search(self):
         self.selenium.find_element(*self._search_button_locator).click()
+        self._wait_for_search_ajax()
 
     def click_filter_addons_link(self):
         self.selenium.find_element(*self._filter_by_addons_locator).click()
+        self._wait_for_search_ajax()
 
     def click_filter_libraries_link(self):
         self.selenium.find_element(*self._filter_by_libraries_locator).click()
+        self._wait_for_search_ajax()
 
     def addons_element_count(self):
         return len(self.selenium.find_elements(*self.Addon._base_locator))
@@ -92,7 +98,7 @@ class SearchPage(FlightDeckBasePage):
 
     def search_until_package_exists(self, name, package):
         timeout = time.time() + (self.testsetup.timeout / 1000)
-        
+
         while time.time() < timeout:
             self.search_for_term(name)
 
@@ -119,18 +125,24 @@ class SearchPage(FlightDeckBasePage):
         x_offset = 33 * notches
         copies_knob = self.selenium.find_element(*self._copies_knob_locator)
         ActionChains(self.selenium).drag_and_drop_by_offset(copies_knob, x_offset, 0).perform()
+        self._wait_for_search_ajax()
 
     def move_used_packages_slider(self, notches):
         # 8 is the amount of pixels to move one notch
         x_offset = 8 * notches
         used_packages_knob = self.selenium.find_element(*self._used_knob_locator)
         ActionChains(self.selenium).drag_and_drop_by_offset(used_packages_knob, x_offset, 0).perform()
+        self._wait_for_search_ajax()
 
     def move_activity_slider(self, notches):
         # 38 is the amount of pixels to move one notch
         x_offset = 38 * notches
         activity_knob = self.selenium.find_element(*self._activity_knob_locator)
         ActionChains(self.selenium).drag_and_drop_by_offset(activity_knob, x_offset, 0).perform()
+        self._wait_for_search_ajax()
+
+    def _wait_for_search_ajax(self):
+        WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._results_loading_locator))
 
     class SearchResultsRegion(Page):
 
