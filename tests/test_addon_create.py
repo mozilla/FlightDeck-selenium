@@ -38,13 +38,14 @@ from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from pages.addon_editor_page import AddonEditorPage
-from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 
 
-class TestAddonLibDelete():
+class TestAddonCreate:
 
-    def testShouldCheckAddonDelete(self, mozwebqa):
+    def test_create_addon(self, mozwebqa):
+        #This test is to check the labels of an add-on on the dashboard
+        #Create page objects
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
         dashboardpage_obj = DashboardPage(mozwebqa)
@@ -52,33 +53,25 @@ class TestAddonLibDelete():
 
         loginpage_obj.login()
 
+        #Create an addon. Then go to dashboard and assert that the label is 'initial'.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
-
-        #Get the name of the addon on the editor page.
         addon_name = addonpage_obj.addon_name
 
-        #Go the the dashboard and delete the addon that you just created. Then check that the addon at the top of the list is not the same as the one you just deleted.
         homepage_obj.header.click_dashboard()
-        dashboardpage_obj.addon(addon_name).click_delete()
-        dashboardpage_obj.addon(addon_name).confirm_delete()
-        Assert.false(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s found" % addon_name)
+        Assert.true(dashboardpage_obj.is_the_current_page)
+        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
 
-    def testShouldCheckLibDelete(self, mozwebqa):
+        #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
+        dashboardpage_obj.addon(addon_name).click_edit()
+        addonpage_obj.click_copy()
+        copy_addon_name = addonpage_obj.addon_name
 
-        homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
-        dashboardpage_obj = DashboardPage(mozwebqa)
-        libpage_obj = LibraryEditorPage(mozwebqa)
-
-        homepage_obj.go_to_home_page()
-        loginpage_obj.login()
-
-        homepage_obj.go_to_home_page()
-        homepage_obj.click_create_lib_btn()
-        library_name = libpage_obj.library_name
-
+        try:
+            Assert.not_equal(addon_name, copy_addon_name)
+        except:
+            print 'A copy of the addon could not be created'
         homepage_obj.header.click_dashboard()
-        dashboardpage_obj.library(library_name).click_delete()
-        dashboardpage_obj.library(library_name).confirm_delete()
-        Assert.false(dashboardpage_obj.library(library_name).is_displayed, "Library %s found" % library_name)
+        Assert.true(dashboardpage_obj.addon(copy_addon_name).is_displayed, "Addon %s not found" % copy_addon_name)
+
+        dashboardpage_obj.delete_test_data()

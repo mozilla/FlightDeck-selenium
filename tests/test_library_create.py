@@ -41,9 +41,9 @@ from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 
 
-class TestLibLabel():
+class TestLibraryCreate:
 
-    def testShouldCheckLibraryLabel(self, mozwebqa):
+    def test_create_library(self, mozwebqa):
         #This test is to check the labels of a library on the dashboard
         #Create page objects
         homepage_obj = HomePage(mozwebqa)

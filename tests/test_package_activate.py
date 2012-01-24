@@ -42,9 +42,9 @@ from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 
 
-class TestAddonActivateDeactivate():
+class TestPackageActivateDeactivate:
 
-    def testShouldCheckAddonDeactivateAndActivate(self, mozwebqa):
+    def test_addon_activate_deactivate(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
         dashboardpage_obj = DashboardPage(mozwebqa)
@@ -80,7 +80,7 @@ class TestAddonActivateDeactivate():
 
         dashboardpage_obj.delete_test_data()
 
-    def testShouldCheckLibDeactivateAndActivate(self, mozwebqa):
+    def test_library_activate_deactivate(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
         dashboardpage_obj = DashboardPage(mozwebqa)
