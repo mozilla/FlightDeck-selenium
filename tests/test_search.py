@@ -48,7 +48,7 @@ xfail = pytest.mark.xfail
 prod = pytest.mark.prod
 
 
-class TestSearch():
+class TestSearch:
 
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)

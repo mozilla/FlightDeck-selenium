@@ -41,9 +41,9 @@ from pages.addon_editor_page import AddonEditorPage
 from unittestzero import Assert
 
 
-class TestViewSource():
+class TestViewSource:
 
-    def test_view_addon_source(self, mozwebqa):
+    def test_view_source_addon(self, mozwebqa):
         #This test is to check viewing the source of an addon while not logged in
         homepage_obj = HomePage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
