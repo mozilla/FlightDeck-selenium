@@ -39,6 +39,7 @@ from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from pages.addon_editor_page import AddonEditorPage
 from unittestzero import Assert
+from random import randint
 
 
 class TestAddonLabel():
@@ -75,3 +76,26 @@ class TestAddonLabel():
         Assert.true(dashboardpage_obj.addon(copy_addon_name).is_displayed, "Addon %s not found" % copy_addon_name)
 
         dashboardpage_obj.delete_test_data()
+
+    def test_rename_addon(self, mozwebqa):
+
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        dashboardpage_obj = DashboardPage(mozwebqa)
+        addonpage_obj = AddonEditorPage(mozwebqa)
+
+        new_addon_name = 'renamed addon ' + str(randint(1, 1000))
+
+        loginpage_obj.login()
+
+        #Create an addon.
+        homepage_obj.go_to_home_page()
+        homepage_obj.click_create_addon_btn()
+
+        #Click properties and change its name
+        addonpage_obj.click_properties()
+        addonpage_obj.type_addon_name(new_addon_name)
+        addonpage_obj.click_properties_save()
+        Assert.equal(addonpage_obj.addon_name, new_addon_name)
+
+        addonpage_obj.delete_test_data()
