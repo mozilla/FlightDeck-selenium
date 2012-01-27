@@ -8,6 +8,7 @@ from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
+from random import randint
 
 
 class TestLibraryCreate:
@@ -45,3 +46,25 @@ class TestLibraryCreate:
         Assert.true(dashboardpage_obj.library(copy_library_name).is_displayed, "Library %s not found" % copy_library_name)
         
         dashboardpage_obj.delete_test_data()
+
+    def test_rename_library(self, mozwebqa):
+
+        homepage_obj = HomePage(mozwebqa)
+        loginpage_obj = LoginPage(mozwebqa)
+        librarypage_obj = LibraryEditorPage(mozwebqa)
+
+        new_library_name = 'renamed library ' + str(randint(1, 1000))
+
+        loginpage_obj.login()
+
+        #Create a new library
+        homepage_obj.go_to_home_page()
+        homepage_obj.click_create_addon_btn()
+
+        #Click properties and change its name
+        librarypage_obj.click_properties()
+        librarypage_obj.type_library_name(new_library_name)
+        librarypage_obj.click_properties_save()
+        Assert.equal(librarypage_obj.library_name, new_library_name)
+
+        librarypage_obj.delete_test_data()
