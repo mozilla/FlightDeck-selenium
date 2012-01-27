@@ -7,6 +7,7 @@ from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from pages.addon_editor_page import AddonEditorPage
 from unittestzero import Assert
+from random import randint
 
 
 class TestAddonCreate:
@@ -48,7 +49,6 @@ class TestAddonCreate:
 
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
-        dashboardpage_obj = DashboardPage(mozwebqa)
         addonpage_obj = AddonEditorPage(mozwebqa)
 
         new_addon_name = 'renamed addon ' + str(randint(1, 1000))

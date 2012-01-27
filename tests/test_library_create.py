@@ -7,6 +7,7 @@ from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
+from random import randint
 
 
 class TestLibraryCreate:
@@ -49,7 +50,6 @@ class TestLibraryCreate:
 
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
-        dashboardpage_obj = DashboardPage(mozwebqa)
         librarypage_obj = LibraryEditorPage(mozwebqa)
 
         new_library_name = 'renamed library ' + str(randint(1, 1000))
