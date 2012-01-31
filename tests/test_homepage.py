@@ -8,12 +8,11 @@ from pages.home_page import HomePage
 from pages.dashboard_page import DashboardPage
 from unittestzero import Assert
 import pytest
-prod = pytest.mark.prod
 
 
 class TestHomepage:
 
-    @prod
+    @pytest.mark.nondestructive
     def test_doc_link_redirects(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
@@ -23,7 +22,7 @@ class TestHomepage:
 
         Assert.contains("https://addons.mozilla.org/en-US/developers/docs/sdk/latest/", homepage_obj.selenium.current_url)
 
-    @prod
+    @pytest.mark.nondestructive
     def test_addons_libraries_listed_on_home(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 

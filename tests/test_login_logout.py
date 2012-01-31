@@ -8,13 +8,12 @@ from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from unittestzero import Assert
 import pytest
-prod = pytest.mark.prod
 
 
 # These are login/logout tests with more detailed assertions intended for production runs
 class TestLoginLogout:
 
-    @prod
+    @pytest.mark.nondestructive
     def test_login(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
@@ -29,7 +28,7 @@ class TestLoginLogout:
         Assert.true(dashboard_obj.header.logged_in)
         Assert.equal(dashboard_obj.logged_in_username, mozwebqa.credentials['default']['name'])
 
-    @prod
+    @pytest.mark.nondestructive
     def test_logout(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)

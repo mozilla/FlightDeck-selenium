@@ -38,6 +38,6 @@ class TestViewSource:
         homepage_obj.header.click_search()
         
         searchpage_obj.library(1).click()
-        
+
         Assert.true(libraryeditor_obj.tab(1).selected)
         Assert.not_none(libraryeditor_obj.tab(1).content)
