@@ -14,6 +14,7 @@ class AddonEditorPage(FlightDeckBasePage):
 
     _addon_name = (By.ID, 'package-info-name')
     _copy_locator = (By.ID, 'package-copy')
+    _copy_spinner_locator = (By.CSS_SELECTOR, '#package-copy a.loading')
     _save_locator = (By.ID, 'package-save')
     _save_spinner_locator = (By.CSS_SELECTOR, '#package-save.loading')
     _properties_locator = (By.ID, 'package-properties')
@@ -27,6 +28,7 @@ class AddonEditorPage(FlightDeckBasePage):
 
     def click_copy(self):
         self.selenium.find_element(*self._copy_locator).click()
+        self._wait_for_copy()
         self.add_id()
 
     def click_save(self):
@@ -56,3 +58,6 @@ class AddonEditorPage(FlightDeckBasePage):
 
     def _wait_for_save(self):
         WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._save_spinner_locator))
+
+    def _wait_for_copy(self):
+        WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._copy_spinner_locator))
