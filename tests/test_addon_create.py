@@ -28,7 +28,7 @@ class TestAddonCreate:
         homepage_obj.click_create_addon_btn()
         addon_name = addonpage_obj.addon_name
 
-        homepage_obj.header.click_dashboard()
+        addonpage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.is_the_current_page)
         Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
 
@@ -37,10 +37,9 @@ class TestAddonCreate:
         addonpage_obj.click_copy()
         copy_addon_name = addonpage_obj.addon_name
 
-        try:
-            Assert.not_equal(addon_name, copy_addon_name)
-        except:
-            print 'A copy of the addon could not be created'
+        Assert.contains(addon_name, copy_addon_name)
+        Assert.contains('copy', copy_addon_name)
+
         homepage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.addon(copy_addon_name).is_displayed, "Addon %s not found" % copy_addon_name)
 
