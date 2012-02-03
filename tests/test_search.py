@@ -202,6 +202,7 @@ class TestSearch:
         searchpage_obj.library(library_name).click_author()
         Assert.equal(userpage_obj.author_name.lower(), author_name)
 
+    @pytest.mark.xfail(reason="Bug 723042 - Incorrect addon name displayed")
     def test_clicking_addon_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
