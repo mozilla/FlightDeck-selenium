@@ -10,6 +10,7 @@ from pages.addon_editor_page import AddonEditorPage
 from unittestzero import Assert
 import pytest
 
+
 class TestViewSource:
 
     def test_view_source_addon(self, mozwebqa):
