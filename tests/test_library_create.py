@@ -4,8 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.home_page import HomePage
-from pages.login_page import LoginPage
-from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 from random import randint
 
