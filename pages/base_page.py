@@ -73,6 +73,8 @@ class FlightDeckBasePage(Page):
 
         def click_search(self):
             self.selenium.find_element(*self._search_link_locator).click()
+            from pages.search_page import SearchPage
+            return SearchPage(self.testsetup)
 
         def click_documentation(self):
             self.selenium.find_element(*self._documentation_link_locator).click()

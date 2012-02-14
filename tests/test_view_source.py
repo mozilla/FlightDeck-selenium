@@ -21,7 +21,7 @@ class TestViewSource:
 
         #Go to search page and click view source on the first addon listed
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
         
         searchpage_obj.addon(1).click()
 
@@ -37,7 +37,7 @@ class TestViewSource:
 
         #Go to search page and click view source on the first library listed
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
         
         searchpage_obj.library(1).click()
 

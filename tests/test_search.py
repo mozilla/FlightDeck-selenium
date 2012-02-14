@@ -35,7 +35,7 @@ class TestSearch:
         searchterm = addonpage_obj.addon_name
 
         homepage_obj = addonpage_obj.header.click_home_logo()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         searchpage_obj.search_until_package_exists(searchterm, searchpage_obj.addon(searchterm))
         Assert.true(searchpage_obj.addon(searchterm).is_displayed, '%s not found before timeout' % searchterm)
@@ -61,7 +61,7 @@ class TestSearch:
         searchterm = librarypage_obj.library_name
 
         homepage_obj = librarypage_obj.header.click_home_logo()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         searchpage_obj.search_until_package_exists(searchterm, searchpage_obj.library(searchterm))
         Assert.true(searchpage_obj.library(searchterm).is_displayed, '%s not found before timeout' % searchterm)
@@ -74,7 +74,7 @@ class TestSearch:
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         # get addon name, split string in half and search with it
         # results should be returned including the original addon
@@ -93,7 +93,7 @@ class TestSearch:
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         # get library name, split string in half and search with it
         # results should be returned including the original addon
@@ -112,7 +112,7 @@ class TestSearch:
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         # search with a zero length string should still return results
         # default display is for 5 addons/5 libraries
@@ -130,7 +130,7 @@ class TestSearch:
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         # search with a generic but safe string 'test'
         # filter by add-on results and check number
@@ -152,7 +152,7 @@ class TestSearch:
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         # search with a generic but safe string 'test'
         # filter by add-on results and check number
@@ -177,7 +177,7 @@ class TestSearch:
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         addon_name = searchpage_obj.addon(1).name
         author_name = searchpage_obj.addon(addon_name).author_name
@@ -193,7 +193,7 @@ class TestSearch:
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         library_name = searchpage_obj.library(1).name
         author_name = searchpage_obj.library(library_name).author_name
@@ -210,7 +210,7 @@ class TestSearch:
         homepage_obj.go_to_home_page()
         loginpage_obj = homepage_obj.header.click_signin()
         dashboard_obj = loginpage_obj.login()
-        dashboard_obj.header.click_search()
+        searchpage_obj = dashboard_obj.header.click_search()
 
         addon_name = searchpage_obj.addon(1).name
         searchpage_obj.addon(addon_name).click()
@@ -227,7 +227,7 @@ class TestSearch:
         homepage_obj.go_to_home_page()
         loginpage_obj = homepage_obj.header.click_signin()
         dashboard_obj = loginpage_obj.login()
-        dashboard_obj.header.click_search()
+        searchpage_obj = dashboard_obj.header.click_search()
 
         library_name = searchpage_obj.library(1).name
         searchpage_obj.library(library_name).click()
@@ -242,7 +242,7 @@ class TestSearch:
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         initial_addon_count = searchpage_obj.addons_count_label
         initial_library_count = searchpage_obj.library_count_label
@@ -258,7 +258,7 @@ class TestSearch:
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
         searchpage_obj.click_filter_libraries_link()
 
         initial_library_count = searchpage_obj.library_count_label
@@ -273,7 +273,7 @@ class TestSearch:
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_search()
+        searchpage_obj = homepage_obj.header.click_search()
 
         initial_addon_count = searchpage_obj.addons_count_label
         initial_library_count = searchpage_obj.library_count_label
