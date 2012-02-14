@@ -39,10 +39,10 @@ class TestLibraryCreate:
 
         Assert.contains(library_name, copy_library_name)
         Assert.contains('copy', copy_library_name)
-        
+
         libpage_obj.header.click_dashboard()
         Assert.true(dashboardpage_obj.library(copy_library_name).is_displayed, "Library %s not found" % copy_library_name)
-        
+
         dashboardpage_obj.delete_test_data()
 
     def test_rename_library(self, mozwebqa):

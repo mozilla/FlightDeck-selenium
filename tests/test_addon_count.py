@@ -17,11 +17,10 @@ class TestAddonCount:
         #This test is to assert that the count of the addons on dashboard is equal to the number of addons present on the page.
         #Create page objects
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
         dashboardpage_obj = DashboardPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_signin()
+        loginpage_obj = homepage_obj.header.click_signin()
         loginpage_obj.login()
         Assert.true(dashboardpage_obj.is_the_current_page)
 

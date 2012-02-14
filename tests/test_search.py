@@ -19,13 +19,12 @@ class TestSearch:
     @pytest.mark.native
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
         dashboard_obj = DashboardPage(mozwebqa)
         addonpage_obj = AddonEditorPage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_signin()
+        loginpage_obj = homepage_obj.header.click_signin()
         loginpage_obj.login()
 
         #create a new addon with the valid criteria (version not initial)
@@ -46,13 +45,12 @@ class TestSearch:
     @pytest.mark.native
     def test_search_by_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
         dashboard_obj = DashboardPage(mozwebqa)
         librarypage_obj = LibraryEditorPage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_signin()
+        loginpage_obj = homepage_obj.header.click_signin()
         loginpage_obj.login()
 
         #create a new library with the valid criteria (version not initial)
@@ -205,13 +203,12 @@ class TestSearch:
     @pytest.mark.xfail(reason="Bug 723042 - Incorrect addon name displayed")
     def test_clicking_addon_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
         dashboard_obj = DashboardPage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
         editorpage_obj = AddonEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_signin()
+        loginpage_obj = homepage_obj.header.click_signin()
         loginpage_obj.login()
         dashboard_obj.header.click_search()
 
@@ -223,13 +220,12 @@ class TestSearch:
 
     def test_clicking_library_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
         dashboard_obj = DashboardPage(mozwebqa)
         searchpage_obj = SearchPage(mozwebqa)
         editorpage_obj = LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_signin()
+        loginpage_obj = homepage_obj.header.click_signin()
         loginpage_obj.login()
         dashboard_obj.header.click_search()
 

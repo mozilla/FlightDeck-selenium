@@ -15,12 +15,11 @@ class TestPackageActivateDeactivate:
 
     def test_addon_activate_deactivate(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
         dashboardpage_obj = DashboardPage(mozwebqa)
         addonpage_obj = AddonEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_signin()
+        loginpage_obj = homepage_obj.header.click_signin()
         loginpage_obj.login()
         Assert.true(dashboardpage_obj.is_the_current_page)
 
@@ -51,12 +50,11 @@ class TestPackageActivateDeactivate:
 
     def test_library_activate_deactivate(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
         dashboardpage_obj = DashboardPage(mozwebqa)
         librarypage_obj = LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_signin()
+        loginpage_obj = homepage_obj.header.click_signin()
         loginpage_obj.login()
         Assert.true(dashboardpage_obj.is_the_current_page)
 

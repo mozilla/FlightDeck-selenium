@@ -16,11 +16,10 @@ class TestLoginLogout:
     @pytest.mark.nondestructive
     def test_login(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
         dashboard_obj = DashboardPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        homepage_obj.header.click_signin()
+        loginpage_obj = homepage_obj.header.click_signin()
         Assert.true(loginpage_obj.is_the_current_page)
         loginpage_obj.login()
 
