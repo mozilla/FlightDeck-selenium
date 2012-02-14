@@ -4,7 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.home_page import HomePage
-from pages.login_page import LoginPage
 from unittestzero import Assert
 
 
@@ -12,11 +11,12 @@ class TestPackageDelete:
 
     def test_addon_delete(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
-
-        loginpage_obj.login()
 
         homepage_obj.go_to_home_page()
+        loginpage_obj = homepage_obj.header.click_signin()
+        dashboard_obj = loginpage_obj.login()
+
+        homepage_obj = dashboard_obj.go_to_home_page()
         addonpage_obj = homepage_obj.click_create_addon_btn()
 
         #Get the name of the addon on the editor page.
@@ -29,14 +29,13 @@ class TestPackageDelete:
         Assert.false(dashboard_obj.addon(addon_name).is_displayed, "Addon %s found" % addon_name)
 
     def test_library_delete(self, mozwebqa):
-
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        loginpage_obj.login()
+        loginpage_obj = homepage_obj.header.click_signin()
+        dashboard_obj = loginpage_obj.login()
 
-        homepage_obj.go_to_home_page()
+        homepage_obj = dashboard_obj.go_to_home_page()
         libpage_obj = homepage_obj.click_create_lib_btn()
         library_name = libpage_obj.library_name
 

@@ -16,12 +16,13 @@ class TestLibraryCreate:
         #This test is to check the labels of a library on the dashboard
         #Create page objects
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
 
-        loginpage_obj.login()
+        homepage_obj.go_to_home_page()
+        loginpage_obj = homepage_obj.header.click_signin()
+        dashboard_obj = loginpage_obj.login()
 
         #Create a library. Then go to dashboard and assert that the label is present.
-        homepage_obj.go_to_home_page()
+        homepage_obj = dashboard_obj.go_to_home_page()
         libpage_obj = homepage_obj.click_create_lib_btn()
         library_name = libpage_obj.library_name
 
@@ -43,18 +44,17 @@ class TestLibraryCreate:
         dashboard_obj.delete_test_data()
 
     def test_rename_library(self, mozwebqa):
-
         homepage_obj = HomePage(mozwebqa)
-        loginpage_obj = LoginPage(mozwebqa)
-        libpage_obj = LibraryEditorPage(mozwebqa)
+
+        homepage_obj.go_to_home_page()
+        loginpage_obj = homepage_obj.header.click_signin()
+        dashboard_obj = loginpage_obj.login()
 
         new_library_name = 'renamed library ' + str(randint(1, 1000))
 
-        loginpage_obj.login()
-
         #Create a new library
-        homepage_obj.go_to_home_page()
-        homepage_obj.click_create_addon_btn()  # TODO: wtf
+        homepage_obj = dashboard_obj.go_to_home_page()
+        libpage_obj = homepage_obj.click_create_lib_btn()
 
         #Click properties and change its name
         libpage_obj.click_properties()

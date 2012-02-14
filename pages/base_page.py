@@ -93,6 +93,8 @@ class FlightDeckBasePage(Page):
 
         def click_signout(self):
             self.selenium.find_element(*self._signout_link_locator).click()
+            from pages.home_page import HomePage
+            return HomePage(self.testsetup)
 
         def click_create_addon(self):
             create_link = self.selenium.find_element(*self._create_locator)

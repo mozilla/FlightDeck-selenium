@@ -27,11 +27,10 @@ class TestLoginLogout:
 
     @pytest.mark.nondestructive
     def test_logout(self, mozwebqa):
-        homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
 
         dashboard_obj = loginpage_obj.login()
         Assert.true(dashboard_obj.header.logged_in)
-        dashboard_obj.header.click_signout()
+        homepage_obj = dashboard_obj.header.click_signout()
 
         Assert.true(homepage_obj.header.logged_out)
