@@ -5,7 +5,6 @@
 
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
-from pages.addon_editor_page import AddonEditorPage
 from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 
@@ -15,12 +14,11 @@ class TestPackageDelete:
     def test_addon_delete(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
-        addonpage_obj = AddonEditorPage(mozwebqa)
 
         loginpage_obj.login()
 
         homepage_obj.go_to_home_page()
-        homepage_obj.click_create_addon_btn()
+        addonpage_obj = homepage_obj.click_create_addon_btn()
 
         #Get the name of the addon on the editor page.
         addon_name = addonpage_obj.addon_name

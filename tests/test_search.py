@@ -16,7 +16,6 @@ class TestSearch:
     @pytest.mark.native
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        addonpage_obj = AddonEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         loginpage_obj = homepage_obj.header.click_signin()
@@ -24,7 +23,7 @@ class TestSearch:
 
         #create a new addon with the valid criteria (version not initial)
         homepage_obj = dashboard_obj.header.click_home_logo()
-        homepage_obj.click_create_addon_btn()
+        addonpage_obj = homepage_obj.click_create_addon_btn()
         addonpage_obj.type_addon_version('searchable')
         addonpage_obj.click_save()
         searchterm = addonpage_obj.addon_name

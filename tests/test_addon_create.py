@@ -5,7 +5,6 @@
 
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
-from pages.addon_editor_page import AddonEditorPage
 from unittestzero import Assert
 from random import randint
 
@@ -16,13 +15,12 @@ class TestAddonCreate:
         #This test is to check the labels of an add-on on the dashboard
         #Create page objects
         loginpage_obj = LoginPage(mozwebqa)
-        addonpage_obj = AddonEditorPage(mozwebqa)
 
         dashboard_obj = loginpage_obj.login()
 
         #Create an addon. Then go to dashboard and assert that the label is 'initial'.
         homepage_obj = dashboard_obj.go_to_home_page()
-        homepage_obj.click_create_addon_btn()
+        addonpage_obj = homepage_obj.click_create_addon_btn()
         addon_name = addonpage_obj.addon_name
 
         dashboard_obj = addonpage_obj.header.click_dashboard()
@@ -46,7 +44,6 @@ class TestAddonCreate:
 
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
-        addonpage_obj = AddonEditorPage(mozwebqa)
 
         new_addon_name = 'renamed addon ' + str(randint(1, 1000))
 
@@ -54,7 +51,7 @@ class TestAddonCreate:
 
         #Create an addon.
         homepage_obj.go_to_home_page()
-        homepage_obj.click_create_addon_btn()
+        addonpage_obj = homepage_obj.click_create_addon_btn()
 
         #Click properties and change its name
         addonpage_obj.click_properties()

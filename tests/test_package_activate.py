@@ -4,7 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.home_page import HomePage
-from pages.addon_editor_page import AddonEditorPage
 from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 
@@ -13,7 +12,6 @@ class TestPackageActivateDeactivate:
 
     def test_addon_activate_deactivate(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        addonpage_obj = AddonEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         loginpage_obj = homepage_obj.header.click_signin()
@@ -22,7 +20,7 @@ class TestPackageActivateDeactivate:
 
         # Go back to homepage and create a new addon to work with.
         homepage_obj = dashboard_obj.header.click_home_logo()
-        homepage_obj.click_create_addon_btn()
+        addonpage_obj = homepage_obj.click_create_addon_btn()
         addon_name = addonpage_obj.addon_name
         dashboard_obj = addonpage_obj.header.click_dashboard()
 

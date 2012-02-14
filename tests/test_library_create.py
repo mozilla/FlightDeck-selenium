@@ -55,7 +55,7 @@ class TestLibraryCreate:
 
         #Create a new library
         homepage_obj.go_to_home_page()
-        homepage_obj.click_create_addon_btn()
+        homepage_obj.click_create_addon_btn()  # TODO: wtf
 
         #Click properties and change its name
         librarypage_obj.click_properties()
