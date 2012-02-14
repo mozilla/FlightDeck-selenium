@@ -82,6 +82,8 @@ class FlightDeckBasePage(Page):
 
         def click_dashboard(self):
             self.selenium.find_element(*self._myaccount_link_locator).click()
+            from pages.dashboard_page import DashboardPage
+            return DashboardPage(self.testsetup)
 
         def click_signout(self):
             self.selenium.find_element(*self._signout_link_locator).click()

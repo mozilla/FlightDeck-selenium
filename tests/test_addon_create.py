@@ -18,32 +18,31 @@ class TestAddonCreate:
         #Create page objects
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
-        dashboardpage_obj = DashboardPage(mozwebqa)
         addonpage_obj = AddonEditorPage(mozwebqa)
 
-        loginpage_obj.login()
+        dashboard_obj = loginpage_obj.login()
 
         #Create an addon. Then go to dashboard and assert that the label is 'initial'.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
         addon_name = addonpage_obj.addon_name
 
-        addonpage_obj.header.click_dashboard()
-        Assert.true(dashboardpage_obj.is_the_current_page)
-        Assert.true(dashboardpage_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
+        dashboard_obj = addonpage_obj.header.click_dashboard()
+        Assert.true(dashboard_obj.is_the_current_page)
+        Assert.true(dashboard_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
 
         #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
-        dashboardpage_obj.addon(addon_name).click_edit()
+        dashboard_obj.addon(addon_name).click_edit()
         addonpage_obj.click_copy()
         copy_addon_name = addonpage_obj.addon_name
 
         Assert.contains(addon_name, copy_addon_name)
         Assert.contains('copy', copy_addon_name)
 
-        homepage_obj.header.click_dashboard()
-        Assert.true(dashboardpage_obj.addon(copy_addon_name).is_displayed, "Addon %s not found" % copy_addon_name)
+        dashboard_obj = homepage_obj.header.click_dashboard()
+        Assert.true(dashboard_obj.addon(copy_addon_name).is_displayed, "Addon %s not found" % copy_addon_name)
 
-        dashboardpage_obj.delete_test_data()
+        dashboard_obj.delete_test_data()
 
     def test_rename_addon(self, mozwebqa):
 
@@ -53,7 +52,7 @@ class TestAddonCreate:
 
         new_addon_name = 'renamed addon ' + str(randint(1, 1000))
 
-        loginpage_obj.login()
+        dashboard_obj = loginpage_obj.login()
 
         #Create an addon.
         homepage_obj.go_to_home_page()

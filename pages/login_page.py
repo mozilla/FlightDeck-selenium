@@ -28,3 +28,6 @@ class LoginPage(FlightDeckBasePage):
         pop_up.sign_in()
 
         WebDriverWait(self.selenium, 10).until(lambda s: self.header.logged_in)
+
+        from pages.dashboard_page import DashboardPage
+        return DashboardPage(self.testsetup)

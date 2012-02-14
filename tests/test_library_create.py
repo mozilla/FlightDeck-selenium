@@ -18,32 +18,31 @@ class TestLibraryCreate:
         #Create page objects
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
-        dashboardpage_obj = DashboardPage(mozwebqa)
         libpage_obj = LibraryEditorPage(mozwebqa)
 
-        loginpage_obj.login()
+        dashboard_obj = loginpage_obj.login()
 
         #Create a library. Then go to dashboard and assert that the label is present.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
         library_name = libpage_obj.library_name
 
-        libpage_obj.header.click_dashboard()
-        Assert.true(dashboardpage_obj.is_the_current_page)
-        Assert.true(dashboardpage_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
+        dashboard_obj= libpage_obj.header.click_dashboard()
+        Assert.true(dashboard_obj.is_the_current_page)
+        Assert.true(dashboard_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
 
         #Click on the edit button of the library.Then create a copy of that library and assert that the label is 'copy'
-        dashboardpage_obj.library(library_name).click_edit()
+        dashboard_obj.library(library_name).click_edit()
         libpage_obj.click_copy()
         copy_library_name = libpage_obj.library_name
 
         Assert.contains(library_name, copy_library_name)
         Assert.contains('copy', copy_library_name)
 
-        libpage_obj.header.click_dashboard()
-        Assert.true(dashboardpage_obj.library(copy_library_name).is_displayed, "Library %s not found" % copy_library_name)
+        dashboard_obj = libpage_obj.header.click_dashboard()
+        Assert.true(dashboard_obj.library(copy_library_name).is_displayed, "Library %s not found" % copy_library_name)
 
-        dashboardpage_obj.delete_test_data()
+        dashboard_obj.delete_test_data()
 
     def test_rename_library(self, mozwebqa):
 
@@ -53,7 +52,7 @@ class TestLibraryCreate:
 
         new_library_name = 'renamed library ' + str(randint(1, 1000))
 
-        loginpage_obj.login()
+        dashboard_obj = loginpage_obj.login()
 
         #Create a new library
         homepage_obj.go_to_home_page()
