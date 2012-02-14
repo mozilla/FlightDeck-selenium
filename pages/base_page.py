@@ -18,6 +18,8 @@ class FlightDeckBasePage(Page):
 
     def go_to_home_page(self):
         self.selenium.get(self.base_url)
+        from pages.home_page import HomePage
+        return HomePage(self.testsetup)
 
     def add_id(self):
         m = re.search("([0-9]{7})", self.selenium.current_url)

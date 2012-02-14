@@ -5,7 +5,6 @@
 
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
-from pages.dashboard_page import DashboardPage
 from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 from random import randint
@@ -20,14 +19,14 @@ class TestLibraryCreate:
         loginpage_obj = LoginPage(mozwebqa)
         libpage_obj = LibraryEditorPage(mozwebqa)
 
-        dashboard_obj = loginpage_obj.login()
+        loginpage_obj.login()
 
         #Create a library. Then go to dashboard and assert that the label is present.
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
         library_name = libpage_obj.library_name
 
-        dashboard_obj= libpage_obj.header.click_dashboard()
+        dashboard_obj = libpage_obj.header.click_dashboard()
         Assert.true(dashboard_obj.is_the_current_page)
         Assert.true(dashboard_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
 
@@ -52,7 +51,7 @@ class TestLibraryCreate:
 
         new_library_name = 'renamed library ' + str(randint(1, 1000))
 
-        dashboard_obj = loginpage_obj.login()
+        loginpage_obj.login()
 
         #Create a new library
         homepage_obj.go_to_home_page()

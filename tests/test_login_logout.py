@@ -5,7 +5,6 @@
 
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
-from pages.dashboard_page import DashboardPage
 from unittestzero import Assert
 import pytest
 
@@ -16,7 +15,6 @@ class TestLoginLogout:
     @pytest.mark.nondestructive
     def test_login(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        
 
         homepage_obj.go_to_home_page()
         loginpage_obj = homepage_obj.header.click_signin()
@@ -31,7 +29,6 @@ class TestLoginLogout:
     def test_logout(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
-        
 
         dashboard_obj = loginpage_obj.login()
         Assert.true(dashboard_obj.header.logged_in)

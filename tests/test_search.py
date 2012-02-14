@@ -4,9 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.home_page import HomePage
-from pages.login_page import LoginPage
-from pages.search_page import SearchPage
-from pages.dashboard_page import DashboardPage
 from pages.addon_editor_page import AddonEditorPage
 from pages.library_editor_page import LibraryEditorPage
 from pages.user_page import UserPage
@@ -19,9 +16,7 @@ class TestSearch:
     @pytest.mark.native
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        
         addonpage_obj = AddonEditorPage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         loginpage_obj = homepage_obj.header.click_signin()
@@ -45,9 +40,7 @@ class TestSearch:
     @pytest.mark.native
     def test_search_by_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        
         librarypage_obj = LibraryEditorPage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         loginpage_obj = homepage_obj.header.click_signin()
@@ -71,7 +64,6 @@ class TestSearch:
     @pytest.mark.nondestructive
     def test_search_partial_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         searchpage_obj = homepage_obj.header.click_search()
@@ -90,7 +82,6 @@ class TestSearch:
     @pytest.mark.nondestructive
     def test_search_partial_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         searchpage_obj = homepage_obj.header.click_search()
@@ -109,7 +100,6 @@ class TestSearch:
     @pytest.mark.nondestructive
     def test_empty_search_returns_all_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         searchpage_obj = homepage_obj.header.click_search()
@@ -127,7 +117,6 @@ class TestSearch:
     @pytest.mark.nondestructive
     def test_search_addon_filter_results_match(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         searchpage_obj = homepage_obj.header.click_search()
@@ -149,7 +138,6 @@ class TestSearch:
     @pytest.mark.nondestructive
     def test_search_library_filter_results_match(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         searchpage_obj = homepage_obj.header.click_search()
@@ -174,7 +162,6 @@ class TestSearch:
 
         homepage_obj = HomePage(mozwebqa)
         userpage_obj = UserPage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         searchpage_obj = homepage_obj.header.click_search()
@@ -190,7 +177,6 @@ class TestSearch:
         # go to library result and click author link
         homepage_obj = HomePage(mozwebqa)
         userpage_obj = UserPage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         searchpage_obj = homepage_obj.header.click_search()
@@ -203,8 +189,7 @@ class TestSearch:
     @pytest.mark.xfail(reason="Bug 723042 - Incorrect addon name displayed")
     def test_clicking_addon_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        
-        searchpage_obj = SearchPage(mozwebqa)
+
         editorpage_obj = AddonEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
@@ -220,8 +205,7 @@ class TestSearch:
 
     def test_clicking_library_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        
-        searchpage_obj = SearchPage(mozwebqa)
+
         editorpage_obj = LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
@@ -239,7 +223,6 @@ class TestSearch:
     @pytest.mark.nondestructive
     def test_copies_slider_filters_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         searchpage_obj = homepage_obj.header.click_search()
@@ -255,7 +238,6 @@ class TestSearch:
     @pytest.mark.nondestructive
     def test_used_packages_slider_filters_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         searchpage_obj = homepage_obj.header.click_search()
@@ -270,7 +252,6 @@ class TestSearch:
     @pytest.mark.nondestructive
     def test_activity_slider_filters_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        searchpage_obj = SearchPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         searchpage_obj = homepage_obj.header.click_search()

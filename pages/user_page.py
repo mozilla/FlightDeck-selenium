@@ -14,4 +14,4 @@ class UserPage(FlightDeckBasePage):
 
     @property
     def author_name(self):
-        return self.selenium.find_element(*self._username_locator).text 
+        return self.selenium.find_element(*self._username_locator).text

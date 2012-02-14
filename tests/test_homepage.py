@@ -5,7 +5,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.home_page import HomePage
-from pages.dashboard_page import DashboardPage
 from unittestzero import Assert
 import pytest
 

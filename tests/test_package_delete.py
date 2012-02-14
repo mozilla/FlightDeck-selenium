@@ -5,7 +5,6 @@
 
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
-from pages.dashboard_page import DashboardPage
 from pages.addon_editor_page import AddonEditorPage
 from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
@@ -18,7 +17,7 @@ class TestPackageDelete:
         loginpage_obj = LoginPage(mozwebqa)
         addonpage_obj = AddonEditorPage(mozwebqa)
 
-        dashboard_obj = loginpage_obj.login()
+        loginpage_obj.login()
 
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_addon_btn()
@@ -39,7 +38,7 @@ class TestPackageDelete:
         libpage_obj = LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
-        dashboard_obj = loginpage_obj.login()
+        loginpage_obj.login()
 
         homepage_obj.go_to_home_page()
         homepage_obj.click_create_lib_btn()
