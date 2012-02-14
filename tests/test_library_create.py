@@ -17,13 +17,12 @@ class TestLibraryCreate:
         #Create page objects
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
-        libpage_obj = LibraryEditorPage(mozwebqa)
 
         loginpage_obj.login()
 
         #Create a library. Then go to dashboard and assert that the label is present.
         homepage_obj.go_to_home_page()
-        homepage_obj.click_create_lib_btn()
+        libpage_obj = homepage_obj.click_create_lib_btn()
         library_name = libpage_obj.library_name
 
         dashboard_obj = libpage_obj.header.click_dashboard()
@@ -47,7 +46,7 @@ class TestLibraryCreate:
 
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
-        librarypage_obj = LibraryEditorPage(mozwebqa)
+        libpage_obj = LibraryEditorPage(mozwebqa)
 
         new_library_name = 'renamed library ' + str(randint(1, 1000))
 
@@ -58,9 +57,9 @@ class TestLibraryCreate:
         homepage_obj.click_create_addon_btn()  # TODO: wtf
 
         #Click properties and change its name
-        librarypage_obj.click_properties()
-        librarypage_obj.type_library_name(new_library_name)
-        librarypage_obj.click_properties_save()
-        Assert.equal(librarypage_obj.library_name, new_library_name)
+        libpage_obj.click_properties()
+        libpage_obj.type_library_name(new_library_name)
+        libpage_obj.click_properties_save()
+        Assert.equal(libpage_obj.library_name, new_library_name)
 
-        librarypage_obj.delete_test_data()
+        libpage_obj.delete_test_data()

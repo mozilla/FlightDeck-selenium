@@ -5,7 +5,6 @@
 
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
-from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 
 
@@ -33,13 +32,12 @@ class TestPackageDelete:
 
         homepage_obj = HomePage(mozwebqa)
         loginpage_obj = LoginPage(mozwebqa)
-        libpage_obj = LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         loginpage_obj.login()
 
         homepage_obj.go_to_home_page()
-        homepage_obj.click_create_lib_btn()
+        libpage_obj = homepage_obj.click_create_lib_btn()
         library_name = libpage_obj.library_name
 
         dashboard_obj = homepage_obj.header.click_dashboard()

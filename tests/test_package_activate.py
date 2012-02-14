@@ -4,7 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.home_page import HomePage
-from pages.library_editor_page import LibraryEditorPage
 from unittestzero import Assert
 
 
@@ -45,7 +44,6 @@ class TestPackageActivateDeactivate:
 
     def test_library_activate_deactivate(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        librarypage_obj = LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         loginpage_obj = homepage_obj.header.click_signin()
@@ -54,9 +52,9 @@ class TestPackageActivateDeactivate:
 
         # go back to homepage, create a new library to work with
         homepage_obj = dashboard_obj.header.click_home_logo()
-        homepage_obj.click_create_lib_btn()
-        library_name = librarypage_obj.library_name
-        dashboard_obj = librarypage_obj.header.click_dashboard()
+        libpage_obj = homepage_obj.click_create_lib_btn()
+        library_name = libpage_obj.library_name
+        dashboard_obj = libpage_obj.header.click_dashboard()
 
         #Click on the private button to make it private and then check that the library is not in the list anymore
         dashboard_obj.library(library_name).click_private()

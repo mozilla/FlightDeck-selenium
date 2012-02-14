@@ -39,7 +39,6 @@ class TestSearch:
     @pytest.mark.native
     def test_search_by_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        librarypage_obj = LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
         loginpage_obj = homepage_obj.header.click_signin()
@@ -47,12 +46,12 @@ class TestSearch:
 
         #create a new library with the valid criteria (version not initial)
         homepage_obj = dashboard_obj.header.click_home_logo()
-        homepage_obj.click_create_lib_btn()
-        librarypage_obj.type_library_version('searchable')
-        librarypage_obj.click_save()
-        searchterm = librarypage_obj.library_name
+        libpage_obj = homepage_obj.click_create_lib_btn()
+        libpage_obj.type_library_version('searchable')
+        libpage_obj.click_save()
+        searchterm = libpage_obj.library_name
 
-        homepage_obj = librarypage_obj.header.click_home_logo()
+        homepage_obj = libpage_obj.header.click_home_logo()
         searchpage_obj = homepage_obj.header.click_search()
 
         searchpage_obj.search_until_package_exists(searchterm, searchpage_obj.library(searchterm))
