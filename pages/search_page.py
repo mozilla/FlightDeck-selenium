@@ -6,7 +6,6 @@
 import time
 from page import Page
 from pages.base_page import FlightDeckBasePage
-from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -143,10 +142,10 @@ class SearchPage(FlightDeckBasePage):
 
         def click(self):
             self.root_element.find_element(*self._name_locator).click()
-            if 'addon' in self._base_locator:
+            if 'addon' in self._base_locator[1]:
                 from pages.addon_editor_page import AddonEditorPage
                 return AddonEditorPage(self.testsetup)
-            elif 'library' in self._base_locator:
+            elif 'library' in self._base_locator[1]:
                 from pages.library_editor_page import LibraryEditorPage
                 return LibraryEditorPage(self.testsetup)
 

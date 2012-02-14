@@ -108,7 +108,7 @@ class DashboardPage(FlightDeckBasePage):
         _test_locator = (By.CSS_SELECTOR, "li.UI_Try_in_Browser > a")
 
         def click_test(self):
-            self.root_element.find_element(*DashboardContentRegion._test_locator).click()
+            self.root_element.find_element(self._test_locator).click()
 
     class Library(DashboardContentRegion):
         _base_locator = (By.XPATH, "//section[@id='app-content']/ul[preceding-sibling::h2[contains(text(),'Libraries')]][1]/li")
