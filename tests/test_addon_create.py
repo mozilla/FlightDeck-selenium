@@ -28,7 +28,7 @@ class TestAddonCreate:
         Assert.true(dashboard_obj.addon(addon_name).is_displayed, "Addon %s not found" % addon_name)
 
         #Click on the edit button of the addon.Then create a copy of that addon and assert that the label is 'copy'
-        dashboard_obj.addon(addon_name).click_edit()
+        addonpage_obj = dashboard_obj.addon(addon_name).click_edit()
         addonpage_obj.click_copy()
         copy_addon_name = addonpage_obj.addon_name
 

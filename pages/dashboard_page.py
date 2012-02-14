@@ -73,6 +73,13 @@ class DashboardPage(FlightDeckBasePage):
         def click_edit(self):
             self._root_element.find_element(*self._edit_locator).click()
 
+            if 'Add-ons' in self._base_locator[1]:
+                from pages.addon_editor_page import AddonEditorPage
+                return  AddonEditorPage(self.testsetup)
+            elif 'Libraries' in self._base_locator[1]:
+                from pages.library_editor_page import LibraryEditorPage
+                return LibraryEditorPage(self.testsetup)
+
         def click_delete(self):
             self._root_element.find_element(*self._delete_locator).click()
 

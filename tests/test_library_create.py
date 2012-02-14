@@ -30,7 +30,7 @@ class TestLibraryCreate:
         Assert.true(dashboard_obj.library(library_name).is_displayed, "Library %s not found" % library_name)
 
         #Click on the edit button of the library.Then create a copy of that library and assert that the label is 'copy'
-        dashboard_obj.library(library_name).click_edit()
+        libpage_obj = dashboard_obj.library(library_name).click_edit()
         libpage_obj.click_copy()
         copy_library_name = libpage_obj.library_name
 
