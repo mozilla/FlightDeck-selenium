@@ -68,6 +68,8 @@ class FlightDeckBasePage(Page):
 
         def click_home_logo(self):
             self.selenium.find_element(*self._home_link_locator).click()
+            from pages.home_page import HomePage
+            return HomePage(self.testsetup)
 
         def click_search(self):
             self.selenium.find_element(*self._search_link_locator).click()

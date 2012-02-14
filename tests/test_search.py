@@ -28,13 +28,13 @@ class TestSearch:
         dashboard_obj = loginpage_obj.login()
 
         #create a new addon with the valid criteria (version not initial)
-        dashboard_obj.header.click_home_logo()
+        homepage_obj = dashboard_obj.header.click_home_logo()
         homepage_obj.click_create_addon_btn()
         addonpage_obj.type_addon_version('searchable')
         addonpage_obj.click_save()
         searchterm = addonpage_obj.addon_name
 
-        addonpage_obj.header.click_home_logo()
+        homepage_obj = addonpage_obj.header.click_home_logo()
         homepage_obj.header.click_search()
 
         searchpage_obj.search_until_package_exists(searchterm, searchpage_obj.addon(searchterm))
@@ -54,13 +54,13 @@ class TestSearch:
         dashboard_obj = loginpage_obj.login()
 
         #create a new library with the valid criteria (version not initial)
-        dashboard_obj.header.click_home_logo()
+        homepage_obj = dashboard_obj.header.click_home_logo()
         homepage_obj.click_create_lib_btn()
         librarypage_obj.type_library_version('searchable')
         librarypage_obj.click_save()
         searchterm = librarypage_obj.library_name
 
-        librarypage_obj.header.click_home_logo()
+        homepage_obj = librarypage_obj.header.click_home_logo()
         homepage_obj.header.click_search()
 
         searchpage_obj.search_until_package_exists(searchterm, searchpage_obj.library(searchterm))

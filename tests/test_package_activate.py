@@ -23,7 +23,7 @@ class TestPackageActivateDeactivate:
         Assert.true(dashboard_obj.is_the_current_page)
 
         # Go back to homepage and create a new addon to work with.
-        dashboard_obj.header.click_home_logo()
+        homepage_obj = dashboard_obj.header.click_home_logo()
         homepage_obj.click_create_addon_btn()
         addon_name = addonpage_obj.addon_name
         dashboard_obj = addonpage_obj.header.click_dashboard()
@@ -49,7 +49,6 @@ class TestPackageActivateDeactivate:
 
     def test_library_activate_deactivate(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
-        dashboard_obj
         librarypage_obj = LibraryEditorPage(mozwebqa)
 
         homepage_obj.go_to_home_page()
@@ -58,7 +57,7 @@ class TestPackageActivateDeactivate:
         Assert.true(dashboard_obj.is_the_current_page)
 
         # go back to homepage, create a new library to work with
-        dashboard_obj.header.click_home_logo()
+        homepage_obj = dashboard_obj.header.click_home_logo()
         homepage_obj.click_create_lib_btn()
         library_name = librarypage_obj.library_name
         dashboard_obj = librarypage_obj.header.click_dashboard()
