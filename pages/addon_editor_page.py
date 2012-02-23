@@ -16,6 +16,7 @@ class AddonEditorPage(FlightDeckBasePage):
     _copy_locator = (By.ID, 'package-copy')
     _copy_spinner_locator = (By.CSS_SELECTOR, '#package-copy a.loading')
     _save_locator = (By.ID, 'package-save')
+    _save_options_locator = (By.ID, 'package-save-options')
     _save_spinner_locator = (By.CSS_SELECTOR, '#package-save.loading')
     _properties_locator = (By.ID, 'package-properties')
     _version_locator = (By.ID, 'version_name')
@@ -47,8 +48,8 @@ class AddonEditorPage(FlightDeckBasePage):
         self._wait_for_save()
 
     def type_addon_version(self, version_label):
-        save_button = self.selenium.find_element(*self._save_locator)
-        ActionChains(self.selenium).move_to_element(save_button).perform()
+        save_options_button = self.selenium.find_element(*self._save_options_locator)
+        save_options_button.click()
         version_field = self.selenium.find_element(*self._version_locator)
         version_field.clear()
         version_field.send_keys(version_label)
