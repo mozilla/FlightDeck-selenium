@@ -65,7 +65,8 @@ class SearchPage(FlightDeckBasePage):
         self.click_search()
 
     def search_until_package_exists(self, name, package):
-        timeout = time.time() + (self.testsetup.timeout / 1000)
+        #120 seconds is a reasonable timeframe in which the package is expected to appear
+        timeout = time.time() + 120
 
         while time.time() < timeout:
             self.search_for_term(name)
