@@ -6,7 +6,6 @@
 from pages.base_page import FlightDeckBasePage
 from pages.regions.editor_tab_region import EditorTabRegion
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 
 
