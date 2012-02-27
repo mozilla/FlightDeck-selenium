@@ -128,8 +128,13 @@ class TestSearch:
         # 20 items maximum per page
         label_count = min(searchpage_obj.addons_count_label, 20)
         element_count = searchpage_obj.addons_element_count()
+        library_count = searchpage_obj.library_element_count()
+
 
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
+
+        Assert.equal(library_count, 0, 'Number of library elements shown should be 0 when add-on filter is enabled.')
+
 
     @pytest.mark.nondestructive
     def test_search_library_filter_results_match(self, mozwebqa):
