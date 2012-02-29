@@ -22,7 +22,7 @@ class TestLibraryCreate:
         #Create a library. Then go to dashboard and assert that the label is present.
         homepage_obj = dashboard_obj.go_to_home_page()
         libpage_obj = homepage_obj.click_create_lib_btn()
-        library_name = libpage_obj.library_name
+        library_name = libpage_obj.name
 
         dashboard_obj = libpage_obj.header.click_dashboard()
         Assert.true(dashboard_obj.is_the_current_page)
@@ -31,7 +31,7 @@ class TestLibraryCreate:
         #Click on the edit button of the library.Then create a copy of that library and assert that the label is 'copy'
         libpage_obj = dashboard_obj.library(library_name).click_edit()
         libpage_obj.click_copy()
-        copy_library_name = libpage_obj.library_name
+        copy_library_name = libpage_obj.name
 
         Assert.contains(library_name, copy_library_name)
         Assert.contains('copy', copy_library_name)
@@ -56,8 +56,8 @@ class TestLibraryCreate:
 
         #Click properties and change its name
         libpage_obj.click_properties()
-        libpage_obj.type_library_name(new_library_name)
+        libpage_obj.type_name(new_library_name)
         libpage_obj.click_properties_save()
-        Assert.equal(libpage_obj.library_name, new_library_name)
+        Assert.equal(libpage_obj.name, new_library_name)
 
         libpage_obj.delete_test_data()

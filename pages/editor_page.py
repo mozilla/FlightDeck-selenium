@@ -9,9 +9,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-class AddonEditorPage(FlightDeckBasePage):
+class EditorPage(FlightDeckBasePage):
 
-    _addon_name = (By.ID, 'package-info-name')
+    _name_locator = (By.ID, 'package-info-name')
     _copy_locator = (By.ID, 'package-copy')
     _copy_spinner_locator = (By.CSS_SELECTOR, '#package-copy a.loading')
     _save_locator = (By.ID, 'package-save')
@@ -19,12 +19,12 @@ class AddonEditorPage(FlightDeckBasePage):
     _save_spinner_locator = (By.CSS_SELECTOR, '#package-save.loading')
     _properties_locator = (By.ID, 'package-properties')
     _version_locator = (By.ID, 'version_name')
-    _addon_name_input_locator = (By.ID, 'full_name')
+    _name_input_locator = (By.ID, 'full_name')
     _properties_save_locator = (By.ID, 'savenow')
 
     @property
-    def addon_name(self):
-        return self.selenium.find_element(*self._addon_name).text
+    def name(self):
+        return self.selenium.find_element(*self._name_locator).text
 
     def click_copy(self):
         self.selenium.find_element(*self._copy_locator).click()
@@ -38,15 +38,15 @@ class AddonEditorPage(FlightDeckBasePage):
     def click_properties(self):
         self.selenium.find_element(*self._properties_locator).click()
 
-    def type_addon_name(self, value):
-        self.selenium.find_element(*self._addon_name_input_locator).clear()
-        self.selenium.find_element(*self._addon_name_input_locator).send_keys(value)
+    def type_name(self, value):
+        self.selenium.find_element(*self._name_input_locator).clear()
+        self.selenium.find_element(*self._name_input_locator).send_keys(value)
 
     def click_properties_save(self):
         self.selenium.find_element(*self._properties_save_locator).click()
         self._wait_for_save()
 
-    def type_addon_version(self, version_label):
+    def type_version(self, version_label):
         save_options_button = self.selenium.find_element(*self._save_options_locator)
         save_options_button.click()
         version_field = self.selenium.find_element(*self._version_locator)
@@ -61,3 +61,14 @@ class AddonEditorPage(FlightDeckBasePage):
 
     def _wait_for_copy(self):
         WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._copy_spinner_locator))
+
+
+class AddonEditorPage(EditorPage):
+    #Addon class add here the items that are specific for addon edit page
+    def __init__(self, testsetup):
+        EditorPage.__init__(self, testsetup)
+
+class LibraryEditorPage(EditorPage):
+    #Library class add here the items that are specific for library edit page
+    def __init__(self, testsetup):
+        EditorPage.__init__(self, testsetup)

@@ -25,11 +25,11 @@ class HomePage(FlightDeckBasePage):
     def click_create_addon_btn(self):
         self.selenium.find_element(*self._create_addon_btn).click()
         self.add_id()
-        from pages.addon_editor_page import AddonEditorPage
+        from pages.editor_page import AddonEditorPage
         return AddonEditorPage(self.testsetup)
 
     def click_create_lib_btn(self):
         self.selenium.find_element(*self._create_lib_btn).click()
         self.add_id()
-        from pages.library_editor_page import LibraryEditorPage
+        from pages.editor_page import LibraryEditorPage
         return LibraryEditorPage(self.testsetup)

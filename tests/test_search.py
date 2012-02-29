@@ -4,8 +4,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.home_page import HomePage
-from pages.addon_editor_page import AddonEditorPage
-from pages.library_editor_page import LibraryEditorPage
+from pages.editor_page import AddonEditorPage
+from pages.editor_page import LibraryEditorPage
 from pages.user_page import UserPage
 from unittestzero import Assert
 import pytest
@@ -23,9 +23,9 @@ class TestSearch:
         #create a new addon with the valid criteria (version not initial)
         homepage_obj = dashboard_obj.header.click_home_logo()
         addonpage_obj = homepage_obj.click_create_addon_btn()
-        addonpage_obj.type_addon_version('searchable')
+        addonpage_obj.type_version('searchable')
         addonpage_obj.click_save()
-        searchterm = addonpage_obj.addon_name
+        searchterm = addonpage_obj.name
 
         homepage_obj = addonpage_obj.header.click_home_logo()
         searchpage_obj = homepage_obj.header.click_search()
@@ -45,9 +45,9 @@ class TestSearch:
         #create a new library with the valid criteria (version not initial)
         homepage_obj = dashboard_obj.header.click_home_logo()
         libpage_obj = homepage_obj.click_create_lib_btn()
-        libpage_obj.type_library_version('searchable')
+        libpage_obj.type_version('searchable')
         libpage_obj.click_save()
-        searchterm = libpage_obj.library_name
+        searchterm = libpage_obj.name
 
         homepage_obj = libpage_obj.header.click_home_logo()
         searchpage_obj = homepage_obj.header.click_search()
@@ -130,7 +130,6 @@ class TestSearch:
         element_count = searchpage_obj.addons_element_count()
         library_count = searchpage_obj.library_element_count()
 
-
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
         Assert.equal(library_count, 0, 'Number of library elements shown should be 0 when add-on filter is enabled.')
@@ -200,7 +199,7 @@ class TestSearch:
 
         addon_name = searchpage_obj.addon(1).name
         searchpage_obj.addon(addon_name).click()
-        Assert.equal(editorpage_obj.addon_name, addon_name)
+        Assert.equal(editorpage_obj.name, addon_name)
 
         searchpage_obj.delete_test_data()
 
@@ -216,7 +215,7 @@ class TestSearch:
 
         library_name = searchpage_obj.library(1).name
         searchpage_obj.library(library_name).click()
-        Assert.equal(editorpage_obj.library_name, library_name)
+        Assert.equal(editorpage_obj.name, library_name)
 
         searchpage_obj.delete_test_data()
 

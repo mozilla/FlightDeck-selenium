@@ -144,10 +144,10 @@ class SearchPage(FlightDeckBasePage):
         def click(self):
             self.root_element.find_element(*self._name_locator).click()
             if 'addon' in self._base_locator[1]:
-                from pages.addon_editor_page import AddonEditorPage
+                from pages.editor_page import AddonEditorPage
                 return AddonEditorPage(self.testsetup)
             elif 'library' in self._base_locator[1]:
-                from pages.library_editor_page import LibraryEditorPage
+                from pages.editor_page import LibraryEditorPage
                 return LibraryEditorPage(self.testsetup)
 
         def click_author(self):
