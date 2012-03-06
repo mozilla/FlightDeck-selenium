@@ -64,11 +64,13 @@ class EditorPage(FlightDeckBasePage):
 
 
 class AddonEditorPage(EditorPage):
-    #Addon class add here the items that are specific for addon edit page
-    def __init__(self, testsetup):
-        EditorPage.__init__(self, testsetup)
+
+    @property
+    def addon_name(self):
+        return self.name
 
 class LibraryEditorPage(EditorPage):
-    #Library class add here the items that are specific for library edit page
-    def __init__(self, testsetup):
-        EditorPage.__init__(self, testsetup)
+
+    @property
+    def library_name(self):
+        return self.name

@@ -20,7 +20,7 @@ class TestPackageActivateDeactivate:
         # Go back to homepage and create a new addon to work with.
         homepage_obj = dashboard_obj.header.click_home_logo()
         addonpage_obj = homepage_obj.click_create_addon_btn()
-        addon_name = addonpage_obj.name
+        addon_name = addonpage_obj.addon_name
         dashboard_obj = addonpage_obj.header.click_dashboard()
 
         #Click on the private button to make it private and then check that the addon is not in the list anymore
@@ -53,7 +53,7 @@ class TestPackageActivateDeactivate:
         # go back to homepage, create a new library to work with
         homepage_obj = dashboard_obj.header.click_home_logo()
         libpage_obj = homepage_obj.click_create_lib_btn()
-        library_name = libpage_obj.name
+        library_name = libpage_obj.library_name
         dashboard_obj = libpage_obj.header.click_dashboard()
 
         #Click on the private button to make it private and then check that the library is not in the list anymore
