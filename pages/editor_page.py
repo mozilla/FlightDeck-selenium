@@ -23,7 +23,7 @@ class EditorPage(FlightDeckBasePage):
     _properties_save_locator = (By.ID, 'savenow')
 
     @property
-    def name(self):
+    def package_name(self):
         return self.selenium.find_element(*self._name_locator).text
 
     def click_copy(self):
@@ -38,7 +38,7 @@ class EditorPage(FlightDeckBasePage):
     def click_properties(self):
         self.selenium.find_element(*self._properties_locator).click()
 
-    def type_name(self, value):
+    def type_package_name(self, value):
         self.selenium.find_element(*self._name_input_locator).clear()
         self.selenium.find_element(*self._name_input_locator).send_keys(value)
 
@@ -46,7 +46,7 @@ class EditorPage(FlightDeckBasePage):
         self.selenium.find_element(*self._properties_save_locator).click()
         self._wait_for_save()
 
-    def type_version(self, version_label):
+    def type_package_version(self, version_label):
         save_options_button = self.selenium.find_element(*self._save_options_locator)
         save_options_button.click()
         version_field = self.selenium.find_element(*self._version_locator)
@@ -64,13 +64,9 @@ class EditorPage(FlightDeckBasePage):
 
 
 class AddonEditorPage(EditorPage):
-
-    @property
-    def addon_name(self):
-        return self.name
+    #Addon class add here the items that are specific for addon edit page
+    pass
 
 class LibraryEditorPage(EditorPage):
-
-    @property
-    def library_name(self):
-        return self.name
+    #Addon class add here the items that are specific for library edit page
+    pass

@@ -23,9 +23,9 @@ class TestSearch:
         #create a new addon with the valid criteria (version not initial)
         homepage_obj = dashboard_obj.header.click_home_logo()
         addonpage_obj = homepage_obj.click_create_addon_btn()
-        addonpage_obj.type_version('searchable')
+        addonpage_obj.type_package_version('searchable')
         addonpage_obj.click_save()
-        searchterm = addonpage_obj.addon_name
+        searchterm = addonpage_obj.package_name
 
         homepage_obj = addonpage_obj.header.click_home_logo()
         searchpage_obj = homepage_obj.header.click_search()
@@ -45,9 +45,9 @@ class TestSearch:
         #create a new library with the valid criteria (version not initial)
         homepage_obj = dashboard_obj.header.click_home_logo()
         libpage_obj = homepage_obj.click_create_lib_btn()
-        libpage_obj.type_version('searchable')
+        libpage_obj.type_package_version('searchable')
         libpage_obj.click_save()
-        searchterm = libpage_obj.library_name
+        searchterm = libpage_obj.package_name
 
         homepage_obj = libpage_obj.header.click_home_logo()
         searchpage_obj = homepage_obj.header.click_search()
@@ -199,7 +199,7 @@ class TestSearch:
 
         addon_name = searchpage_obj.addon(1).name
         searchpage_obj.addon(addon_name).click()
-        Assert.equal(editorpage_obj.addon_name, addon_name)
+        Assert.equal(editorpage_obj.package_name, addon_name)
 
         searchpage_obj.delete_test_data()
 
@@ -215,7 +215,7 @@ class TestSearch:
 
         library_name = searchpage_obj.library(1).name
         searchpage_obj.library(library_name).click()
-        Assert.equal(editorpage_obj.library_name, library_name)
+        Assert.equal(editorpage_obj.package_name, library_name)
 
         searchpage_obj.delete_test_data()
 

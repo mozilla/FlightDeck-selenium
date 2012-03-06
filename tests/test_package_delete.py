@@ -20,7 +20,7 @@ class TestPackageDelete:
         addonpage_obj = homepage_obj.click_create_addon_btn()
 
         #Get the name of the addon on the editor page.
-        addon_name = addonpage_obj.addon_name
+        addon_name = addonpage_obj.package_name
 
         #Go the the dashboard and delete the addon that you just created. Then check that the addon at the top of the list is not the same as the one you just deleted.
         dashboard_obj = homepage_obj.header.click_dashboard()
@@ -37,7 +37,7 @@ class TestPackageDelete:
 
         homepage_obj = dashboard_obj.go_to_home_page()
         libpage_obj = homepage_obj.click_create_lib_btn()
-        library_name = libpage_obj.library_name
+        library_name = libpage_obj.package_name
 
         dashboard_obj = homepage_obj.header.click_dashboard()
         dashboard_obj.library(library_name).click_delete()
