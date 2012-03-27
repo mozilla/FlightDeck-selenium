@@ -262,3 +262,26 @@ class TestSearch:
 
         Assert.true(initial_addon_count > searchpage_obj.addons_count_label)
         Assert.true(initial_library_count > searchpage_obj.library_count_label)
+
+    @pytest.mark.nondestructive
+    @pytest.mark.xfail(reason="Bug 738469 - Default sort order says 'Activity', but doesn't actually match 'Activity' search-sort order/results")
+    def test_that_checks_the_default_search_filter_is_correct(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
+
+        homepage_obj.go_to_home_page()
+        searchpage_obj = homepage_obj.header.click_search()
+
+        searchpage_obj.type_search_term('addon')
+        searchpage_obj.click_search()
+
+        searchpage_obj.click_see_all_addons()
+
+        default_sort_method = searchpage_obj.current_sort_method
+        default_loaded_addons = [addon.name for addon in searchpage_obj.addons]
+
+        searchpage_obj.sort_addons_by('Forks')
+
+        searchpage_obj.sort_addons_by(default_sort_method)
+
+        for idx, addon  in enumerate(searchpage_obj.addons):
+            Assert.equal(addon.name, default_loaded_addons[idx])
