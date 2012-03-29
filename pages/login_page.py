@@ -22,10 +22,11 @@ class LoginPage(FlightDeckBasePage):
 
         self.selenium.find_element(*self._browser_id_link_locator).click()
 
-        from pages.browser_id import BrowserID
-        pop_up = BrowserID(self.testsetup)
-        pop_up.login_browser_id(user)
-        pop_up.sign_in()
+        credentials = self.testsetup.credentials[user]
+
+        from browserid import BrowserID
+        pop_up = BrowserID(self.testsetup.selenium, self.testsetup.timeout)
+        pop_up.sign_in(credentials['email'], credentials['password'])
 
         WebDriverWait(self.selenium, 10).until(lambda s: self.header.logged_in)
 
