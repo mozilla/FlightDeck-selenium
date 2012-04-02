@@ -40,10 +40,6 @@ class SearchPage(FlightDeckBasePage):
     def library(self, lookup):
         return self.Library(self.testsetup, lookup)
 
-    @property
-    def addons(self):
-        return [self.addon(lookup) for lookup in range(1, self.addons_element_count())]
-
     def _item_locator_by_name(self, name):
         return (By.LINK_TEXT, name)
 
@@ -136,6 +132,11 @@ class SearchPage(FlightDeckBasePage):
     def _wait_for_search_ajax(self):
         WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._results_loading_locator))
 
+    @property
+    def paginator(self):
+        from pages.regions.paginator import Paginator
+        return Paginator(self.testsetup)
+
     class SearchResultsRegion(Page):
 
         def __init__(self, testsetup, lookup):
@@ -147,6 +148,15 @@ class SearchPage(FlightDeckBasePage):
 
         _name_locator = (By.CSS_SELECTOR, "h3 > a")
         _author_link_locator = (By.CSS_SELECTOR, "ul.search_meta li:nth-child(1) > a")
+        _activity_locator = (By.CSS_SELECTOR, 'ul.search_meta > li.activity')
+
+        _activity_rating = {'inactive':0,
+                            'stale':1,
+                            'low':2,
+                            'moderate':3,
+                            'high':4,
+                            'rockin\'': 5
+                            }
 
         @property
         def root_element(self):
@@ -172,6 +182,11 @@ class SearchPage(FlightDeckBasePage):
             elif 'library' in self._base_locator[1]:
                 from pages.editor_page import LibraryEditorPage
                 return LibraryEditorPage(self.testsetup)
+
+        @property
+        def activity_raring(self):
+            activity = self.root_element.find_element(*self._activity_locator).text.strip()
+            return self._activity_rating[activity]
 
         def click_author(self):
             self.root_element.find_element(*self._author_link_locator).click()
