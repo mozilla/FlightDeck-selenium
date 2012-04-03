@@ -265,7 +265,7 @@ class TestSearch:
 
     @pytest.mark.nondestructive
     @pytest.mark.xfail(reason="Bug 738469 - Default sort order says 'Activity', but doesn't actually match 'Activity' search-sort order/results")
-    def test_that_checks_the_activity_search_filter(self, mozwebqa):
+    def test_default_search_order_is_by_activity(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
         homepage_obj.go_to_home_page()
