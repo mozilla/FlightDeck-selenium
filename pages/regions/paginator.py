@@ -12,7 +12,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 class Paginator(Page):
 
-    _next_locator = (By.CSS_SELECTOR, 'ul.UI_Pagination > li.next')
+    _next_locator = (By.CSS_SELECTOR, 'ul.UI_Pagination > li.next > a')
     _results_loading_locator = (By.CSS_SELECTOR, '#SearchResults.loading')
 
     @property
@@ -22,6 +22,8 @@ class Paginator(Page):
     def next(self):
         self.selenium.find_element(*self._next_locator).click()
         self._wait_for_search_ajax()
+        from pages.search_page import SearchPage
+        return SearchPage(self.testsetup)
 
     def _wait_for_search_ajax(self):
         WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._results_loading_locator))

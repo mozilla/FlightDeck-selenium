@@ -184,7 +184,7 @@ class SearchPage(FlightDeckBasePage):
                 return LibraryEditorPage(self.testsetup)
 
         @property
-        def activity_raring(self):
+        def activity_rating(self):
             activity = self.root_element.find_element(*self._activity_locator).text.strip()
             return self._activity_rating[activity]
 
