@@ -150,11 +150,11 @@ class SearchPage(FlightDeckBasePage):
         _author_link_locator = (By.CSS_SELECTOR, "ul.search_meta li:nth-child(1) > a")
         _activity_locator = (By.CSS_SELECTOR, 'ul.search_meta > li.activity')
 
-        _activity_rating = {'inactive':0,
-                            'stale':1,
-                            'low':2,
-                            'moderate':3,
-                            'high':4,
+        _activity_rating = {'inactive': 0,
+                            'stale': 1,
+                            'low': 2,
+                            'moderate': 3,
+                            'high': 4,
                             'rockin\'': 5
                             }
 
