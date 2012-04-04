@@ -9,6 +9,7 @@ from pages.base_page import FlightDeckBasePage
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.select import Select
 
 
 class SearchPage(FlightDeckBasePage):
@@ -29,6 +30,10 @@ class SearchPage(FlightDeckBasePage):
     _results_message_locator = (By.CSS_SELECTOR, "#SearchResults > p")
     _results_loading_locator = (By.CSS_SELECTOR, '#SearchResults.loading')
 
+    _see_all_results_addon_locator = (By.CSS_SELECTOR, "#SearchResults > p.see-more > a[href*='type=a']")
+
+    _sort_filter_locator = (By.ID, 'SortSelect')
+
     def addon(self, lookup):
         return self.Addon(self.testsetup, lookup)
 
@@ -38,6 +43,16 @@ class SearchPage(FlightDeckBasePage):
     def _item_locator_by_name(self, name):
         return (By.LINK_TEXT, name)
 
+    def sort_addons_by(self, sort_method):
+        sort_selector = Select(self.selenium.find_element(*self._sort_filter_locator))
+        sort_selector.select_by_visible_text(sort_method)
+        self._wait_for_search_ajax()
+
+    @property
+    def current_sort_method(self):
+        sort_selector = Select(self.selenium.find_element(*self._sort_filter_locator))
+        return sort_selector.first_selected_option.text
+
     def type_search_term(self, text):
         self.selenium.find_element(*self._search_field_locator).send_keys(text)
 
@@ -46,6 +61,10 @@ class SearchPage(FlightDeckBasePage):
 
     def click_search(self):
         self.selenium.find_element(*self._search_button_locator).click()
+        self._wait_for_search_ajax()
+
+    def click_see_all_addons(self):
+        self.selenium.find_element(*self._see_all_results_addon_locator).click()
         self._wait_for_search_ajax()
 
     def click_filter_addons_link(self):
@@ -113,6 +132,11 @@ class SearchPage(FlightDeckBasePage):
     def _wait_for_search_ajax(self):
         WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._results_loading_locator))
 
+    @property
+    def paginator(self):
+        from pages.regions.paginator import Paginator
+        return Paginator(self.testsetup)
+
     class SearchResultsRegion(Page):
 
         def __init__(self, testsetup, lookup):
@@ -124,6 +148,15 @@ class SearchPage(FlightDeckBasePage):
 
         _name_locator = (By.CSS_SELECTOR, "h3 > a")
         _author_link_locator = (By.CSS_SELECTOR, "ul.search_meta li:nth-child(1) > a")
+        _activity_locator = (By.CSS_SELECTOR, 'ul.search_meta > li.activity')
+
+        _activity_rating = {'inactive': 0,
+                            'stale': 1,
+                            'low': 2,
+                            'moderate': 3,
+                            'high': 4,
+                            'rockin\'': 5
+                            }
 
         @property
         def root_element(self):
@@ -149,6 +182,11 @@ class SearchPage(FlightDeckBasePage):
             elif 'library' in self._base_locator[1]:
                 from pages.editor_page import LibraryEditorPage
                 return LibraryEditorPage(self.testsetup)
+
+        @property
+        def activity_rating(self):
+            activity = self.root_element.find_element(*self._activity_locator).text.strip()
+            return self._activity_rating[activity]
 
         def click_author(self):
             self.root_element.find_element(*self._author_link_locator).click()

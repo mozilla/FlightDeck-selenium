@@ -262,3 +262,27 @@ class TestSearch:
 
         Assert.true(initial_addon_count > searchpage_obj.addons_count_label)
         Assert.true(initial_library_count > searchpage_obj.library_count_label)
+
+    @pytest.mark.nondestructive
+    @pytest.mark.xfail(reason="Bug 738469 - Default sort order says 'Activity', but doesn't actually match 'Activity' search-sort order/results")
+    def test_default_search_order_is_by_activity(self, mozwebqa):
+        homepage_obj = HomePage(mozwebqa)
+
+        homepage_obj.go_to_home_page()
+        searchpage_obj = homepage_obj.header.click_search()
+
+        searchpage_obj.type_search_term('addon')
+        searchpage_obj.click_search()
+
+        searchpage_obj.click_see_all_addons()
+
+        Assert.equal('Activity', searchpage_obj.current_sort_method)
+
+        addons_activity_property_list = []
+        while searchpage_obj.paginator.is_next_visible:
+            for lookup in range(1, searchpage_obj.addons_element_count() + 1):
+                addons_activity_property_list.append(
+                        searchpage_obj.addon(lookup).activity_rating)
+
+            Assert.is_sorted_descending(addons_activity_property_list, 'The addons are not sorted by Activity')
+            searchpage_obj.paginator.next()
