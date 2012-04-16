@@ -5,6 +5,7 @@
 
 from pages.base_page import FlightDeckBasePage
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class HomePage(FlightDeckBasePage):
@@ -24,12 +25,16 @@ class HomePage(FlightDeckBasePage):
 
     def click_create_addon_btn(self):
         self.selenium.find_element(*self._create_addon_btn).click()
-        self.add_id()
         from pages.editor_page import AddonEditorPage
-        return AddonEditorPage(self.testsetup)
+        addon_editor = AddonEditorPage(self.testsetup)
+        WebDriverWait(self.selenium, 10).until(lambda s: addon_editor.tab(0).selected)
+        self.add_id()
+        return addon_editor
 
     def click_create_lib_btn(self):
         self.selenium.find_element(*self._create_lib_btn).click()
-        self.add_id()
         from pages.editor_page import LibraryEditorPage
-        return LibraryEditorPage(self.testsetup)
+        library_editor = LibraryEditorPage(self.testsetup)
+        WebDriverWait(self.selenium, 10).until(lambda s: library_editor.tab(0).selected)
+        self.add_id()
+        return library_editor
