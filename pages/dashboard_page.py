@@ -85,15 +85,18 @@ class DashboardPage(FlightDeckBasePage):
 
         def confirm_delete(self):
             self.selenium.find_element(*self._confirm_delete_locator).click()
-            WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._root_locator))
+            WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._root_locator),
+                'Package element did not disappear from the DOM before the timout')
 
         def click_public(self):
             self._root_element.find_element(*self._public_locator).click()
-            WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._root_locator))
+            WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._root_locator),
+                'Package element did not disappear from the DOM before the timout')
 
         def click_private(self):
             self._root_element.find_element(*self._private_locator).click()
-            WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._root_locator))
+            WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._root_locator),
+                'Package element did not disappear from the DOM before the timout')
 
         @property
         def name(self):

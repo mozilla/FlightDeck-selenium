@@ -28,7 +28,8 @@ class LoginPage(FlightDeckBasePage):
         pop_up = BrowserID(self.testsetup.selenium, self.testsetup.timeout)
         pop_up.sign_in(credentials['email'], credentials['password'])
 
-        WebDriverWait(self.selenium, 10).until(lambda s: self.header.logged_in)
+        WebDriverWait(self.selenium, 10).until(lambda s: self.header.logged_in,
+            'BrowserID did not login before the timeout')
 
         from pages.dashboard_page import DashboardPage
         return DashboardPage(self.testsetup)

@@ -57,10 +57,12 @@ class EditorPage(FlightDeckBasePage):
         return EditorTabRegion(self.testsetup, lookup)
 
     def _wait_for_save(self):
-        WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._save_spinner_locator))
+        WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._save_spinner_locator),
+            'The save spinner did not disappear before the timeout')
 
     def _wait_for_copy(self):
-        WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._copy_spinner_locator))
+        WebDriverWait(self.selenium, 10).until(lambda s: not self.is_element_present(*self._copy_spinner_locator),
+            'The save spinner did not disappear before the timeout')
 
 
 class AddonEditorPage(EditorPage):

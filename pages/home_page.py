@@ -27,7 +27,8 @@ class HomePage(FlightDeckBasePage):
         self.selenium.find_element(*self._create_addon_btn).click()
         from pages.editor_page import AddonEditorPage
         addon_editor = AddonEditorPage(self.testsetup)
-        WebDriverWait(self.selenium, self.timeout).until(lambda s: addon_editor.tab(0).selected)
+        WebDriverWait(self.selenium, self.timeout).until(lambda s: addon_editor.tab(0).selected,
+            'The editor tab did not appear before the timeout')
         self.add_id()
         return addon_editor
 
@@ -35,6 +36,7 @@ class HomePage(FlightDeckBasePage):
         self.selenium.find_element(*self._create_lib_btn).click()
         from pages.editor_page import LibraryEditorPage
         library_editor = LibraryEditorPage(self.testsetup)
-        WebDriverWait(self.selenium, self.timeout).until(lambda s: library_editor.tab(0).selected)
+        WebDriverWait(self.selenium, self.timeout).until(lambda s: library_editor.tab(0).selected,
+            'The editor tab did not appear before the timeout')
         self.add_id()
         return library_editor
