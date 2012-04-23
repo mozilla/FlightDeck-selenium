@@ -17,6 +17,8 @@ class Page(object):
         self.base_url = testsetup.base_url
         self.timeout = testsetup.timeout
 
+        self.selenium.maximize_window()
+
     @property
     def is_the_current_page(self):
         if self._page_title:
