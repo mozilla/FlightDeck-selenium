@@ -84,16 +84,16 @@ class SearchPage(FlightDeckBasePage):
         self.click_search()
 
     def search_until_package_exists(self, name, package):
-        #120 seconds is a reasonable timeframe in which the package is expected to appear
-        timeout = time.time() + 120
+        WebDriverWait(self.selenium, 120).until(lambda s: self.search_and_check_if_package_exists(name, package),
+                                                "Package %s could not be found before the timeout" % name)
 
-        while time.time() < timeout:
-            self.search_for_term(name)
-
-            if package.is_displayed:
-                break
-            else:
-                self.header.click_search()
+    def search_and_check_if_package_exists(self, name, package):
+        self.search_for_term(name)
+        if package.is_displayed:
+            return True
+        else:
+            self.header.click_search()
+            return False
 
     @property
     def addons_count_label(self):
