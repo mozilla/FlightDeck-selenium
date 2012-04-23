@@ -84,7 +84,8 @@ class SearchPage(FlightDeckBasePage):
         self.click_search()
 
     def search_until_package_exists(self, name, package):
-        WebDriverWait(self.selenium, 120).until(lambda s: self.search_and_check_if_package_exists(name, package))
+        WebDriverWait(self.selenium, 120).until(lambda s: self.search_and_check_if_package_exists(name, package),
+                                                "Package %s could not be found before the timeout" % name)
 
     def search_and_check_if_package_exists(self, name, package):
         self.search_for_term(name)
