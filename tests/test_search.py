@@ -57,6 +57,7 @@ class TestSearch:
 
         searchpage_obj.delete_test_data()
 
+    @pytest.mark.xfail(reason="Bug 747342 - Substring search of "mult" for "multiculturalYP" fails")
     @pytest.mark.nondestructive
     def test_search_partial_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
