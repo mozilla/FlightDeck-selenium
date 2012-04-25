@@ -27,10 +27,10 @@ class SearchPage(FlightDeckBasePage):
     _used_knob_locator = (By.CSS_SELECTOR, "#UsedFilter div.knob")
     _activity_knob_locator = (By.CSS_SELECTOR, "#ActivityFilter div.knob")
 
-    _results_message_locator = (By.CSS_SELECTOR, "#SearchResults > p")
     _results_loading_locator = (By.CSS_SELECTOR, '#SearchResults.loading')
 
-    _see_all_results_addon_locator = (By.CSS_SELECTOR, "#SearchResults > p.see-more > a[href*='type=a']")
+    _see_all_matching_addons_locator = (By.CSS_SELECTOR, "#SearchResults > p.see-more > a[href*='type=a']")
+    _see_all_matching_libraries_locator = (By.CSS_SELECTOR, "#SearchResults > p.see-more > a[href*='type=a']")
 
     _sort_filter_locator = (By.ID, 'SortSelect')
 
@@ -63,8 +63,20 @@ class SearchPage(FlightDeckBasePage):
         self.selenium.find_element(*self._search_button_locator).click()
         self._wait_for_search_ajax()
 
-    def click_see_all_addons(self):
-        self.selenium.find_element(*self._see_all_results_addon_locator).click()
+    @property
+    def is_see_all_matching_addons_visible(self):
+        return self.is_element_visible(*self._see_all_matching_addons_locator)
+
+    def click_see_all_matching_addons(self):
+        self.selenium.find_element(*self._see_all_matching_addons_locator).click()
+        self._wait_for_search_ajax()
+
+    @property
+    def is_see_all_matching_libraries_visible(self):
+        return self.is_element_visible(*self._see_all_matching_libraries_locator)
+
+    def click_see_all_matching_libraries(self):
+        self.selenium.find_element(*self._see_all_matching_libraries_locator).click()
         self._wait_for_search_ajax()
 
     def click_filter_addons_link(self):
