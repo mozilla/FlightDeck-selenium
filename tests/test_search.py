@@ -57,7 +57,6 @@ class TestSearch:
 
         searchpage_obj.delete_test_data()
 
-    @pytest.mark.xfail(reason="Bug 747342 - Substring search of "mult" for "multiculturalYP" fails")
     @pytest.mark.nondestructive
     def test_search_partial_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
@@ -72,6 +71,9 @@ class TestSearch:
         search_string = top_addon_name[:4]
         searchpage_obj.type_search_term(search_string)
         searchpage_obj.click_search()
+
+        if searchpage_obj.is_see_all_matching_addons_visible:
+            searchpage_obj.click_see_all_matching_addons()
 
         Assert.true(searchpage_obj.addons_element_count() >= 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed, 'Addon \'%s\' not found' % top_addon_name)
@@ -90,6 +92,9 @@ class TestSearch:
         search_string = top_library_name[:4]
         searchpage_obj.type_search_term(search_string)
         searchpage_obj.click_search()
+
+        if searchpage_obj.is_see_all_matching_libraries_visible:
+            searchpage_obj.click_see_all_matching_libraries()
 
         Assert.true(searchpage_obj.library_element_count() >= 1)
         Assert.true(searchpage_obj.library(top_library_name).is_displayed, 'Library \'%s\' not found' % top_library_name)
@@ -275,7 +280,7 @@ class TestSearch:
         searchpage_obj.type_search_term('addon')
         searchpage_obj.click_search()
 
-        searchpage_obj.click_see_all_addons()
+        searchpage_obj.click_see_all_matching_addons()
 
         Assert.equal('Activity', searchpage_obj.current_sort_method)
 
