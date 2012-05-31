@@ -29,8 +29,8 @@ class SearchPage(FlightDeckBasePage):
 
     _results_loading_locator = (By.CSS_SELECTOR, '#SearchResults.loading')
 
-    _see_all_matching_addons_locator = (By.CSS_SELECTOR, "#SearchResults > p.see-more > a[href*='type=a']")
-    _see_all_matching_libraries_locator = (By.CSS_SELECTOR, "#SearchResults > p.see-more > a[href*='type=a']")
+    _see_all_matching_addons_locator = (By.CSS_SELECTOR, ".see-more:nth-of-type(1) a")
+    _see_all_matching_libraries_locator = (By.CSS_SELECTOR, ".see-more:nth-of-type(2) a")
 
     _sort_filter_locator = (By.ID, 'SortSelect')
 
@@ -87,6 +87,7 @@ class SearchPage(FlightDeckBasePage):
         self.selenium.find_element(*self._filter_by_libraries_locator).click()
         self._wait_for_search_ajax()
 
+    @property
     def addons_element_count(self):
         return len(self.selenium.find_elements(*self.Addon._base_locator))
 
@@ -112,6 +113,7 @@ class SearchPage(FlightDeckBasePage):
         label = self.selenium.find_element(*self._addon_count_label_locator).text
         return int(label.strip('()'))
 
+    @property
     def library_element_count(self):
         return len(self.selenium.find_elements(*self.Library._base_locator))
 

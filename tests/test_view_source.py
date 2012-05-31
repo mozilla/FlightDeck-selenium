@@ -10,6 +10,7 @@ import pytest
 
 class TestViewSource:
 
+    @pytest.mark.nondestructive
     def test_view_source_addon(self, mozwebqa):
         #This test is to check viewing the source of an addon while not logged in
         homepage_obj = HomePage(mozwebqa)

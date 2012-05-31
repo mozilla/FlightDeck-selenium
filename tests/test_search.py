@@ -13,6 +13,7 @@ import pytest
 
 class TestSearch:
 
+    @pytest.mark.nondestructive
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
@@ -35,6 +36,7 @@ class TestSearch:
 
         searchpage_obj.delete_test_data()
 
+    @pytest.mark.nondestructive
     def test_search_by_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
@@ -75,7 +77,7 @@ class TestSearch:
         if searchpage_obj.is_see_all_matching_addons_visible:
             searchpage_obj.click_see_all_matching_addons()
 
-        Assert.true(searchpage_obj.addons_element_count() >= 1)
+        Assert.true(searchpage_obj.addons_element_count >= 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed, 'Addon \'%s\' not found' % top_addon_name)
 
     @pytest.mark.nondestructive
@@ -96,7 +98,7 @@ class TestSearch:
         if searchpage_obj.is_see_all_matching_libraries_visible:
             searchpage_obj.click_see_all_matching_libraries()
 
-        Assert.true(searchpage_obj.library_element_count() >= 1)
+        Assert.greater_equal(searchpage_obj.library_element_count, 1)
         Assert.true(searchpage_obj.library(top_library_name).is_displayed, 'Library \'%s\' not found' % top_library_name)
 
     @pytest.mark.nondestructive
@@ -113,8 +115,8 @@ class TestSearch:
         searchpage_obj.clear_search()
         searchpage_obj.click_search()
 
-        Assert.equal(searchpage_obj.addons_element_count(), 5)
-        Assert.equal(searchpage_obj.library_element_count(), 5)
+        Assert.equal(searchpage_obj.addons_element_count, 5)
+        Assert.equal(searchpage_obj.library_element_count, 5)
 
     @pytest.mark.nondestructive
     def test_search_addon_filter_results_match(self, mozwebqa):
@@ -133,13 +135,12 @@ class TestSearch:
 
         # 20 items maximum per page
         label_count = min(searchpage_obj.addons_count_label, 20)
-        element_count = searchpage_obj.addons_element_count()
-        library_count = searchpage_obj.library_element_count()
+        element_count = searchpage_obj.addons_element_count
+        library_count = searchpage_obj.library_element_count
 
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
         Assert.equal(library_count, 0, 'Number of library elements shown should be 0 when add-on filter is enabled.')
-
 
     @pytest.mark.nondestructive
     def test_search_library_filter_results_match(self, mozwebqa):
@@ -158,7 +159,7 @@ class TestSearch:
 
         # 20 items maximum per page
         label_count = min(searchpage_obj.library_count_label, 20)
-        element_count = searchpage_obj.library_element_count()
+        element_count = searchpage_obj.library_element_count
 
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
@@ -209,6 +210,7 @@ class TestSearch:
 
         searchpage_obj.delete_test_data()
 
+    @pytest.mark.nondestructive
     def test_clicking_library_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
@@ -286,7 +288,7 @@ class TestSearch:
 
         addons_activity_property_list = []
         while searchpage_obj.paginator.is_next_visible:
-            for lookup in range(1, searchpage_obj.addons_element_count() + 1):
+            for lookup in range(1, searchpage_obj.addons_element_count + 1):
                 addons_activity_property_list.append(
                         searchpage_obj.addon(lookup).activity_rating)
 
