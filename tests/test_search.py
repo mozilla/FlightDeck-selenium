@@ -13,7 +13,6 @@ import pytest
 
 class TestSearch:
 
-    @pytest.mark.nondestructive
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
@@ -36,7 +35,6 @@ class TestSearch:
 
         searchpage_obj.delete_test_data()
 
-    @pytest.mark.nondestructive
     def test_search_by_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
