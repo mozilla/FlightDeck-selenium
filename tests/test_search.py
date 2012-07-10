@@ -75,7 +75,7 @@ class TestSearch:
         if searchpage_obj.is_see_all_matching_addons_visible:
             searchpage_obj.click_see_all_matching_addons()
 
-        Assert.true(searchpage_obj.addons_element_count >= 1)
+        Assert.greater_equal(searchpage_obj.addons_element_count, 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed, 'Addon \'%s\' not found' % top_addon_name)
 
     @pytest.mark.nondestructive
