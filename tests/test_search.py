@@ -75,7 +75,7 @@ class TestSearch:
         if searchpage_obj.is_see_all_matching_addons_visible:
             searchpage_obj.click_see_all_matching_addons()
 
-        Assert.true(searchpage_obj.addons_element_count >= 1)
+        Assert.greater_equal(searchpage_obj.addons_element_count, 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed, 'Addon \'%s\' not found' % top_addon_name)
 
     @pytest.mark.nondestructive
@@ -237,8 +237,8 @@ class TestSearch:
         initial_library_count = searchpage_obj.library_count_label
         searchpage_obj.move_copies_slider(1)
 
-        Assert.true(initial_addon_count > searchpage_obj.addons_count_label)
-        Assert.true(initial_library_count > searchpage_obj.library_count_label)
+        Assert.greater(initial_addon_count, searchpage_obj.addons_count_label)
+        Assert.greater(initial_library_count, searchpage_obj.library_count_label)
 
     @pytest.mark.native
     @pytest.mark.nondestructive
@@ -252,7 +252,7 @@ class TestSearch:
         initial_library_count = searchpage_obj.library_count_label
         searchpage_obj.move_used_packages_slider(10)
 
-        Assert.true(initial_library_count > searchpage_obj.library_count_label)
+        Assert.greater(initial_library_count, searchpage_obj.library_count_label)
 
     @pytest.mark.native
     @pytest.mark.nondestructive
@@ -266,8 +266,8 @@ class TestSearch:
         initial_library_count = searchpage_obj.library_count_label
         searchpage_obj.move_activity_slider(1)
 
-        Assert.true(initial_addon_count > searchpage_obj.addons_count_label)
-        Assert.true(initial_library_count > searchpage_obj.library_count_label)
+        Assert.greater(initial_addon_count, searchpage_obj.addons_count_label)
+        Assert.greater(initial_library_count, searchpage_obj.library_count_label)
 
     @pytest.mark.nondestructive
     @pytest.mark.xfail(reason="Bug 738469 - Default sort order says 'Activity', but doesn't actually match 'Activity' search-sort order/results")

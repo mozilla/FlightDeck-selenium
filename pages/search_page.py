@@ -29,8 +29,8 @@ class SearchPage(FlightDeckBasePage):
 
     _results_loading_locator = (By.CSS_SELECTOR, '#SearchResults.loading')
 
-    _see_all_matching_addons_locator = (By.CSS_SELECTOR, ".see-more:nth-of-type(1) a")
-    _see_all_matching_libraries_locator = (By.CSS_SELECTOR, ".see-more:nth-of-type(2) a")
+    _see_all_matching_addons_locator = (By.XPATH, ".//a[contains(text(),'matching add-ons')]")
+    _see_all_matching_libraries_locator = (By.XPATH, ".//a[contains(text(),'matching libraries')]")
 
     _sort_filter_locator = (By.ID, 'SortSelect')
 
