@@ -3,6 +3,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import pytest
+
 from pages.home_page import HomePage
 from unittestzero import Assert
 from random import randint
@@ -41,6 +43,7 @@ class TestAddonCreate:
 
         dashboard_obj.delete_test_data()
 
+    @pytest.mark.xfail(reason="bug 774634")
     def test_rename_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
