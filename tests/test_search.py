@@ -176,6 +176,7 @@ class TestSearch:
         searchpage_obj.addon(addon_name).click_author()
         Assert.equal(userpage_obj.author_name.lower(), author_name)
 
+    @pytest.mark.xfail(reason="Bug 773289 - gateway timeout")
     @pytest.mark.nondestructive
     def test_clicking_library_author_link_displays_author_profile(self, mozwebqa):
 
