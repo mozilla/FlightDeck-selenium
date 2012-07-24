@@ -43,7 +43,6 @@ class TestAddonCreate:
 
         dashboard_obj.delete_test_data()
 
-    @pytest.mark.xfail(reason="bug 774634")
     def test_rename_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
