@@ -100,6 +100,7 @@ class TestSearch:
         Assert.true(searchpage_obj.library(top_library_name).is_displayed, 'Library \'%s\' not found' % top_library_name)
 
     @pytest.mark.nondestructive
+    @pytest.mark.xfail(reason='Bug 779791 - Blank search returns only 4 libraries')
     def test_empty_search_returns_all_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
