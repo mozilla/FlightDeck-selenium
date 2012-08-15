@@ -13,6 +13,7 @@ import pytest
 
 class TestSearch:
 
+    py.test.mark.xfail(reason="See 782748 - slow indexing on -dev")
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
@@ -78,6 +79,7 @@ class TestSearch:
         Assert.greater_equal(searchpage_obj.addons_element_count, 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed, 'Addon \'%s\' not found' % top_addon_name)
 
+    py.test.mark.xfail(reason="See 782748 - slow indexing on -dev")
     @pytest.mark.nondestructive
     def test_search_partial_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
@@ -193,7 +195,7 @@ class TestSearch:
         searchpage_obj.library(library_name).click_author()
         Assert.equal(userpage_obj.author_name.lower(), author_name)
 
-    @pytest.mark.xfail(reason="Bug 723042 - Incorrect addon name displayed")
+    @pytest.mark.xfail(reason="Bug 723042 - Incorrect add-on name displayed")
     def test_clicking_addon_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
