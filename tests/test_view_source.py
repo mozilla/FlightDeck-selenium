@@ -23,7 +23,6 @@ class TestViewSource:
         Assert.true(addoneditor_obj.tab(1).selected)
         Assert.not_none(addoneditor_obj.tab(1).content)
 
-    @pytest.mark.xfail(reason='Bugzilla 722725 No default file displayed')
     def test_view_source_library(self, mozwebqa):
         #This test is to check viewing the source of a library while not logged in
         homepage_obj = HomePage(mozwebqa)
