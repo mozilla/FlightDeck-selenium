@@ -22,7 +22,7 @@ class FlightDeckBasePage(Page):
 
     def add_id(self):
         m = re.search("package\/([0-9]*)", self.selenium.current_url)
-        id = m.group()
+        id = m.group(1)
 
         if id not in self._garbage:
             self._garbage.append(id)
