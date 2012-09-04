@@ -13,7 +13,7 @@ import pytest
 
 class TestSearch:
 
-    py.test.mark.xfail(reason="See 782748 - slow indexing on -dev")
+    pytest.mark.xfail(reason="See 782748 - slow indexing on -dev")
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
