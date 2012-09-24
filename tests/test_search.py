@@ -13,7 +13,7 @@ import pytest
 
 class TestSearch:
 
-    pytest.mark.xfail(reason="See 782748 - slow indexing on -dev")
+    @pytest.mark.xfail(reason="See 782748 - slow indexing on -dev")
     def test_search_by_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
@@ -79,7 +79,7 @@ class TestSearch:
         Assert.greater_equal(searchpage_obj.addons_element_count, 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed, 'Addon \'%s\' not found' % top_addon_name)
 
-    py.test.mark.xfail(reason="See 782748 - slow indexing on -dev")
+    @pytest.mark.xfail(reason="See 782748 - slow indexing on -dev")
     @pytest.mark.nondestructive
     def test_search_partial_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
