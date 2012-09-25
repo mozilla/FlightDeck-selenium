@@ -22,7 +22,6 @@ class TestHomepage:
         Assert.contains("https://addons.mozilla.org/en-US/developers/docs/sdk/latest/", homepage_obj.selenium.current_url)
 
     @pytest.mark.nondestructive
-    @pytest.mark.xfail(reason='Bug 779823 - Expecting 3 libraries on the homepage')
     def test_addons_libraries_listed_on_home(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 

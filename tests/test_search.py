@@ -79,7 +79,6 @@ class TestSearch:
         Assert.greater_equal(searchpage_obj.addons_element_count, 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed, 'Addon \'%s\' not found' % top_addon_name)
 
-    @pytest.mark.xfail(reason="See 782748 - slow indexing on -dev")
     @pytest.mark.nondestructive
     def test_search_partial_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
@@ -102,7 +101,6 @@ class TestSearch:
         Assert.true(searchpage_obj.library(top_library_name).is_displayed, 'Library \'%s\' not found' % top_library_name)
 
     @pytest.mark.nondestructive
-    @pytest.mark.xfail(reason='Bug 779791 - Blank search returns only 4 libraries')
     def test_empty_search_returns_all_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
@@ -179,7 +177,6 @@ class TestSearch:
         searchpage_obj.addon(addon_name).click_author()
         Assert.equal(userpage_obj.author_name.lower(), author_name)
 
-    @pytest.mark.xfail(reason="Bug 773289 - gateway timeout")
     @pytest.mark.nondestructive
     def test_clicking_library_author_link_displays_author_profile(self, mozwebqa):
 
@@ -195,7 +192,6 @@ class TestSearch:
         searchpage_obj.library(library_name).click_author()
         Assert.equal(userpage_obj.author_name.lower(), author_name)
 
-    @pytest.mark.xfail(reason="Bug 723042 - Incorrect add-on name displayed")
     def test_clicking_addon_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
