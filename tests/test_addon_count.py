@@ -21,6 +21,8 @@ class TestAddonCount:
         dashboard_obj = loginpage_obj.login()
         Assert.true(dashboard_obj.is_the_current_page)
 
+        dashboard_obj.click_public_addons_link()
+
         #Get the total count of the number of add-ons that are displayed on the dashboard.
         addon_count = dashboard_obj.addons_element_count()
 
