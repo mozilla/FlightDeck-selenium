@@ -142,6 +142,7 @@ class TestSearch:
 
         Assert.equal(library_count, 0, 'Number of library elements shown should be 0 when add-on filter is enabled.')
 
+    @pytest.mark.xfail(reason="Bug 689508 - ElasicSearch/database synchronisation issue")
     @pytest.mark.nondestructive
     def test_search_library_filter_results_match(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
