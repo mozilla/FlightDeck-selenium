@@ -19,6 +19,7 @@ class DashboardPage(FlightDeckBasePage):
     _private_libraries_link = (By.LINK_TEXT, "Private Libraries")
     _addons_public_counter = (By.ID, "public_addons_no")
     _logged_in_username_locator = (By.CSS_SELECTOR, "li.name")
+    _next_locator = (By.CSS_SELECTOR, '.UI_Pagin_Action.next > a')
 
     def addon(self, lookup):
         return self.Addon(self.testsetup, lookup)
@@ -35,7 +36,11 @@ class DashboardPage(FlightDeckBasePage):
         return self.selenium.find_element(*self._addons_public_counter).text
 
     def addons_element_count(self):
-        return len(self.selenium.find_elements(*self.Addon._base_locator))
+        elements = len(self.selenium.find_elements(*self.Addon._base_locator))
+        while self.is_element_visible(*self._next_locator):
+            self.selenium.find_element(*self._next_locator).click()
+            elements = elements + len(self.selenium.find_elements(*self.Addon._base_locator))
+        return elements
 
     def click_public_addons_link(self):
         self.selenium.find_element(*self._public_addons_link).click()
