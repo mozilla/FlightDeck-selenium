@@ -36,11 +36,11 @@ class DashboardPage(FlightDeckBasePage):
         return self.selenium.find_element(*self._addons_public_counter).text
 
     def addons_element_count(self):
-        elements = len(self.selenium.find_elements(*self.Addon._base_locator))
+        addons_count = len(self.selenium.find_elements(*self.Addon._base_locator))
         while self.is_element_visible(*self._next_locator):
             self.selenium.find_element(*self._next_locator).click()
-            elements = elements + len(self.selenium.find_elements(*self.Addon._base_locator))
-        return elements
+            addons_count = addons_count + len(self.selenium.find_elements(*self.Addon._base_locator))
+        return addons_count
 
     def click_public_addons_link(self):
         self.selenium.find_element(*self._public_addons_link).click()
