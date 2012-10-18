@@ -46,6 +46,7 @@ class DashboardPage(FlightDeckBasePage):
 
     def click_previous(self):
         self.selenium.find_element(*self._previous_locator).click()
+        return DashboardPage(self.testsetup)
 
     @property
     def is_next_button_disabled(self):
