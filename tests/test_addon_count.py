@@ -3,9 +3,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from pages.home_page import HomePage
-from unittestzero import Assert
 import pytest
+from unittestzero import Assert
+
+from pages.home_page import HomePage
 
 
 class TestAddonCount:
@@ -23,11 +24,12 @@ class TestAddonCount:
 
         dashboard_obj.click_public_addons_link()
 
-        #Get the total count of the number of add-ons that are displayed on the dashboard.
-        addon_count = dashboard_obj.addons_element_count()
-
         #Get the number of addons that are displayed on the left hand side of the page.(Something like your add-ons(20))
         counter = dashboard_obj.addons_count_label
+        addon_count = dashboard_obj.addons_element_count
+        while dashboard_obj.is_next_button_disabled:
+            addon_count = addon_count + dashboard_obj.addons_element_count
+            dashboard_obj = dashboard_obj.click_next()
 
         #Assert that the total addons on the page matches the counter on the left hand side.
-        Assert.equal(str(addon_count), str(counter))
+        Assert.equal(counter, str(addon_count))

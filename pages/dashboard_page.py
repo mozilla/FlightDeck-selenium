@@ -20,6 +20,7 @@ class DashboardPage(FlightDeckBasePage):
     _addons_public_counter = (By.ID, "public_addons_no")
     _logged_in_username_locator = (By.CSS_SELECTOR, "li.name")
     _next_locator = (By.CSS_SELECTOR, '.UI_Pagin_Action.next > a')
+    _previous_locator = (By.CSS_SELECTOR, '.UI_Pagin_Action.prev > a')
 
     def addon(self, lookup):
         return self.Addon(self.testsetup, lookup)
@@ -35,12 +36,24 @@ class DashboardPage(FlightDeckBasePage):
     def addons_count_label(self):
         return self.selenium.find_element(*self._addons_public_counter).text
 
+    @property
     def addons_element_count(self):
-        addons_count = len(self.selenium.find_elements(*self.Addon._base_locator))
-        while self.is_element_visible(*self._next_locator):
-            self.selenium.find_element(*self._next_locator).click()
-            addons_count = addons_count + len(self.selenium.find_elements(*self.Addon._base_locator))
-        return addons_count
+        return len(self.selenium.find_elements(*self.Addon._base_locator))
+
+    def click_next(self):
+        self.selenium.find_element(*self._next_locator).click()
+        return DashboardPage(self.testsetup)
+
+    def click_previous(self):
+        self.selenium.find_element(*self._previous_locator).click()
+
+    @property
+    def is_next_button_disabled(self):
+        return self.is_element_visible(*self._next_locator)
+
+    @property
+    def is_previous_button_disabled(self):
+        return self.is_element_visible(*self._previous_locator)
 
     def click_public_addons_link(self):
         self.selenium.find_element(*self._public_addons_link).click()
