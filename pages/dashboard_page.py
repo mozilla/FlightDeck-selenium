@@ -49,11 +49,11 @@ class DashboardPage(FlightDeckBasePage):
         return DashboardPage(self.testsetup)
 
     @property
-    def is_next_button_disabled(self):
+    def is_next_button_enabled(self):
         return self.is_element_visible(*self._next_locator)
 
     @property
-    def is_previous_button_disabled(self):
+    def is_previous_button_enabled(self):
         return self.is_element_visible(*self._previous_locator)
 
     def click_public_addons_link(self):

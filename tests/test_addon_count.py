@@ -27,7 +27,7 @@ class TestAddonCount:
         #Get the number of addons that are displayed on the left hand side of the page.(Something like your add-ons(20))
         counter = dashboard_obj.addons_count_label
         addon_count = dashboard_obj.addons_element_count
-        while dashboard_obj.is_next_button_disabled:
+        while dashboard_obj.is_next_button_enabled:
             addon_count = addon_count + dashboard_obj.addons_element_count
             dashboard_obj = dashboard_obj.click_next()
 
