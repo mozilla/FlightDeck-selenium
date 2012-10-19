@@ -28,8 +28,8 @@ class TestAddonCount:
         counter = dashboard_obj.addons_count_label
         addon_count = dashboard_obj.addons_element_count
         while dashboard_obj.is_next_button_enabled:
-            addon_count = addon_count + dashboard_obj.addons_element_count
             dashboard_obj = dashboard_obj.click_next()
+            addon_count = addon_count + dashboard_obj.addons_element_count
 
         #Assert that the total addons on the page matches the counter on the left hand side.
         Assert.equal(counter, str(addon_count))
