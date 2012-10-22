@@ -25,11 +25,10 @@ class TestAddonCount:
         dashboard_obj.click_public_addons_link()
 
         #Get the number of addons that are displayed on the left hand side of the page.(Something like your add-ons(20))
-        counter = dashboard_obj.addons_count_label
         addon_count = dashboard_obj.addons_element_count
         while dashboard_obj.is_next_button_enabled:
             dashboard_obj = dashboard_obj.click_next()
             addon_count = addon_count + dashboard_obj.addons_element_count
 
         #Assert that the total addons on the page matches the counter on the left hand side.
-        Assert.equal(counter, str(addon_count))
+        Assert.equal(dashboard_obj.addons_count_label, str(addon_count))
