@@ -36,7 +36,7 @@ class TestSearch:
 
         searchpage_obj.delete_test_data()
 
-    @pytest.mark.xfail(reason = "Bug 794432 - [dev]Searching for a library just created does not return the library when searching for it")
+    @pytest.mark.xfail(reason="Bug 794432 - [dev]Searching for a library just created does not return the library when searching for it")
     def test_search_by_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
