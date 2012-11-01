@@ -21,7 +21,6 @@ class TestHomepage:
 
         Assert.contains("https://addons.mozilla.org/en-US/developers/docs/sdk/latest/", homepage_obj.selenium.current_url)
 
-    @pytest.mark.xfail(reason="Bug 806794 - [dev] Browse add-ons and Browse Libraries are not displayed on homepage")
     @pytest.mark.nondestructive
     def test_addons_libraries_listed_on_home(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
