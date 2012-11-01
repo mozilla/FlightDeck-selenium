@@ -59,7 +59,6 @@ class TestSearch:
 
         searchpage_obj.delete_test_data()
 
-    @pytest.mark.xfail(reason="Bug 806438 - [dev] 'No results were found for the term "".' on the base search page")
     @pytest.mark.nondestructive
     def test_search_partial_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
@@ -81,7 +80,6 @@ class TestSearch:
         Assert.greater_equal(searchpage_obj.addons_element_count, 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed, 'Addon \'%s\' not found' % top_addon_name)
 
-    @pytest.mark.xfail(reason="Bug 806438 - [dev] 'No results were found for the term "".' on the base search page")
     @pytest.mark.nondestructive
     def test_search_partial_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
@@ -103,7 +101,6 @@ class TestSearch:
         Assert.greater_equal(searchpage_obj.library_element_count, 1)
         Assert.true(searchpage_obj.library(top_library_name).is_displayed, 'Library \'%s\' not found' % top_library_name)
 
-    @pytest.mark.xfail(reason="Bug 806438 - [dev] 'No results were found for the term "".' on the base search page")
     @pytest.mark.nondestructive
     def test_empty_search_returns_all_results(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
@@ -167,7 +164,6 @@ class TestSearch:
 
         Assert.equal(label_count, element_count, 'Number of items displayed should match 20 or total number of results, whichever is smallest. This is due to pagination.')
 
-    @pytest.mark.xfail(reason="Bug 806438 - [dev] 'No results were found for the term "".' on the base search page")
     @pytest.mark.nondestructive
     def test_clicking_addon_author_link_displays_author_profile(self, mozwebqa):
         # go to addon result and click author link
@@ -183,7 +179,6 @@ class TestSearch:
         searchpage_obj.addon(addon_name).click_author()
         Assert.equal(userpage_obj.author_name.lower(), author_name)
 
-    @pytest.mark.xfail(reason="Bug 806438 - [dev] 'No results were found for the term "".' on the base search page")
     @pytest.mark.nondestructive
     def test_clicking_library_author_link_displays_author_profile(self, mozwebqa):
 
@@ -199,7 +194,6 @@ class TestSearch:
         searchpage_obj.library(library_name).click_author()
         Assert.equal(userpage_obj.author_name.lower(), author_name)
 
-    @pytest.mark.xfail(reason="Bug 806438 - [dev] 'No results were found for the term "".' on the base search page")
     def test_clicking_addon_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
 
@@ -216,7 +210,6 @@ class TestSearch:
 
         searchpage_obj.delete_test_data()
 
-    @pytest.mark.xfail(reason="Bug 806438 - [dev] 'No results were found for the term "".' on the base search page")
     @pytest.mark.nondestructive
     def test_clicking_library_source_displays_editor(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)

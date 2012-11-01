@@ -10,7 +10,6 @@ import pytest
 
 class TestViewSource:
 
-    @pytest.mark.xfail(reason="Bug 806438 - [dev] 'No results were found for the term "".' on the base search page")
     @pytest.mark.nondestructive
     def test_view_source_addon(self, mozwebqa):
         #This test is to check viewing the source of an addon while not logged in
@@ -24,7 +23,6 @@ class TestViewSource:
         Assert.true(addoneditor_obj.tab(1).selected)
         Assert.not_none(addoneditor_obj.tab(1).content)
 
-    @pytest.mark.xfail(reason="Bug 806438 - [dev] 'No results were found for the term "".' on the base search page")
     def test_view_source_library(self, mozwebqa):
         #This test is to check viewing the source of a library while not logged in
         homepage_obj = HomePage(mozwebqa)
