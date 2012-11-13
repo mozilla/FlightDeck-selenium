@@ -59,6 +59,7 @@ class TestSearch:
 
         searchpage_obj.delete_test_data()
 
+    @pytest.mark.xfail(reason="Bug 811278 - Default sort option differs when searching with an empty search term, from searching with a search term")
     @pytest.mark.nondestructive
     def test_search_partial_addon_name_returns_addon(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
