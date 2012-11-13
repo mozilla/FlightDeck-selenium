@@ -81,6 +81,7 @@ class TestSearch:
         Assert.greater_equal(searchpage_obj.addons_element_count, 1)
         Assert.true(searchpage_obj.addon(top_addon_name).is_displayed, 'Addon \'%s\' not found' % top_addon_name)
 
+    @pytest.mark.xfail(reason="Bug 811278 - Default sort option differs when searching with an empty search term, from searching with a search term")
     @pytest.mark.nondestructive
     def test_search_partial_library_name_returns_library(self, mozwebqa):
         homepage_obj = HomePage(mozwebqa)
