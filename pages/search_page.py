@@ -159,7 +159,7 @@ class SearchPage(FlightDeckBasePage):
             if type(lookup) is int:
                 self._root_locator = (self._base_locator[0], "%s[%i]" % (self._base_locator[1], lookup))
             elif type(lookup) is unicode:
-                self._root_locator = (self._base_locator[0], "%s[descendant::h3/a[text()='%s']]" % (self._base_locator[1], lookup))
+                self._root_locator = (self._base_locator[0], "%s[descendant::h3/a[normalize-space(text())='%s']]" % (self._base_locator[1], lookup))
 
         _name_locator = (By.CSS_SELECTOR, "h3 > a")
         _author_link_locator = (By.CSS_SELECTOR, "ul.search_meta li:nth-child(1) > a")
