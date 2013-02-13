@@ -27,4 +27,4 @@ class Paginator(Page):
 
     def _wait_for_search_ajax(self):
         WebDriverWait(self.selenium, self.timeout).until(lambda s: not self.is_element_present(*self._results_loading_locator),
-            'The page load spinner did not disappear before the timeout')
+                                                         'The page load spinner did not disappear before the timeout')

@@ -292,7 +292,7 @@ class TestSearch:
         while searchpage_obj.paginator.is_next_visible:
             for lookup in range(1, searchpage_obj.addons_element_count + 1):
                 addons_activity_property_list.append(
-                        searchpage_obj.addon(lookup).activity_rating)
+                    searchpage_obj.addon(lookup).activity_rating)
 
             Assert.is_sorted_descending(addons_activity_property_list, 'The addons are not sorted by Activity')
             searchpage_obj.paginator.next()
