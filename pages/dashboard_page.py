@@ -98,7 +98,7 @@ class DashboardPage(FlightDeckBasePage):
 
             if 'Add-ons' in self._base_locator[1]:
                 from pages.editor_page import AddonEditorPage
-                return  AddonEditorPage(self.testsetup)
+                return AddonEditorPage(self.testsetup)
             elif 'Libraries' in self._base_locator[1]:
                 from pages.editor_page import LibraryEditorPage
                 return LibraryEditorPage(self.testsetup)
@@ -109,17 +109,17 @@ class DashboardPage(FlightDeckBasePage):
         def confirm_delete(self):
             self.selenium.find_element(*self._confirm_delete_locator).click()
             WebDriverWait(self.selenium, self.timeout).until(lambda s: not self.is_element_present(*self._root_locator),
-                'Package %s did not disappear from the DOM before the timeout' % self.lookup)
+                                                             'Package %s did not disappear from the DOM before the timeout' % self.lookup)
 
         def click_public(self):
             self._root_element.find_element(*self._public_locator).click()
             WebDriverWait(self.selenium, self.timeout).until(lambda s: not self.is_element_present(*self._root_locator),
-                'Package %s did not disappear from the DOM before the timeout' % self.lookup)
+                                                             'Package %s did not disappear from the DOM before the timeout' % self.lookup)
 
         def click_private(self):
             self._root_element.find_element(*self._private_locator).click()
             WebDriverWait(self.selenium, self.timeout).until(lambda s: not self.is_element_present(*self._root_locator),
-                'Package %s did not disappear from the DOM before the timeout' % self.lookup)
+                                                             'Package %s did not disappear from the DOM before the timeout' % self.lookup)
 
         @property
         def name(self):

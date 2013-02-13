@@ -23,7 +23,7 @@ class Page(object):
     def is_the_current_page(self):
         if self._page_title:
             WebDriverWait(self.selenium, 10).until(lambda s: self.selenium.title,
-                'A page title did not appear before the timeout')
+                                                   'A page title did not appear before the timeout')
 
         Assert.equal(self.selenium.title, self._page_title)
         return True

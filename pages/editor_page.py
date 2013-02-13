@@ -58,16 +58,17 @@ class EditorPage(FlightDeckBasePage):
 
     def _wait_for_save(self):
         WebDriverWait(self.selenium, self.timeout).until(lambda s: not self.is_element_present(*self._save_spinner_locator),
-            'The save spinner did not disappear before the timeout')
+                                                         'The save spinner did not disappear before the timeout')
 
     def _wait_for_copy(self):
         WebDriverWait(self.selenium, self.timeout).until(lambda s: not self.is_element_present(*self._copy_spinner_locator),
-            'The save spinner did not disappear before the timeout')
+                                                         'The save spinner did not disappear before the timeout')
 
 
 class AddonEditorPage(EditorPage):
     #Addon class add here the items that are specific for addon edit page
     pass
+
 
 class LibraryEditorPage(EditorPage):
     #Addon class add here the items that are specific for library edit page
